@@ -1,6 +1,6 @@
 package Banco;
 
-public class Main {
+public class SisteBank {
     public static void main(String[] args) {
         System.out.println("Hola, GitHub!");
     }
