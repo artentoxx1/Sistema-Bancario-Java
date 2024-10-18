@@ -1,5 +1,5 @@
 # Sistema-Bancario-Java
-Desarrollar e implementar un sistema bancario para una entidad financiera peruana que permita gestionar, automatizar y realizar funciones indispensables dentro de la organización, en beneficio de los clientes, brindando garantía y confiabilidad.
+Desarrollar e implementar un sistema bancario para una entidad financiera peruana que permita gestionar, automatizar y realizar funciones indispensables dentro de la organización, en beneficio de los clientes, brindandoles garantía y confiabilidad.
 
 ## Grupo 6:
 - Barrera Estrella, Fernando Anthony Steve
