@@ -40,4 +40,28 @@ public class Cliente {
         this.liquidezFinanciera = liquidezFinanciera;
 
     }
+    public void buscarCliente(String dato){
+
+    }
+    public void depositarCuenta(String dni,double cantidadDeposito,String numeroCuenta){
+
+    }
+    public void retirarCuenta(double cantidadRetiro,String contraseniaTarjeta){
+
+    }
+    public void sacarTarjetaCredito(){
+
+    }
+    public void sacarTarjetaDebito(){
+
+    }
+    public void hacerPrestamo(){
+
+    }
+    public void hacerInversion(){
+
+    }
+    public void pagosServicios(){
+
+    }
 }
