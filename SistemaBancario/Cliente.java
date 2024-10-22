@@ -17,15 +17,37 @@ public class Cliente {
     private CuentaAhorro cuentaAhorros;
     private CuentaCorriente cuentaCorriente;
     private CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo;
+    private TarjetaDeDebito tarjetaDeDebito;
+    private TarjetaDeCredito tarjetaDeCredito;
     private double liquidezFinanciera;
 
     public Cliente(){
+        nombresCliente = "";
+        apellidoPaternoCliente = "";
+        apellidoMaternoCliente = "";
+        sexoCliente = "";
+        dniCliente = "";
+        telefonoCliente = "";
+        correoCliente = "";
+        ocupacionCliente = "";
+        profesionCliente = "";
+        estadoCivilCliente = "";
+        cargaFamiliarCliente = "";
+        direccionCliente = "";
+        codigoUbigeoCliente = "";
+        cuentaAhorros = null;
+        cuentaCorriente = null;
+        cuentaDepositoPlazoFijo = null;
+        tarjetaDeDebito = null;
+        tarjetaDeCredito = null;
+        liquidezFinanciera = 0;
     }
     public Cliente(String nombresCliente,String apellidoMaternoCliente,String apellidoPaternoCliente,
                    String sexoCliente,String dniCliente,String telefonoCliente, String correoCliente,
                    String ocupacionCliente, String profesionCliente, String estadoCivilCliente,String cargaFamiliarClient,
                    String  direccionCliente,String codigoUbigeoCliente,CuentaAhorro cuentaAhorros,
-                   CuentaCorriente cuentaCorriente, CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo,double liquidezFinanciera) {
+                   CuentaCorriente cuentaCorriente, CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo,
+                   TarjetaDeDebito tarjetaDeDebito,TarjetaDeCredito tarjetaDeCredito, double liquidezFinanciera) {
         this.nombresCliente = nombresCliente;
         this.apellidoPaternoCliente = apellidoPaternoCliente;
         this.apellidoMaternoCliente = apellidoMaternoCliente;
@@ -42,6 +64,8 @@ public class Cliente {
         this.cuentaAhorros = cuentaAhorros;
         this.cuentaCorriente = cuentaCorriente;
         this.cuentaDepositoPlazoFijo = cuentaDepositoPlazoFijo;
+        this.tarjetaDeDebito = tarjetaDeDebito;
+        this.tarjetaDeCredito = tarjetaDeCredito;
         this.liquidezFinanciera = liquidezFinanciera;
     }
     public String getNombresCliente() {
@@ -142,6 +166,24 @@ public class Cliente {
     public void setCuentaDepositoPlazoFijo(CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo) {
         this.cuentaDepositoPlazoFijo = cuentaDepositoPlazoFijo;
     }
+    public TarjetaDeDebito getTarjetaDeDebito() {
+        return tarjetaDeDebito;
+    }
+    public void setTarjetaDeDebito(TarjetaDeDebito tarjetaDeDebito) {
+        this.tarjetaDeDebito = tarjetaDeDebito;
+    }
+    public TarjetaDeCredito getTarjetaDeCredito() {
+        return tarjetaDeCredito;
+    }
+    public void setTarjetaDeCredito(TarjetaDeCredito tarjetaDeCredito) {
+        this.tarjetaDeCredito = tarjetaDeCredito;
+    }
+    public double getLiquidezFinanciera(){
+        return liquidezFinanciera;
+    }
+    public void setLiquidezFinanciera(double liquidezFinanciera) {
+        this.liquidezFinanciera = liquidezFinanciera;
+    }
     public void depositarCuenta(int tipoCuenta,double cantidadDeposito,String numeroCuenta){
         switch(tipoCuenta){
             case 1:
@@ -164,22 +206,45 @@ public class Cliente {
                     System.out.println("Error...");
                 }
                 break;
-            case 3:
-                if(cuentaDepositoPlazoFijo.numeroCuenta.equals(numeroCuenta)){
-                    cuentaDepositoPlazoFijo.saldoCuenta = cuentaDepositoPlazoFijo.saldoCuenta + cantidadDeposito;
-                    System.out.println("Saldo añadido a la cuenta " + numeroCuenta);
-                    System.out.println("Nuevo saldo: "+ cuentaCorriente.saldoCuenta);
-                }
-                else{
-                    System.out.println("Error...");
-                }
-                break;
             default:
                 System.out.println("Digite una opcion correcta.");
         }
     }
-    public void retirarCuenta(double cantidadRetiro,String contraseniaTarjeta){
-
+    public void retirarCuenta(int tipoCuenta,double cantidadRetiro,String contraseniaTarjeta){
+        switch(tipoCuenta){
+            case 1:
+                //cuenta ahorro
+                if(tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)){
+                    if(cuentaAhorros.saldoCuenta>0 && cuentaAhorros.saldoCuenta>=cantidadRetiro){
+                        cuentaAhorros.saldoCuenta-=cantidadRetiro;
+                        System.out.println("Cantidad a retirar de la cuenta: "+ cantidadRetiro);
+                        System.out.println("Saldo restante: "+ cuentaAhorros.saldoCuenta);
+                    }
+                    else{
+                        System.out.println("Cantidad insuficiente dentro de la cuenta.");
+                        System.out.println("Saldo disponible: "+cuentaAhorros.saldoCuenta);
+                    }
+                }
+                else{System.out.println("Error...");}
+                break;
+            case 2:
+                //cuenta corriente
+                if(tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)){
+                    if(cuentaCorriente.saldoCuenta>0 && cuentaCorriente.saldoCuenta >=cantidadRetiro){
+                        cuentaCorriente.saldoCuenta = cuentaCorriente.saldoCuenta - cantidadRetiro;
+                        System.out.println("Cantidad a retirar de la cuenta: "+ cantidadRetiro);
+                        System.out.println("Saldo restante: "+ cuentaCorriente.saldoCuenta);
+                    }
+                    else{
+                        System.out.println("Cantidad insuficiente dentro de la tarjeta.");
+                        System.out.println("Saldo disponible: "+cuentaCorriente.saldoCuenta);
+                    }
+                }
+                else {System.out.println("Error...");}
+                break;
+            default:
+                System.out.println("Digite una opcion correcta.");
+        }
     }
     public void sacarTarjetaCredito(){
 
