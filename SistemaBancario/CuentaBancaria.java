@@ -1,5 +1,5 @@
 package Banco.SistemaBancario;
-
+import java.util.Scanner;
 public class CuentaBancaria {
     protected String numeroCuenta;
     protected double saldoCuenta;
@@ -36,5 +36,30 @@ public class CuentaBancaria {
     }
     public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
+    }
+    Scanner sc = new Scanner(System.in);
+    public void depositar(double monto){
+        saldoCuenta=saldoCuenta+monto;
+        setSaldoCuenta(saldoCuenta);
+        System.out.println("Depositado exitoso");
+    }
+    public void retirar(double monto){
+        saldoCuenta=saldoCuenta-monto;
+        setSaldoCuenta(saldoCuenta);
+        System.out.println("Retiro exitoso");
+
+    }
+    public Transaccion[] obtenerHistorial(){
+
+        return historialCuenta;
+    }
+    public void mostrarHistorial(){
+        for(int i=0;i<historialCuenta.length;i++){
+            System.out.println(historialCuenta[i]);
+        }
+    }
+    public void mostrarSaldo(){
+        System.out.println("Su saldo de cuenta es: "+ getSaldoCuenta());
+
     }
 }
