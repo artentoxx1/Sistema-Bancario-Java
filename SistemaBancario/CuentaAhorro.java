@@ -22,4 +22,24 @@ public class CuentaAhorro extends CuentaBancaria {
         this.limiteRetiros = limiteRetiros;
     }
 
+    public double calcularIntereses(){
+        double b;
+        b=tasaInteres*0.01*saldoCuenta;
+        return b;
+    }
+    public boolean permitirRetiro(){
+
+        boolean b = false;
+        if(limiteRetiros>0){
+            b=true;
+            limiteRetiros--;
+            return b;
+        }
+        else{
+            return b;
+        }
+    }
+    public void actualizarRetirosMensuales(){
+        //No necesario porque permitir retiro ya lo hace
+    }
 }
