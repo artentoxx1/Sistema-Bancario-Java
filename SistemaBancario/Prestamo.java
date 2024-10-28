@@ -88,7 +88,7 @@ public class Prestamo {
             double tasaMensual = tasaInteres / 12 / 100;
             double interesAcumulado = saldoRestante * Math.pow(1 + tasaMensual, periodoGracia) - saldoRestante;
             saldoRestante += interesAcumulado;
-            System.out.println("Intereses capitalizados: $" + interesAcumulado);
+            System.out.println("Intereses capitalizados: S/." + interesAcumulado);
             return interesAcumulado;
         }
         return 0;
@@ -100,7 +100,7 @@ public class Prestamo {
         if (totalPago <= saldoRestante) {
             saldoRestante -= totalPago;
             pagosRealizados++;
-            System.out.println("Pago realizado: $" + totalPago + ". Saldo restante: $" + saldoRestante);
+            System.out.println("Pago realizado: S/." + totalPago + ". Saldo restante: S/." + saldoRestante);
             verificarMora();
         } else {
             System.out.println("El pago excede el saldo restante del préstamo.");
@@ -112,7 +112,7 @@ public class Prestamo {
         if (cantidad <= saldoRestante) {
             saldoRestante -= cantidad;
             pagosRealizados++;
-            System.out.println("Pago adicional realizado: $" + cantidad + ". Saldo restante: $" + saldoRestante);
+            System.out.println("Pago adicional realizado: S/." + cantidad + ". Saldo restante: S/." + saldoRestante);
         } else {
             System.out.println("El pago adicional excede el saldo restante del préstamo.");
         }
@@ -133,7 +133,7 @@ public class Prestamo {
         if (enMora) {
             double penalizacion = saldoRestante * 0.05; // Penalización del 5%
             saldoRestante += penalizacion;
-            System.out.println("Se ha aplicado una penalización por mora de: $" + penalizacion);
+            System.out.println("Se ha aplicado una penalización por mora de: S/." + penalizacion);
         }
     }
 
@@ -175,7 +175,7 @@ public class Prestamo {
 
     // Metodo para generar el estado actual del prestamo
     public String estadoPrestamo() {
-        return "Saldo pendiente: $" + saldoRestante + " | Cuota mensual: $" + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
+        return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
     }
 
     // Simulacion de pago anticipado
@@ -185,7 +185,7 @@ public class Prestamo {
         } else {
             saldoRestante -= cantidad;
             pagosRealizados++;
-            System.out.println("Pago anticipado realizado: $" + cantidad + ". Nuevo saldo restante: $" + saldoRestante);
+            System.out.println("Pago anticipado realizado: S/." + cantidad + ". Nuevo saldo restante: S/." + saldoRestante);
         }
     }
 
