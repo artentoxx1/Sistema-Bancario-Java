@@ -29,4 +29,9 @@ public class Fecha {
     public int getAnio() {
         return anio;
     }
+    public void setAnio(int anio) {this.anio = anio;}
+
+    public String toString() {
+        return dia+"/"+mes+"/"+anio;
+    }
 }
