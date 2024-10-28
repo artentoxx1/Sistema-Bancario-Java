@@ -1,5 +1,7 @@
 package Banco.SistemaBancario;
 
+import static Banco.SistemaBancario.Tarjeta.*;
+
 public class Cliente {
     private String nombresCliente;
     private String apellidoPaternoCliente;
@@ -223,16 +225,6 @@ public class Cliente {
     public void setLiquidezFinanciera(double liquidezFinanciera) {
         this.liquidezFinanciera = liquidezFinanciera;
     }
-
-    public void sacarCuentaAhorros(){
-
-    }
-    public void sacarCuentaCorriente(){
-
-    }
-    public void sacarCuentaDepositoaPlazoFijo(){
-
-    }
     public void depositarCuenta(int tipoCuenta, double cantidadDeposito, String numeroCuenta) {
         switch (tipoCuenta) {
             case 1:
@@ -351,8 +343,8 @@ public class Cliente {
         }
 
         if (puedeOtorgarTarjeta) {
-            String numeroTarjetaGenerado = TarjetaDeCredito.generarNumeroTarjeta();
-            String claveTarjetaGenerada = TarjetaDeCredito.generarClaveTarjeta();
+            String numeroTarjetaGenerado = generarNumeroTarjeta();
+            String claveTarjetaGenerada = generarClaveTarjeta();
 
             tarjetaDeCredito = new TarjetaDeCredito(
                     numeroTarjetaGenerado,
@@ -385,8 +377,8 @@ public class Cliente {
         }
 
         if (puedeOtorgarTarjeta) {
-            String numeroTarjetaGenerado = TarjetaDeDebito.generarNumeroTarjeta();
-            String claveTarjetaGenerada = TarjetaDeDebito.generarClaveTarjeta();
+            String numeroTarjetaGenerado = generarNumeroTarjeta();
+            String claveTarjetaGenerada = generarClaveTarjeta();
 
             tarjetaDeDebito = new TarjetaDeDebito(
                     numeroTarjetaGenerado,
