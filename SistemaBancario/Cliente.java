@@ -10,12 +10,9 @@ public class Cliente {
     private String dniCliente;
     private String telefonoCliente;
     private String correoCliente;
-    private String ocupacionCliente;
     private String profesionCliente;
-    private String estadoCivilCliente;
     private String cargaFamiliarCliente;
     private String direccionCliente;
-    private String codigoUbigeoCliente;
     private CuentaAhorro cuentaAhorros;
     private CuentaCorriente cuentaCorriente;
     private CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo;
@@ -31,12 +28,9 @@ public class Cliente {
         dniCliente = "";
         telefonoCliente = "";
         correoCliente = "";
-        ocupacionCliente = "";
         profesionCliente = "";
-        estadoCivilCliente = "";
         cargaFamiliarCliente = "";
         direccionCliente = "";
-        codigoUbigeoCliente = "";
         cuentaAhorros = null;
         cuentaCorriente = null;
         cuentaDepositoPlazoFijo = null;
@@ -47,8 +41,8 @@ public class Cliente {
 
     public Cliente(String nombresCliente, String apellidoMaternoCliente, String apellidoPaternoCliente,
                    String sexoCliente, String dniCliente, String telefonoCliente, String correoCliente,
-                   String ocupacionCliente, String profesionCliente, String estadoCivilCliente, String cargaFamiliarClient,
-                   String direccionCliente, String codigoUbigeoCliente, CuentaAhorro cuentaAhorros,
+                   String profesionCliente, String cargaFamiliarClient,
+                   String direccionCliente, CuentaAhorro cuentaAhorros,
                    CuentaCorriente cuentaCorriente, CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo,
                    TarjetaDeDebito tarjetaDeDebito, TarjetaDeCredito tarjetaDeCredito, double liquidezFinanciera) {
         this.nombresCliente = nombresCliente;
@@ -58,12 +52,9 @@ public class Cliente {
         this.dniCliente = dniCliente;
         this.telefonoCliente = telefonoCliente;
         this.correoCliente = correoCliente;
-        this.ocupacionCliente = ocupacionCliente;
         this.profesionCliente = profesionCliente;
-        this.estadoCivilCliente = estadoCivilCliente;
         this.cargaFamiliarCliente = cargaFamiliarClient;
         this.direccionCliente = direccionCliente;
-        this.codigoUbigeoCliente = codigoUbigeoCliente;
         this.cuentaAhorros = cuentaAhorros;
         this.cuentaCorriente = cuentaCorriente;
         this.cuentaDepositoPlazoFijo = cuentaDepositoPlazoFijo;
@@ -128,28 +119,12 @@ public class Cliente {
         this.correoCliente = correoCliente;
     }
 
-    public String getOcupacionCliente() {
-        return ocupacionCliente;
-    }
-
-    public void setOcupacionCliente(String ocupacionCliente) {
-        this.ocupacionCliente = ocupacionCliente;
-    }
-
     public String getProfesionCliente() {
         return profesionCliente;
     }
 
     public void setProfesionCliente(String profesionCliente) {
         this.profesionCliente = profesionCliente;
-    }
-
-    public String getEstadoCivilCliente() {
-        return estadoCivilCliente;
-    }
-
-    public void setEstadoCivilCliente(String estadoCivilCliente) {
-        this.estadoCivilCliente = estadoCivilCliente;
     }
 
     public String getCargaFamiliarCliente() {
@@ -168,14 +143,6 @@ public class Cliente {
 
     public void setDireccionCliente(String direccionCliente) {
         this.direccionCliente = direccionCliente;
-    }
-
-    public String getCodigoUbigeoCliente() {
-        return codigoUbigeoCliente;
-    }
-
-    public void setCodigoUbigeoCliente(String codigoUbigeoCliente) {
-        this.codigoUbigeoCliente = codigoUbigeoCliente;
     }
 
     public CuentaAhorro getCuentaAhorros() {
