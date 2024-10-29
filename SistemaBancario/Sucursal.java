@@ -28,4 +28,23 @@ public class Sucursal{
         System.out.println("Ciudad Surcursal: " + ciudadSurcursal);
         System.out.println("Cantidad Empleados: " + cantidadEmpleados);
     }
+    //Get y Set
+    public String getDireccion(){
+        return direccionSucursal;
+    }
+    public void setDireccion(String direccion){
+        this.direccionSucursal = direccion;
+    }
+    public String getCodigo(){
+        return codigoSucursal;
+    }
+    public void setCodigo(String codigo){
+        this.codigoSucursal = codigo;
+    }
+    public String getCiudad(){
+        return ciudadSurcursal;
+    }
+    public void setCiudad(String ciudad){
+        this.ciudadSurcursal = ciudad;
+    }
 }
