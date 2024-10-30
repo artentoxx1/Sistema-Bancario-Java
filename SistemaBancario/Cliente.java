@@ -1,7 +1,7 @@
 package Banco.SistemaBancario;
 
 import static Banco.SistemaBancario.Tarjeta.*;
-
+import java.util.Scanner;
 public class Cliente {
     private String nombresCliente;
     private String apellidoPaternoCliente;
@@ -310,17 +310,18 @@ public class Cliente {
         }
 
         if (puedeOtorgarTarjeta) {
+
             String numeroTarjetaGenerado = generarNumeroTarjeta();
             String claveTarjetaGenerada = generarClaveTarjeta();
 
             tarjetaDeCredito = new TarjetaDeCredito(
                     numeroTarjetaGenerado,
                     claveTarjetaGenerada,
-                    cuentaCorriente,
                     limiteCreditoInicial,
                     deudaInicial,
                     limiteCreditoInicial,
-                    fechaDePago
+                    fechaDePago,
+                    cuentaCorriente
             );
 
             System.out.println("Tarjeta de crédito otorgada exitosamente al cliente.");
@@ -328,6 +329,21 @@ public class Cliente {
             System.out.println("Límite de crédito inicial: " + limiteCreditoInicial);
             System.out.println("Fecha de pago de la tarjeta: " + fechaDePago);
         }
+    }
+    Scanner entrada = new Scanner(System.in);
+    public String generarNumeroTarjeta(){
+
+        System.out.print("Digite una serie de numeros para que se establezca su numero de Tarjeta");
+        String a;
+        a = entrada.nextLine();
+        return a;
+    }
+    public String generarClaveTarjeta(){
+
+        System.out.print("Digite una serie de numeros para que sea su clave de la tarjeta");
+        String a;
+        a = entrada.nextLine();
+        return a;
     }
 
     public void sacarTarjetaDebito() {
@@ -344,7 +360,8 @@ public class Cliente {
         }
 
         if (puedeOtorgarTarjeta) {
-            String numeroTarjetaGenerado = generarNumeroTarjeta();
+            String numeroTarjetaGenerado ;
+            numeroTarjetaGenerado= generarNumeroTarjeta();
             String claveTarjetaGenerada = generarClaveTarjeta();
 
             tarjetaDeDebito = new TarjetaDeDebito(

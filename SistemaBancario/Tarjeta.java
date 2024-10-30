@@ -4,15 +4,28 @@ public class Tarjeta {
     protected String numeroTarjeta;
     protected String claveTarjeta;
     protected CuentaBancaria cuentaVinculada;
-    public Tarjeta(String numeroTarjeta, String claveTarjeta,CuentaBancaria cuentaVinculada) {
+    public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria Cuenta) {
         this.numeroTarjeta = numeroTarjeta;
         this.claveTarjeta = claveTarjeta;
-        this.cuentaVinculada = null;
+        this.cuentaVinculada=Cuenta;
     }
-    public static String generarNumeroTarjeta() {
-        return String.format("%016d", (long) (Math.random() * 1_000_000_000_000_000L));
+    public String getNumeroTarjeta() {
+        return numeroTarjeta;
     }
-    public static String generarClaveTarjeta() {
-        return String.format("%04d", (int) (Math.random() * 10000));
+    public void setNumeroTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
+    }
+    public String getClaveTarjeta() {
+        return claveTarjeta;
+    }
+    public void setClaveTarjeta(String claveTarjeta) {
+        this.claveTarjeta = claveTarjeta;
+    }
+    public CuentaBancaria getCuentaVinculada() {
+        return cuentaVinculada;
+    }
+
+    public void setCuentaVinculada(CuentaBancaria cuentaVinculada) {
+        this.cuentaVinculada = cuentaVinculada;
     }
 }
