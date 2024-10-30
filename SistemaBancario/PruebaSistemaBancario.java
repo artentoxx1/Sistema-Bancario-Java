@@ -225,7 +225,7 @@ public class PruebaSistemaBancario {
 
     public static void pantallaClientesAdministrador(){
         System.out.println("CLIENTES");
-        System.out.println("1. Ordenar clientes por orden de apellido");
+        System.out.println("1. Ordenar clientes por apellido");
         System.out.println("2. Mostrar carrera profesional de los clientes");
         System.out.println("3. Mostrar correos electronicos de los clientes");
         System.out.println("4. Mostrar numeros de telefonos de los clientes");

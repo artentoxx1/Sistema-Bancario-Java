@@ -102,6 +102,50 @@ public class Administrador extends Empleado {
             System.out.println("No hay sucursal asociado al codigo proporcionado.");
         }
     }
-
-
+    public static void ordenarPorApellido(Cliente[] clientes) {
+        for (int i = 0; i < clientes.length - 1; i++) {
+            for (int j = 0; j < clientes.length - i - 1; j++) {
+                if (clientes[j].getApellidoMaternoCliente().compareToIgnoreCase(clientes[j + 1].getApellidoMaternoCliente()) > 0) {
+                    Cliente temp = clientes[j];
+                    clientes[j] = clientes[j + 1];
+                    clientes[j + 1] = temp;
+                }
+            }
+        }
+    }
+    public static void mostrarCarreraProfesional(Cliente[] clientes){
+        System.out.println("\n--------------------------\n");
+        for(int i=0;i<clientes.length;i++){
+            System.out.println("Carrera profesional del " + (i+1)+" cliente: " + clientes[i].getProfesionCliente());
+        }
+        System.out.println("\n--------------------------\n");
+    }
+    public static void mostrarCorreosClientes(Cliente[] clientes){
+        System.out.println("\n--------------------------\n");
+        for(int i=0;i<clientes.length;i++){
+            System.out.println("Correo del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+        }
+        System.out.println("\n--------------------------\n");
+    }
+    public static void mostrarNumerosClientes(Cliente[] clientes){
+        System.out.println("\n--------------------------\n");
+        for(int i=0;i<clientes.length;i++){
+            System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefonoCliente());
+        }
+        System.out.println("\n--------------------------\n");
+    }
+    public static void mostrarDireccionClientes(Cliente[] clientes){
+        System.out.println("\n--------------------------\n");
+        for(int i=0;i<clientes.length;i++){
+            System.out.println("Direccion del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+        }
+        System.out.println("\n--------------------------\n");
+    }
+    public static void mostrarCargaFamiliarClientes(Cliente[] clientes){
+        System.out.println("\n--------------------------\n");
+        for(int i=0;i<clientes.length;i++){
+            System.out.println("Carga familiar del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+        }
+        System.out.println("\n--------------------------\n");
+    }
 }
