@@ -11,7 +11,7 @@ public class PruebaSistemaBancario {
             System.out.println("\t\t\t¡BIENVENIDO!\t\t\t");
             System.out.println("Escoja si es un empleado o un administrador");
             System.out.println("1. Administrador");
-            System.out.println("2. Empleado");
+            System.out.println("2. Cajero");
             System.out.println("3. Salir");
             System.out.print("Opción: ");
             opc = entrada.nextInt();
@@ -28,9 +28,8 @@ public class PruebaSistemaBancario {
                                 case 1:
                                     do{
                                         System.out.println("\n");
-                                        pantallaClientes();
+                                        pantallaClientesAdministrador();
                                         opc3 = entrada.nextInt();
-
                                         switch(opc3) {
 
                                         }
@@ -40,40 +39,15 @@ public class PruebaSistemaBancario {
                                 case 2:
                                     do{
                                         System.out.println("\n");
-                                        pantallaEmpleados();
+                                        pantallaEmpleadosAdministrador();
                                         opc3 = entrada.nextInt();
 
                                         switch(opc3) {
 
                                         }
                                     } while(opc3 != 5);
-
                                     break;
                                 case 3:
-                                    do{
-                                        System.out.println("\n");
-                                        pantallaCuentas();
-                                        opc3 = entrada.nextInt();
-
-                                        switch(opc3) {
-
-                                        }
-                                    } while(opc3 != 10);
-
-                                    break;
-                                case 4:
-                                    do{
-                                        System.out.println("\n");
-                                        pantallaTarjetas();
-                                        opc3 = entrada.nextInt();
-
-                                        switch(opc3) {
-
-                                        }
-                                    } while(opc3 != 8);
-
-                                    break;
-                                case 5:
                                     do{
                                         System.out.println("\n");
                                         pantallaSucursales();
@@ -85,24 +59,12 @@ public class PruebaSistemaBancario {
                                     } while(opc3 != 6);
 
                                     break;
-                                case 6:
-                                    do{
-                                        System.out.println("\n");
-                                        pantallaOperaciones();
-                                        opc3 = entrada.nextInt();
-
-                                        switch(opc3) {
-
-                                        }
-                                    } while(opc3 != 4);
-
-                                    break;
-                                case 7:
+                                case 4:
                                     break;
                                 default:
                                     System.out.println("Ingrese una opción válida e inténtelo nuevamente.");
                             }
-                        } while(opc2 != 7);
+                        } while(opc2 != 4);
                         System.out.println("\n");
                     }
                     else{
@@ -110,17 +72,17 @@ public class PruebaSistemaBancario {
                     }
                     break;
                 case 2:
-                    if(inicioDeSesionEmpleado()){
+                    if(inicioDeSesionCajero()){
                         do{
                             System.out.println("\n");
-                            pantallaDeInicioEmpleado();
+                            pantallaDeInicioCajero();
                             opc2 = entrada.nextInt();
 
                             switch(opc2) {
                                 case 1:
                                     do{
                                         System.out.println("\n");
-                                        pantallaClientes();
+                                        pantallaClientesCajero();
                                         opc3 = entrada.nextInt();
 
                                         switch(opc3) {
@@ -132,7 +94,7 @@ public class PruebaSistemaBancario {
                                 case 2:
                                     do{
                                         System.out.println("\n");
-                                        pantallaCuentas();
+                                        pantallaCuentasCajero();
                                         opc3 = entrada.nextInt();
 
                                         switch(opc3) {
@@ -144,7 +106,7 @@ public class PruebaSistemaBancario {
                                 case 3:
                                     do{
                                         System.out.println("\n");
-                                        pantallaTarjetas();
+                                        pantallaTarjetasCajero();
                                         opc3 = entrada.nextInt();
 
                                         switch(opc3) {
@@ -187,18 +149,39 @@ public class PruebaSistemaBancario {
         } while(opc != 3);
     }
 
-    public static boolean inicioDeSesionEmpleado(){    //Todos los empleados deberán especificar sus credenciales de inicio de sesion dentro del programa
-        String user = "EmpleadoBanco";
-        String pass = "empleado01";
-        String userIngresadoE, passIngresadoE;
+    public static boolean inicioDeSesionCajero(){    //Todos los empleados deberán especificar sus credenciales de inicio de sesion dentro del programa
+        String user = String.format("%10d",(long) (Math.random()*1_000_000_000));
+        String pass = String.format("%04d",(int) (Math.random()*1_000));
+        int conf,conf2;
+        String userIngresadoE="", passIngresadoE="";
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("\nComplete sus credenciales de inicio de sesión: Empleado");
-        System.out.print("Ingrese su usuario: ");
-        userIngresadoE = sc.nextLine();
-        System.out.print("Ingrese su contraseña: ");
-        passIngresadoE = sc.nextLine();
-
+        System.out.println("Es nuevo usuario? (1= Sí, 2= No): ");
+        conf2 = sc.nextInt();
+        sc.nextLine();
+        if(conf2 == 1){
+            System.out.println("Usuario generado: "+ user);
+            System.out.println("Clave generada: "+ pass);
+            System.out.println("Desea cambiar sus credenciales?(Digite 1 para Sí y 2 para No): ");
+            conf=sc.nextInt();
+            sc.nextLine();
+            if(conf==1){
+                System.out.println("Escriba su nuevo usuario: ");
+                user=sc.nextLine();
+                System.out.println("Escriba su nueva contrasenia: ");
+                pass=sc.nextLine();
+            }
+            System.out.println("\nComplete sus credenciales de inicio de sesión");
+            System.out.print("Ingrese su usuario: ");
+            userIngresadoE = sc.nextLine();
+            System.out.print("Ingrese su contraseña: ");
+            passIngresadoE = sc.nextLine();
+        } else if(conf2==2){
+            System.out.println("\nComplete sus credenciales de inicio de sesión");
+            System.out.print("Ingrese su usuario: ");
+            userIngresadoE = sc.nextLine();
+            System.out.print("Ingrese su contraseña: ");
+            passIngresadoE = sc.nextLine();
+        }
         return user.equals(userIngresadoE) && pass.equals(passIngresadoE);
     }
 
@@ -208,7 +191,7 @@ public class PruebaSistemaBancario {
         String userIngresadoA, passIngresadoA;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\nComplete sus credenciales de inicio de sesión: Administrador");
+        System.out.println("\nComplete sus credenciales de inicio de sesión");
         System.out.print("Ingrese su usuario: ");
         userIngresadoA = sc.nextLine();
         System.out.print("Ingrese su contraseña: ");
@@ -217,7 +200,7 @@ public class PruebaSistemaBancario {
         return user.equals(userIngresadoA) && pass.equals(passIngresadoA);
     }
 
-    public static void pantallaDeInicioEmpleado(){
+    public static void pantallaDeInicioCajero(){
         System.out.println("----------\tBIENVENIDO AL SISTEMA BANCARIO\t----------");
         System.out.println("Escoja alguna de las siguientes opciones");
         System.out.println("1. Clientes");
@@ -236,12 +219,22 @@ public class PruebaSistemaBancario {
         System.out.println("3. Cuentas");
         System.out.println("4. Tarjetas");
         System.out.println("5. Sucursales");
-        System.out.println("6. Operaciones");
-        System.out.println("7. Salir");
+        System.out.println("6. Salir");
         System.out.print("Opción: ");
     }
 
-    public static void pantallaClientes(){
+    public static void pantallaClientesAdministrador(){
+        System.out.println("CLIENTES");
+        System.out.println("1. Ordenar clientes por orden de apellido");
+        System.out.println("2. Mostrar carrera profesional de los clientes");
+        System.out.println("3. Mostrar correos electronicos de los clientes");
+        System.out.println("4. Mostrar numeros de telefonos de los clientes");
+        System.out.println("5. Mostrar direccion de los clientes");
+        System.out.println("6. Mostrar carga familiar de los clientes");
+        System.out.println("7. Regresar");
+        System.out.print("Opción: ");
+    }
+    public static void pantallaClientesCajero(){
         System.out.println("CLIENTES");
         System.out.println("1. Añadir un nuevo cliente");
         System.out.println("2. Modificar la información de un cliente");
@@ -253,7 +246,7 @@ public class PruebaSistemaBancario {
         System.out.print("Opción: ");
     }
 
-    public static void pantallaEmpleados(){
+    public static void pantallaEmpleadosAdministrador(){
         System.out.println("EMPLEADOS");
         System.out.println("1. Añadir un empleado");
         System.out.println("2. Modificar la información de un empleado");
@@ -263,7 +256,7 @@ public class PruebaSistemaBancario {
         System.out.print("Opción: ");
     }
 
-    public static void pantallaCuentas(){
+    public static void pantallaCuentasCajero(){
         System.out.println("CUENTAS");
         System.out.println("1. Abrir una cuenta corriente vinculada a un cliente");
         System.out.println("2. Eliminar una cuenta corriente vinculada a un cliente");
@@ -278,7 +271,7 @@ public class PruebaSistemaBancario {
         System.out.print("Opción: ");
     }
 
-    public static void pantallaTarjetas(){
+    public static void pantallaTarjetasCajero(){
         System.out.println("TARJETAS");
         System.out.println("1. Generar una tarjeta de crédito para un cliente");
         System.out.println("2. Anular la tarjeta de crédito de un cliente");
