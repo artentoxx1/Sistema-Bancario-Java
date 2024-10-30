@@ -1,59 +1,46 @@
 package Banco.SistemaBancario;
 
 public class TarjetaDeCredito extends Tarjeta{
-    private double limiteCredito;
+    private String numeroTarjeta;
+    private String claveTarjeta;
+    private double limiteTarjeta;
     private double deudaActual;
     private double saldoDisponible;
     private Fecha fechaPagoDeuda;
+    private CuentaBancaria cuentaVinculada;
 
-    public TarjetaDeCredito(String numeroTarjeta, String claveTarjeta,CuentaBancaria cuentaVinculada,
-                            double limiteCredito, double deudaActual, double saldoDisponible, Fecha fechaPagoDeuda) {
-        super(numeroTarjeta, claveTarjeta, cuentaVinculada);
-        this.limiteCredito = limiteCredito;
-        this.deudaActual = deudaActual;
-        this.saldoDisponible = saldoDisponible;
-        this.fechaPagoDeuda = fechaPagoDeuda;
-    }
-    public String getNumeroTarjeta(){
-        return numeroTarjeta;
-    }
-    public String getClaveTarjeta(){
-        return claveTarjeta;
-    }
-    public CuentaBancaria getCuentaVinculada(){
-        return cuentaVinculada;
-    }
-    public void setNumeroTarjeta(String numeroTarjeta){
+    public TarjetaDeCredito(String numeroTarjeta,String claveTarjeta, double limiteTarjeta, double deudaActual,
+                            double saldoDisponible, Fecha fechaPagoDeuda, CuentaBancaria cuentaVinculada) {
+        super(numeroTarjeta,claveTarjeta, cuentaVinculada);
         this.numeroTarjeta = numeroTarjeta;
-    }
-    public void setClaveTarjeta(String claveTarjeta){
         this.claveTarjeta = claveTarjeta;
-    }
-    public void setCuentaVinculada(CuentaBancaria cuentaVinculada){
-        this.cuentaVinculada = cuentaVinculada;
-    }
-    public double getLimiteCredito(){
-        return limiteCredito;
-    }
-    public void setLimiteCredito(double limiteCredito){
-        this.limiteCredito = limiteCredito;
-    }
-    public double getDeudaActual(){
-        return deudaActual;
-    }
-    public void setDeudaActual(double deudaActual){
+        this.limiteTarjeta = limiteTarjeta;
         this.deudaActual = deudaActual;
-    }
-    public double getSaldoDisponible(){
-        return saldoDisponible;
-    }
-    public void setSaldoDisponible(double saldoDisponible){
         this.saldoDisponible = saldoDisponible;
-    }
-    public Fecha getFechaPagoDeuda(){
-        return fechaPagoDeuda;
-    }
-    public void setFechaPagoDeuda(Fecha fechaPagoDeuda){
         this.fechaPagoDeuda = fechaPagoDeuda;
+        this.cuentaVinculada = cuentaVinculada;
+
     }
+    public void pagarTarjeta(double monto,CuentaBancaria cuenta) {
+        if ((deudaActual-monto)<=0){
+            System.out.println("Devolviendo el vuelto: ");
+            System.out.println("Vuelto: "+(monto-deudaActual));
+            deudaActual = 0;
+        }else{
+            System.out.println("Deuda faltante: " + (deudaActual-monto));
+            deudaActual = deudaActual-monto;
+        }
+    }
+    public void mostrarEstadoCuenta(){
+        System.out.println("Limite de credito: " + limiteTarjeta);
+        System.out.println("Deuda: " + deudaActual);
+        System.out.println("Saldo: " + saldoDisponible);
+        System.out.println("Fecha: " + fechaPagoDeuda);
+        System.out.println("Cuenta Vinculada: " + cuentaVinculada);
+    }
+    public void aumentarLimiteCredito(double nuevoLimite){
+        limiteTarjeta = limiteTarjeta+nuevoLimite;
+        System.out.println("Limite de credito: " + limiteTarjeta);
+    }
+
 }
