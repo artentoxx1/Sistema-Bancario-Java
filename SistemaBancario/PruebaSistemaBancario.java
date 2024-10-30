@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
+        Cliente[] clientes= new Cliente[0];
         int opc, opc2, opc3;
 
         do{
@@ -31,7 +32,7 @@ public class PruebaSistemaBancario {
                                         pantallaClientesAdministrador();
                                         opc3 = entrada.nextInt();
                                         switch(opc3) {
-
+                                            Administrador.ordenarPorApellido(clientes);
                                         }
                                     } while(opc3 != 7);
 
