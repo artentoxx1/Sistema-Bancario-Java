@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
-        Cliente[] clientes= new Cliente[0];
+        Cliente[] clientes;
+        clientes = new Cliente[100];
         int opc, opc2, opc3;
 
         do{
@@ -32,10 +33,29 @@ public class PruebaSistemaBancario {
                                         pantallaClientesAdministrador();
                                         opc3 = entrada.nextInt();
                                         switch(opc3) {
-                                            Administrador.ordenarPorApellido(clientes);
+                                            case 1:
+                                                Administrador.ordenarPorApellido(clientes);
+                                                break;
+                                            case 2:
+                                                Administrador.mostrarCarreraProfesional(clientes);
+                                                break;
+                                            case 3:
+                                                Administrador.mostrarCorreosClientes(clientes);
+                                                break;
+                                            case 4:
+                                                Administrador.mostrarNumerosClientes(clientes);
+                                                break;
+                                            case 5:
+                                                Administrador.mostrarDireccionClientes(clientes);
+                                                break;
+                                            case 6:
+                                                Administrador.mostrarCargaFamiliarClientes(clientes);
+                                                break;
+                                            case 7:break;
+                                            default:
+                                                System.out.println("Digite una opcion valida");
                                         }
                                     } while(opc3 != 7);
-
                                     break;
                                 case 2:
                                     do{
