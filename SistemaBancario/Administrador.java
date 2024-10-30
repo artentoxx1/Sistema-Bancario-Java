@@ -102,6 +102,4 @@ public class Administrador extends Empleado {
             System.out.println("No hay sucursal asociado al codigo proporcionado.");
         }
     }
-
-
 }
