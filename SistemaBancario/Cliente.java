@@ -1,12 +1,7 @@
 package Banco.SistemaBancario;
 
-public class Cliente {
-    private String nombresCliente;
-    private String apellidoPaternoCliente;
-    private String apellidoMaternoCliente;
-    private String sexoCliente;
-    private String dniCliente;
-    private String telefonoCliente;
+public class Cliente extends Persona {
+
     private String correoCliente;
     private String profesionCliente;
     private String cargaFamiliarCliente;
@@ -19,12 +14,7 @@ public class Cliente {
     private double liquidezFinanciera;
 
     public Cliente() {
-        nombresCliente = "";
-        apellidoPaternoCliente = "";
-        apellidoMaternoCliente = "";
-        sexoCliente = "";
-        dniCliente = "";
-        telefonoCliente = "";
+        super();
         correoCliente = "";
         profesionCliente = "";
         cargaFamiliarCliente = "";
@@ -37,18 +27,13 @@ public class Cliente {
         liquidezFinanciera = 0;
     }
 
-    public Cliente(String nombresCliente, String apellidoMaternoCliente, String apellidoPaternoCliente,
-                   String sexoCliente, String dniCliente, String telefonoCliente, String correoCliente,
+    public Cliente(String nombres, String apellidoMaterno, String apellidoPaterno,
+                   String sexo, String dni, String telefono, String correoCliente,
                    String profesionCliente, String cargaFamiliarClient,
                    String direccionCliente, CuentaAhorro cuentaAhorros,
                    CuentaCorriente cuentaCorriente, CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo,
-                   TarjetaDeDebito tarjetaDeDebito, TarjetaDeCredito tarjetaDeCredito, double liquidezFinanciera) {
-        this.nombresCliente = nombresCliente;
-        this.apellidoPaternoCliente = apellidoPaternoCliente;
-        this.apellidoMaternoCliente = apellidoMaternoCliente;
-        this.sexoCliente = sexoCliente;
-        this.dniCliente = dniCliente;
-        this.telefonoCliente = telefonoCliente;
+                   TarjetaDeDebito tarjetaDeDebito, TarjetaDeCredito tarjetaDeCredito, double liquidezFinanciera){
+        super(nombres, apellidoPaterno,apellidoMaterno,sexo,dni,telefono);
         this.correoCliente = correoCliente;
         this.profesionCliente = profesionCliente;
         this.cargaFamiliarCliente = cargaFamiliarClient;
@@ -61,54 +46,42 @@ public class Cliente {
         this.liquidezFinanciera = liquidezFinanciera;
     }
 
-    public String getNombresCliente() {
-        return nombresCliente;
+    public String getNombres(){
+        return nombres;
     }
-
-    public void setNombresCliente(String nombresCliente) {
-        this.nombresCliente = nombresCliente;
+    public void setNombres(String nombres){
+        this.nombres=nombres;
     }
-
-    public String getApellidoPaternoCliente() {
-        return apellidoPaternoCliente;
+    public String getApellidoPaterno(){
+        return apellidoPaterno;
     }
-
-    public void setApellidoPaternoCliente(String apellidoPaternoCliente) {
-        this.apellidoPaternoCliente = apellidoPaternoCliente;
+    public void setApellidoPaterno(String apellidoPaterno){
+        this.apellidoPaterno=apellidoPaterno;
     }
-
-    public String getApellidoMaternoCliente() {
-        return apellidoMaternoCliente;
+    public String getApellidoMaterno(){
+        return apellidoMaterno;
     }
-
-    public void setApellidoMaternoCliente(String apellidoMaternoCliente) {
-        this.apellidoMaternoCliente = apellidoMaternoCliente;
+    public void setApellidoMaterno(String apellidoMaterno){
+        this.apellidoPaterno=apellidoMaterno;
     }
-
-    public String getSexoCliente() {
-        return sexoCliente;
+    public String getSexo(){
+        return sexo;
     }
-
-    public void setSexoCliente(String sexoCliente) {
-        this.sexoCliente = sexoCliente;
+    public void setSexo(String sexo){
+        this.sexo=sexo;
     }
-
-    public String getDniCliente() {
-        return dniCliente;
+    public String getDni(){
+        return dni;
     }
-
-    public void setDniCliente(String dniCliente) {
-        this.dniCliente = dniCliente;
+    public void setDni(String dni){
+        this.dni=dni;
     }
-
-    public String getTelefonoCliente() {
-        return telefonoCliente;
+    public String getTelefono(){
+        return telefono;
     }
-
-    public void setTelefonoCliente(String telefonoCliente) {
-        this.telefonoCliente = telefonoCliente;
+    public void setTelefono(String telefono){
+        this.telefono=telefono;
     }
-
     public String getCorreoCliente() {
         return correoCliente;
     }

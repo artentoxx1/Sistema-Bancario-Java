@@ -2,8 +2,11 @@ package Banco.SistemaBancario;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
-    public Administrador(String nombreEmpleado, String apellidoEmpleado, String sexoEmpleado, String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado, String puestoEmpleado,String sucursalEmpleado) {
-        super(nombreEmpleado, apellidoEmpleado, sexoEmpleado, telefonoEmpleado,edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+    public Administrador(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado,
+                         String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
+                         String puestoEmpleado,String sucursalEmpleado) {
+        super(nombreEmpleado, apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado, telefonoEmpleado,
+                edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
 
     Scanner entrada = new Scanner(System.in);
@@ -15,8 +18,10 @@ public class Administrador extends Empleado {
     public void AniadirEmpleado(Empleado[] empleados){
         System.out.println("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el apellido del empleado: ");
-        String apellidoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido paterno del empleado: ");
+        String apellidoPaternoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido materno del empleado: ");
+        String apellidoMaternoEmpleado = entrada.nextLine();
         System.out.println("Ingrese el sexo del empleado: ");
         String sexoEmpleado = entrada.nextLine();
         System.out.println("Ingrese el telefono del empleado: ");
@@ -32,13 +37,16 @@ public class Administrador extends Empleado {
         System.out.println("Ingrese el codigo de la sucursal del empleado:");
         String sucursalEmpleado = entrada.nextLine();
 
-        Empleado nuevoEmpleado = new Empleado(nombreEmpleado, apellidoEmpleado, sexoEmpleado, telefonoEmpleado, edadEmpleado, dniEmpleado, salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+        Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
+                apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
+                telefonoEmpleado, edadEmpleado, dniEmpleado,
+                salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
 
 
     public static void eliminarEmpleadoSucursal(Empleado[] empleados, String numDni){
         for(int i=0;i<empleados.length;i++){
-            if(empleados[i].getDniEmpleado().equals(numDni)){
+            if(empleados[i].getDni().equals(numDni)){
                 empleados[i].setSucursalEmpleado(null);
             }
         }
@@ -111,7 +119,7 @@ public class Administrador extends Empleado {
         if(clientes.length>0){
             for (int i = 0; i < clientes.length - 1; i++) {
                 for (int j = 0; j < clientes.length - i - 1; j++) {
-                    if (clientes[j].getApellidoMaternoCliente().compareToIgnoreCase(clientes[j + 1].getApellidoMaternoCliente()) > 0) {
+                    if (clientes[j].getApellidoMaterno().compareToIgnoreCase(clientes[j + 1].getApellidoMaterno()) > 0) {
                         Cliente temp = clientes[j];
                         clientes[j] = clientes[j + 1];
                         clientes[j + 1] = temp;
@@ -120,7 +128,7 @@ public class Administrador extends Empleado {
             }
             System.out.println("\n--------------------------\n");
             for(int i=0;i<clientes.length;i++){
-                System.out.println(clientes[i].getApellidoMaternoCliente()+" "+clientes[i].getApellidoPaternoCliente()+" "+clientes[i].getNombresCliente());
+                System.out.println(clientes[i].getApellidoMaterno()+" "+clientes[i].getApellidoPaterno()+" "+clientes[i].getNombres());
             }
             System.out.println("\n--------------------------\n");
         }
@@ -150,7 +158,7 @@ public class Administrador extends Empleado {
         if(clientes.length>0){
             System.out.println("\n--------------------------\n");
             for(int i=0;i<clientes.length;i++){
-                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefonoCliente());
+                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefono());
             }
             System.out.println("\n--------------------------\n");
         }
@@ -204,5 +212,4 @@ public class Administrador extends Empleado {
             }
         }
     }
-
 }

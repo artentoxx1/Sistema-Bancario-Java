@@ -31,7 +31,6 @@ public class Tarjeta {
     public CuentaBancaria getCuentaVinculada() {
         return cuentaVinculada;
     }
-
     public void setCuentaVinculada(CuentaBancaria cuentaVinculada) {
         this.cuentaVinculada = cuentaVinculada;
     }

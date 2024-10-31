@@ -8,7 +8,6 @@ public class TarjetaDeCredito extends Tarjeta{
     private double deudaActual;
     private double saldoDisponible;
     private LocalDate fechaPagoDeuda;
-    private CuentaBancaria cuentaVinculada;
 
     public TarjetaDeCredito(){
         super();
@@ -22,7 +21,6 @@ public class TarjetaDeCredito extends Tarjeta{
         this.deudaActual = deudaActual;
         this.saldoDisponible = saldoDisponible;
         this.fechaPagoDeuda = fechaPagoDeuda;
-        this.cuentaVinculada = cuentaVinculada;
 
     }
     public void pagarTarjeta(double monto,CuentaBancaria cuenta) {
