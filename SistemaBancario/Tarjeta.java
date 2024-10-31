@@ -28,4 +28,26 @@ public class Tarjeta {
     public void setCuentaVinculada(CuentaBancaria cuentaVinculada) {
         this.cuentaVinculada = cuentaVinculada;
     }
+    public static String generarNumeroTarjeta(){
+        String numeroTarjeta = "";
+
+        // Generar 16 dígitos y concatenarlos
+        for (int i = 0; i < 16; i++) {
+            int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
+            numeroTarjeta += digito; // Concatenar el dígito a la cadena
+        }
+
+        return numeroTarjeta;
+    }
+    public static String generarClaveTarjeta(){
+        String claveTarjeta = "";
+
+        // Generar 4 dígitos y concatenarlos
+        for (int i = 0; i < 4; i++) {
+            int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
+            claveTarjeta += digito; // Concatenar el dígito a la cadena
+        }
+
+        return claveTarjeta;
+    }
 }
