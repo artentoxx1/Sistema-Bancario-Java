@@ -14,7 +14,7 @@ public class Empleado {
 
     Scanner entrada=new Scanner(System.in);
 
-    public Empleado() {};
+    public Empleado(String nombreEmpleado, String apellidoEmpleado, String sexoEmpleado, String telefonoEmpleado, Integer edadEmpleado, String dniEmpleado, double salarioEmpleado, String puestoEmpleado, Sucursal sucursalEmpleado) {};
 
     public Empleado(String nombreEmpleado, String apellidoEmpleado, String sexoEmpleado, String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado, String puestoEmpleado,String sucursalEmpleado ) {
         this.nombreEmpleado = nombreEmpleado;
@@ -139,11 +139,14 @@ public class Empleado {
     public void eliminarEmpleado(Empleado [] empleados, String numDni) {
         boolean flag = false;
         for (int i = 0; i < empleados.length; i++) {
-            if (empleados[i].getDniEmpleado().equals(numDni)) {
-                for (int j=i;j<empleados.length-1;j++){
-                    empleados[j]=empleados[j+1];
+            if(empleados[i].getDniEmpleado().equals(numDni) || flag) {
+                if(empleados[i+1] == null){
+                    empleados[i] = null;
+                    i = empleados.length;
+                }else{
+                    empleados[i] = empleados[i+1];
                 }
-                flag=true;
+                flag = true;
             }
         }
         System.out.println("Empleado eliminado correctamente");

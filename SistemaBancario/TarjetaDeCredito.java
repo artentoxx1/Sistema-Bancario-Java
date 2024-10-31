@@ -1,17 +1,21 @@
 package Banco.SistemaBancario;
-
+import java.time.LocalDate;
+import java.time.LocalDate;
 public class TarjetaDeCredito extends Tarjeta{
     private String numeroTarjeta;
     private String claveTarjeta;
     private double limiteTarjeta;
     private double deudaActual;
     private double saldoDisponible;
-    private Fecha fechaPagoDeuda;
+    private LocalDate fechaPagoDeuda;
     private CuentaBancaria cuentaVinculada;
 
+    public TarjetaDeCredito(){
+        super();
+    }
     public TarjetaDeCredito(String numeroTarjeta,String claveTarjeta, double limiteTarjeta, double deudaActual,
-                            double saldoDisponible, Fecha fechaPagoDeuda, CuentaBancaria cuentaVinculada) {
-        super(numeroTarjeta,claveTarjeta, cuentaVinculada);
+                            double saldoDisponible, LocalDate fechaPagoDeuda, CuentaBancaria cuentaVinculada, boolean estadoTarjeta) {
+        super(numeroTarjeta,claveTarjeta, cuentaVinculada, estadoTarjeta);
         this.numeroTarjeta = numeroTarjeta;
         this.claveTarjeta = claveTarjeta;
         this.limiteTarjeta = limiteTarjeta;
