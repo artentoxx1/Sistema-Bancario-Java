@@ -344,14 +344,8 @@ public class PruebaSistemaBancario {
                                         System.out.println("\n");
                                         pantallaTarjetasCajero();
                                         opc3 = entrada.nextInt();
-                                        /*        System.out.println("1. Generar una tarjeta de crédito para un cliente");
-        System.out.println("2. Anular la tarjeta de crédito de un cliente");
-        System.out.println("3. Generar una tarjeta de débito para un cliente");
-        System.out.println("4. Anular la tarjeta de débito de un cliente");
-        System.out.println("5. Vincular la tarjeta de crédito a una cuenta bancaria");
-        System.out.println("6. Vincular la tarjeta de débito a una cuenta bancaria");
-        System.out.println("7. Mostrar la información de la tarjeta de un cliente");
-        System.out.println("8. Regresar");*/
+
+                                        String dni;
                                         switch(opc3) {
                                             case 1:
                                                 System.out.print("Ingrese el plazo para la cuenta ");
@@ -361,35 +355,33 @@ public class PruebaSistemaBancario {
                                                 for(int i=0;i< clientes.length;i++){
                                                     if(numC.equals(clientes[i].getCuentaCorriente().getNumeroCuenta())){
                                                         cajero.generarTarjetaCredito(clientes[i],plazo);
-
                                                     }
-
                                                 }
                                                 break;
                                             case 2:
-
+                                                System.out.println("Ingrese su numero de DNI: ");
+                                                dni= entrada.nextLine();
+                                                cajero.bloquearTarjetaCredito(clientes, dni);
                                                 break;
-                                            case 3:
-
-                                                break;
+                                            case 3: {
+                                                System.out.println("Ingrese su dni");
+                                                dni=entrada.nextLine();
+                                                Cliente nuevo= cajero.buscarCliente(clientes,dni);
+                                                cajero.generarTarjetaDebito(nuevo);
+                                            };break;
                                             case 4:
-
+                                                System.out.println("Ingrese su numero de DNI: ");
+                                                dni= entrada.nextLine();
+                                                cajero.bloquearTarjetaDebito(clientes, dni);
                                                 break;
                                             case 5:
 
                                                 break;
                                             case 6:
-
-                                                break;
-                                            case 7:
-
-                                                break;
-                                            case 8:
-
                                                 break;
                                             default:System.out.println("Digite una opcion valida");
                                         }
-                                    } while(opc3 != 8);
+                                    } while(opc3 != 6);
 
                                     break;
                                 case 4:
@@ -699,13 +691,11 @@ public class PruebaSistemaBancario {
     public static void pantallaTarjetasCajero(){
         System.out.println("TARJETAS");
         System.out.println("1. Generar una tarjeta de crédito para un cliente");
-        System.out.println("2. Anular la tarjeta de crédito de un cliente");
+        System.out.println("2. Bloquear la tarjeta de crédito de un cliente");
         System.out.println("3. Generar una tarjeta de débito para un cliente");
-        System.out.println("4. Anular la tarjeta de débito de un cliente");
-        System.out.println("5. Vincular la tarjeta de crédito a una cuenta bancaria");
-        System.out.println("6. Vincular la tarjeta de débito a una cuenta bancaria");
-        System.out.println("7. Mostrar la información de la tarjeta de un cliente");
-        System.out.println("8. Regresar");
+        System.out.println("4. Bloquear la tarjeta de débito de un cliente");
+        System.out.println("5. Mostrar la información de la tarjeta de un cliente");
+        System.out.println("6. Regresar");
         System.out.print("Opcion: ");
     }
 
