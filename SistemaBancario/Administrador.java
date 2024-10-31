@@ -2,7 +2,6 @@ package Banco.SistemaBancario;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
-
     public Administrador(String nombreEmpleado, String apellidoEmpleado, String sexoEmpleado, String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado, String puestoEmpleado,String sucursalEmpleado) {
         super(nombreEmpleado, apellidoEmpleado, sexoEmpleado, telefonoEmpleado,edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
@@ -13,7 +12,7 @@ public class Administrador extends Empleado {
         mostrarEmpleado(empleado);
     }
 
-    public void AñadirEmpleado(Empleado[] empleados){
+    public void AniadirEmpleado(Empleado[] empleados){
         System.out.println("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
         System.out.println("Ingrese el apellido del empleado: ");

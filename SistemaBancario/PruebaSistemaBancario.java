@@ -5,8 +5,15 @@ import java.util.Scanner;
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
+        Administrador admin= new Administrador("Andre",
+                "Salas","Masculino","923826161",
+                19,"71345893",8235.45,
+                "Administrador","BCP Av. Argentina");
+
         Cliente[] clientes;
         clientes = new Cliente[100];
+        Empleado[] empleados;
+        empleados = new Empleado[100];
         int opc, opc2, opc3;
 
         do{
@@ -62,9 +69,24 @@ public class PruebaSistemaBancario {
                                         System.out.println("\n");
                                         pantallaEmpleadosAdministrador();
                                         opc3 = entrada.nextInt();
-
+                                        String dni;
                                         switch(opc3) {
-
+                                            case 1:
+                                                admin.AniadirEmpleado(empleados);
+                                            case 2:
+                                                System.out.println("Ingrese el DNI del empleado: ");
+                                                dni=entrada.nextLine();
+                                                admin.actualizarEmpleado(empleados,dni);
+                                            case 3:
+                                                System.out.println("Ingrese el DNI del empleado: ");
+                                                dni=entrada.nextLine();
+                                                admin.eliminarEmpleado(empleados,dni);
+                                            case 4:
+                                                System.out.println("Ingrese el DNI del empleado: ");
+                                                dni=entrada.nextLine();
+                                                Empleado.buscarEmpleado(empleados,dni);
+                                            case 5: break;
+                                            default: System.out.println("Digite una opcion valida");
                                         }
                                     } while(opc3 != 5);
                                     break;
@@ -170,40 +192,43 @@ public class PruebaSistemaBancario {
         } while(opc != 3);
     }
 
-    public static boolean inicioDeSesionCajero(){    //Todos los empleados deberán especificar sus credenciales de inicio de sesion dentro del programa
-        String user = String.format("%10d",(long) (Math.random()*1_000_000_000));
-        String pass = String.format("%04d",(int) (Math.random()*1_000));
-        int conf,conf2;
-        String userIngresadoE="", passIngresadoE="";
+    public static boolean inicioDeSesionCajero() {
+        // Todos los empleados deberán especificar sus credenciales de inicio de sesión dentro del programa
+        String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
+        String passGenerada = String.format("%04d", (int) (Math.random() * 1_000)).trim();
+        String userIngresado, passIngresada;
+        int opcion, cambiarCredenciales;
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("Es nuevo usuario? (1= Sí, 2= No): ");
-        conf2 = sc.nextInt();
-        sc.nextLine();
-        if(conf2 == 1){
-            System.out.println("Usuario generado: "+ user);
-            System.out.println("Clave generada: "+ pass);
-            System.out.println("Desea cambiar sus credenciales?(Digite 1 para Sí y 2 para No): ");
-            conf=sc.nextInt();
-            sc.nextLine();
-            if(conf==1){
-                System.out.println("Escriba su nuevo usuario: ");
-                user=sc.nextLine();
-                System.out.println("Escriba su nueva contrasenia: ");
-                pass=sc.nextLine();
+
+        System.out.println("¿Es nuevo usuario? (1 = Sí, 2 = No): ");
+        opcion = sc.nextInt();
+        sc.nextLine(); // Consumir la nueva línea después del entero
+
+        if (opcion == 1) {
+            System.out.println("Usuario generado: " + userGenerado);
+            System.out.println("Clave generada: " + passGenerada);
+            System.out.println("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
+            cambiarCredenciales = sc.nextInt();
+            sc.nextLine(); // Consumir la nueva línea después del entero
+
+            if (cambiarCredenciales == 1) {
+                System.out.print("Escriba su nuevo usuario: ");
+                userGenerado = sc.nextLine();
+                System.out.print("Escriba su nueva contraseña: ");
+                passGenerada = sc.nextLine();
             }
-            System.out.println("\nComplete sus credenciales de inicio de sesión");
-            System.out.print("Ingrese su usuario: ");
-            userIngresadoE = sc.nextLine();
-            System.out.print("Ingrese su contraseña: ");
-            passIngresadoE = sc.nextLine();
-        } else if(conf2==2){
-            System.out.println("\nComplete sus credenciales de inicio de sesión");
-            System.out.print("Ingrese su usuario: ");
-            userIngresadoE = sc.nextLine();
-            System.out.print("Ingrese su contraseña: ");
-            passIngresadoE = sc.nextLine();
         }
-        return user.equals(userIngresadoE) && pass.equals(passIngresadoE);
+
+        // Proceso de inicio de sesión
+        System.out.println("\nComplete sus credenciales de inicio de sesión:");
+        System.out.print("Ingrese su usuario: ");
+        userIngresado = sc.nextLine();
+        System.out.print("Ingrese su contraseña: ");
+        passIngresada = sc.nextLine();
+
+        // Validar credenciales ingresadas con las generadas o cambiadas
+        return userGenerado.equals(userIngresado) && passGenerada.equals(passIngresada);
     }
 
     public static boolean inicioDeSesionAdministrador(){    //El administrador debe especificar sus credenciales de inicio de sesion dentro del programa
