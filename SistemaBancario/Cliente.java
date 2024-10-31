@@ -1,7 +1,5 @@
 package Banco.SistemaBancario;
 
-import static Banco.SistemaBancario.Tarjeta.*;
-import java.util.Scanner;
 public class Cliente {
     private String nombresCliente;
     private String apellidoPaternoCliente;
@@ -311,8 +309,8 @@ public class Cliente {
 
         if (puedeOtorgarTarjeta) {
 
-            String numeroTarjetaGenerado = generarNumeroTarjeta();
-            String claveTarjetaGenerada = generarClaveTarjeta();
+            String numeroTarjetaGenerado = Tarjeta.generarNumeroTarjeta();
+            String claveTarjetaGenerada = Tarjeta.generarClaveTarjeta();
 
             tarjetaDeCredito = new TarjetaDeCredito(
                     numeroTarjetaGenerado,
@@ -330,21 +328,6 @@ public class Cliente {
             System.out.println("Fecha de pago de la tarjeta: " + fechaDePago);
         }
     }
-    Scanner entrada = new Scanner(System.in);
-    public String generarNumeroTarjeta(){
-
-        System.out.print("Digite una serie de numeros para que se establezca su numero de Tarjeta");
-        String a;
-        a = entrada.nextLine();
-        return a;
-    }
-    public String generarClaveTarjeta(){
-
-        System.out.print("Digite una serie de numeros para que sea su clave de la tarjeta");
-        String a;
-        a = entrada.nextLine();
-        return a;
-    }
 
     public void sacarTarjetaDebito() {
         boolean puedeOtorgarTarjeta = true;
@@ -361,8 +344,8 @@ public class Cliente {
 
         if (puedeOtorgarTarjeta) {
             String numeroTarjetaGenerado ;
-            numeroTarjetaGenerado= generarNumeroTarjeta();
-            String claveTarjetaGenerada = generarClaveTarjeta();
+            numeroTarjetaGenerado= Tarjeta.generarNumeroTarjeta();
+            String claveTarjetaGenerada = Tarjeta.generarClaveTarjeta();
 
             tarjetaDeDebito = new TarjetaDeDebito(
                     numeroTarjetaGenerado,
