@@ -13,12 +13,12 @@ public class PruebaSistemaBancario {
         empleados = new Empleado[100];
         int opc, opc2, opc3;
         Cajero cajero= new Cajero(null,null,null,null,null,
-                null,0,"",null);
+                0,"",0.0,null,"",null,null);
         Fecha fecha = new Fecha();
 
 
         Administrador admin= new Administrador("Andre",
-                "Salas","Masculino","923826161",
+                "Salas","Echenique","Masculino","923826161",
                 19,"71345893",0.10,
                 "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
 
@@ -184,7 +184,7 @@ public class PruebaSistemaBancario {
                                                 int index = entrada.nextInt();
                                                 if (index < contadorCuentas && clientes[index] != null) {
                                                     System.out.println("Ingrese el nuevo nombre: ");
-                                                    clientes[index].setNombresCliente(entrada.next());
+                                                    clientes[index].setNombres(entrada.next());
                                                     System.out.println("Información modificada.");
                                                 } else {
                                                     System.out.println("Cliente no encontrado.");
@@ -375,7 +375,11 @@ public class PruebaSistemaBancario {
                                                 cajero.bloquearTarjetaDebito(clientes, dni);
                                                 break;
                                             case 5:
-
+                                                System.out.println("Ingrese su numero de DNI: ");
+                                                dni= entrada.nextLine();
+                                                System.out.println("Ingrese su clave de tarjeta: ");
+                                                String clave= entrada.nextLine();
+                                                cajero.mostrarInformacionTarjeta(clave,dni,clientes);
                                                 break;
                                             case 6:
                                                 break;
@@ -567,22 +571,26 @@ public class PruebaSistemaBancario {
         String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
         String passGenerada = String.format("%04d", (int) (Math.random() * 1_000)).trim();
         String userIngresado, passIngresada;
-        int opcion, cambiarCredenciales;
+        int opcion, cambiarCredenciales=0;
 
         Scanner sc = new Scanner(System.in);
-
         System.out.println("¿Es nuevo usuario? (1 = Sí, 2 = No): ");
         opcion = sc.nextInt();
         sc.nextLine(); // Consumir la nueva línea después del entero
-
+        Cajero cajero=new Cajero(null,null,null,null,
+                null,0,null,0,null,null,null,null);
+        
         if (opcion == 1) {
             System.out.println("Usuario generado: " + userGenerado);
             System.out.println("Clave generada: " + passGenerada);
-            System.out.println("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
-            cambiarCredenciales = sc.nextInt();
+            System.out.println("Ingrese DNI:");
+            String dni= sc.nextLine();
+            cajero.añadirCajero(userGenerado,passGenerada,dni);
+            System.out.print("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
+            cambiarCredenciales=sc.nextInt();
             sc.nextLine(); // Consumir la nueva línea después del entero
 
-            if (cambiarCredenciales == 1) {//andre estuvo aqui
+            if (cambiarCredenciales == 1) {
                 System.out.print("Escriba su nuevo usuario: ");
                 userGenerado = sc.nextLine();
                 System.out.print("Escriba su nueva contraseña: ");
