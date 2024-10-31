@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class Prestamo {
+public class Prestamo implements Operaciones{
     private double montoPrestamo;
     private double tasaInteres;
     private int plazoPrestamo;
@@ -176,17 +176,6 @@ public class Prestamo {
     // Metodo para generar el estado actual del prestamo
     public String estadoPrestamo() {
         return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
-    }
-
-    // Simulacion de pago anticipado
-    public void realizarPagoAnticipado(double cantidad) {
-        if (cantidad > saldoRestante) {
-            System.out.println("El pago anticipado excede el saldo restante del préstamo.");
-        } else {
-            saldoRestante -= cantidad;
-            pagosRealizados++;
-            System.out.println("Pago anticipado realizado: S/." + cantidad + ". Nuevo saldo restante: S/." + saldoRestante);
-        }
     }
 
     // Metodo para renegociar el plazo del prestamo

@@ -196,8 +196,7 @@ public class Cliente {
                 //Cuenta Ahorro
                 if (cuentaAhorros.numeroCuenta.equals(numeroCuenta)) {
                     if (cantidadDeposito > 0) {
-                        cuentaAhorros.saldoCuenta = cuentaAhorros.saldoCuenta + cantidadDeposito;
-                        System.out.println("Saldo añadido a la cuenta " + numeroCuenta);
+                        cuentaAhorros.depositar(cantidadDeposito);
                         System.out.println("Nuevo saldo: " + cuentaAhorros.saldoCuenta);
                     } else {
                         System.out.println("Cantidad a depositar inválida. Por favor coloque otra cantidad.");
@@ -210,8 +209,7 @@ public class Cliente {
                 //Cuenta Corriente
                 if (cuentaCorriente.numeroCuenta.equals(numeroCuenta)) {
                     if (cantidadDeposito > 0) {
-                        cuentaCorriente.saldoCuenta = cuentaCorriente.saldoCuenta + cantidadDeposito;
-                        System.out.println("Saldo añadido a la cuenta " + numeroCuenta);
+                        cuentaCorriente.depositar(cantidadDeposito);
                         System.out.println("Nuevo saldo: " + cuentaCorriente.saldoCuenta);
                     } else {
                         System.out.println("Cantidad insuficiente.");
@@ -231,130 +229,44 @@ public class Cliente {
                 //cuenta ahorro
                 if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
                     if (cuentaAhorros.saldoCuenta > 0 && cuentaAhorros.saldoCuenta >= cantidadRetiro) {
-                        cuentaAhorros.saldoCuenta -= cantidadRetiro;
-                        System.out.println("Cantidad a retirar de la cuenta: " + cantidadRetiro);
+                        cuentaAhorros.retirar(cantidadRetiro);
                         System.out.println("Saldo restante: " + cuentaAhorros.saldoCuenta);
                     } else {
                         System.out.println("Cantidad insuficiente dentro de la cuenta.");
                         System.out.println("Saldo disponible: " + cuentaAhorros.saldoCuenta);
                     }
                 } else {
-                    System.out.println("Error...");
+                    System.out.println("Error en la clave.");
                 }
                 break;
             case 2:
                 //cuenta corriente
                 if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
-                    if (cuentaCorriente.saldoCuenta > 0 && cuentaCorriente.saldoCuenta >= cantidadRetiro) {
-                        cuentaCorriente.saldoCuenta = cuentaCorriente.saldoCuenta - cantidadRetiro;
-                        System.out.println("Cantidad a retirar de la cuenta: " + cantidadRetiro);
+                    if (cantidadRetiro <= cuentaCorriente.saldoCuenta) {
+                        cuentaCorriente.retirar(cantidadRetiro);
+                        System.out.println("Cantidad a retirar: " + cantidadRetiro);
                         System.out.println("Saldo restante: " + cuentaCorriente.saldoCuenta);
                     } else {
-                        System.out.println("Cantidad insuficiente dentro de la tarjeta.");
-                        System.out.println("Saldo disponible: " + cuentaCorriente.saldoCuenta);
+                        double diferencia = cantidadRetiro - cuentaCorriente.saldoCuenta;
+                        double montoConComision = cuentaCorriente.cobrarComisionPorSobregiro(diferencia);
+
+                        if (cuentaCorriente.getLimiteSobregiro() >= montoConComision) {
+                            cuentaCorriente.retirar(cuentaCorriente.saldoCuenta); // Agota el saldo de la cuenta
+                            cuentaCorriente.permitirSobregiro(diferencia); // Utiliza el sobregiro
+                            System.out.println("Retiro exitoso usando sobregiro. Saldo restante: " + cuentaCorriente.saldoCuenta);
+                            System.out.println("Sobregiro restante: " + cuentaCorriente.getLimiteSobregiro());
+                        } else {
+                            System.out.println("Fondos insuficientes. Sobregiro no permitido.");
+                            System.out.println("Saldo disponible: " + cuentaCorriente.saldoCuenta);
+                            System.out.println("Límite de sobregiro disponible: " + cuentaCorriente.getLimiteSobregiro());
+                        }
                     }
                 } else {
-                    System.out.println("Error...");
+                    System.out.println("Error en la clave");
                 }
                 break;
             default:
                 System.out.println("Digite una opcion correcta.");
-        }
-    }
-
-    public void sacarTarjetaCredito(Fecha fechaActual) {
-        double liquidezMinimaRequerida = 5000.00;
-        double limiteCreditoInicial = 10000.00;
-        double deudaInicial = 0.0;
-        Fecha fechaDePago;
-        boolean puedeOtorgarTarjeta = true;
-        int dia = fechaActual.getDia();
-        int mes = fechaActual.getMes();
-        int anio = fechaActual.getAnio();
-        int[] diasEnMes = new int[12];
-        diasEnMes[0] = 31;
-        diasEnMes[1] = 28;
-        diasEnMes[2] = 31;
-        diasEnMes[3] = 30;
-        diasEnMes[4] = 31;
-        diasEnMes[5] = 30;
-        diasEnMes[6] = 31;
-        diasEnMes[7] = 31;
-        diasEnMes[8] = 30;
-        diasEnMes[9] = 31;
-        diasEnMes[10] = 30;
-        diasEnMes[11] = 31;
-        if ((fechaActual.getAnio() % 4 == 0 && fechaActual.getAnio() % 100 != 0) || (fechaActual.getAnio() % 400 == 0)) {
-            diasEnMes[1] = 29;
-        }
-        dia += 60;
-        while (dia > diasEnMes[mes - 1]) {
-            dia -= diasEnMes[mes - 1];
-            mes++;
-            if (mes > 12) {
-                mes = 1;
-                anio++;
-            }
-        }
-        fechaDePago = new Fecha(dia, mes, anio);
-        if (tarjetaDeCredito != null) {
-            System.out.println("Error: El cliente ya tiene una tarjeta de crédito activa.");
-            puedeOtorgarTarjeta = false;
-        }
-
-        if (liquidezFinanciera < liquidezMinimaRequerida) {
-            System.out.println("Error: No se puede otorgar una tarjeta de crédito. La liquidez financiera del cliente es insuficiente.");
-            puedeOtorgarTarjeta = false;
-        }
-
-        if (puedeOtorgarTarjeta) {
-
-            String numeroTarjetaGenerado = Tarjeta.generarNumeroTarjeta();
-            String claveTarjetaGenerada = Tarjeta.generarClaveTarjeta();
-
-            tarjetaDeCredito = new TarjetaDeCredito(
-                    numeroTarjetaGenerado,
-                    claveTarjetaGenerada,
-                    limiteCreditoInicial,
-                    deudaInicial,
-                    limiteCreditoInicial,
-                    fechaDePago,
-                    cuentaCorriente
-            );
-
-            System.out.println("Tarjeta de crédito otorgada exitosamente al cliente.");
-            System.out.println("Número de tarjeta: " + numeroTarjetaGenerado);
-            System.out.println("Límite de crédito inicial: " + limiteCreditoInicial);
-            System.out.println("Fecha de pago de la tarjeta: " + fechaDePago);
-        }
-    }
-
-    public void sacarTarjetaDebito() {
-        boolean puedeOtorgarTarjeta = true;
-        if (tarjetaDeDebito != null) {
-            System.out.println("Error: El cliente ya tiene una tarjeta de debito.");
-            puedeOtorgarTarjeta = false;
-        }
-
-        if (cuentaAhorros == null) {
-            System.out.println("Error: No se puede otorgar una tarjeta de debito. El cliente no tiene una cuenta " +
-                    "de ahorros disponible.");
-            puedeOtorgarTarjeta = false;
-        }
-
-        if (puedeOtorgarTarjeta) {
-            String numeroTarjetaGenerado ;
-            numeroTarjetaGenerado= Tarjeta.generarNumeroTarjeta();
-            String claveTarjetaGenerada = Tarjeta.generarClaveTarjeta();
-
-            tarjetaDeDebito = new TarjetaDeDebito(
-                    numeroTarjetaGenerado,
-                    claveTarjetaGenerada,
-                    cuentaAhorros
-            );
-
-            System.out.println("Tarjeta de crédito otorgada exitosamente al cliente.");
-            System.out.println("Número de tarjeta: " + numeroTarjetaGenerado);
         }
     }
 }

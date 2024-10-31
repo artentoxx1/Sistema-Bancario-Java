@@ -2,14 +2,17 @@ package Banco.SistemaBancario;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
 public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
     private int plazo;
     private double tasaInteresPlazoFijo;
     private LocalDate fechaInicio;
     private int penalizacion;
-    public CuentaDepositoaPlazoFijo(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
-                                    String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion) {
+    public CuentaDepositoaPlazoFijo(){
+        super();
+    }
+    public CuentaDepositoaPlazoFijo(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
+                                    String tipoCuenta, int plazo, double tasaInteresPlazoFijo, LocalDate fechaInicio, int penalizacion) {
         super(numeroCuenta,saldoCuenta,historialCuenta,tipoCuenta);
         this.plazo = plazo;
         this.tasaInteresPlazoFijo = tasaInteresPlazoFijo;

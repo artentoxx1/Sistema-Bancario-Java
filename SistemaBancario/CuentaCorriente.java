@@ -3,8 +3,11 @@ import java.util.Scanner;
 public class CuentaCorriente extends CuentaBancaria{
     private double limiteSobregiro;
     private double comisionPorSobregiro;
-    public CuentaCorriente(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
-                           String tipoCuenta, double limiteSobregiro, double comisionPorSobregiro) {
+    public CuentaCorriente(){
+        super();
+    }
+    public CuentaCorriente(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
+                           String tipoCuenta, Object limiteSobregiro, Object comisionPorSobregiro) {
         super(numeroCuenta, saldoCuenta, historialCuenta, tipoCuenta);
         this.limiteSobregiro = limiteSobregiro;
         this.comisionPorSobregiro = comisionPorSobregiro;
@@ -51,4 +54,5 @@ public class CuentaCorriente extends CuentaBancaria{
         System.out.println("Su sobregiro disponible es:"+getLimiteSobregiro());
 
     }
+
 }

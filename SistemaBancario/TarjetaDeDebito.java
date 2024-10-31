@@ -1,11 +1,15 @@
 package Banco.SistemaBancario;
 
 public class TarjetaDeDebito extends Tarjeta {
-    public TarjetaDeDebito(String numeroTarjetaGenerado, String claveTarjetaGenerada,CuentaAhorro CuentaAhorro) {
-        super(numeroTarjetaGenerado, claveTarjetaGenerada, CuentaAhorro); {
+    public TarjetaDeDebito() {
+        super();
+    }
+    public TarjetaDeDebito(String numeroTarjetaGenerado, String claveTarjetaGenerada,CuentaAhorro CuentaAhorro, boolean estadoTarjeta) {
+        super(numeroTarjetaGenerado, claveTarjetaGenerada, CuentaAhorro, estadoTarjeta); {
             this.numeroTarjeta = numeroTarjetaGenerado;
             this.claveTarjeta = claveTarjetaGenerada;
             this.cuentaVinculada= CuentaAhorro;
+
         }
         this.cuentaVinculada= CuentaAhorro;
     }

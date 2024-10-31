@@ -4,17 +4,30 @@ import java.util.Scanner;
 
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
+        CuentaBancaria[] cuentas = new CuentaBancaria[100];
+        int contadorCuentas = 0;
         Scanner entrada = new Scanner(System.in);
-        Administrador admin= new Administrador("Andre",
-                "Salas","Masculino","923826161",
-                19,"71345893",8235.45,
-                "Administrador","BCP Av. Argentina");
-
         Cliente[] clientes;
         clientes = new Cliente[100];
         Empleado[] empleados;
         empleados = new Empleado[100];
         int opc, opc2, opc3;
+        Cajero cajero= new Cajero(null,null,null,null,null,
+                null,0,"",null);
+        Fecha fecha = new Fecha();
+
+
+        Administrador admin= new Administrador("Andre",
+                "Salas","Masculino","923826161",
+                19,"71345893",0.10,
+                "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
+
+        Sucursal sucursales[];
+                sucursales= new Sucursal[10];
+        Sucursal sucursal= new Sucursal("Av. Óscar R. Benavides 5483, Callao 07006",
+                "14343","Lima" ,100, empleados);
+        sucursales[0]= sucursal;
+
 
         do{
             System.out.println("\t\t\t¡BIENVENIDO!\t\t\t");
@@ -58,7 +71,8 @@ public class PruebaSistemaBancario {
                                             case 6:
                                                 Administrador.mostrarCargaFamiliarClientes(clientes);
                                                 break;
-                                            case 7:break;
+                                            case 7:
+                                                break;
                                             default:
                                                 System.out.println("Digite una opcion valida");
                                         }
@@ -95,9 +109,34 @@ public class PruebaSistemaBancario {
                                         System.out.println("\n");
                                         pantallaSucursales();
                                         opc3 = entrada.nextInt();
-
+                                        String cod;
                                         switch(opc3) {
-
+                                            //Opciones de sucursal
+                                            case 1:
+                                                admin.agregarSucursal(sucursales);
+                                                break;
+                                            case 2:
+                                                System.out.println("Ingrese el codigo de sucursal: ");
+                                                cod =entrada.nextLine();
+                                                Administrador.eliminarSucursal(sucursales,cod);
+                                                break;
+                                            case 3:
+                                                System.out.println("Ingrese el codigo de sucursal: ");
+                                                 cod =entrada.nextLine();
+                                                admin.modificarDatosSucursal(sucursales,cod);
+                                                break;
+                                            case 4:
+                                                admin.AniadirEmpleado(empleados);
+                                                break;
+                                            case 5:
+                                                System.out.println("Ingrese el DNI del empleado: ");
+                                                String dni =entrada.nextLine();
+                                                admin.eliminarEmpleado(empleados,dni);
+                                                break;
+                                            case 6:
+                                                break;
+                                            default:
+                                                System.out.println("Digite una opcion valida");
                                         }
                                     } while(opc3 != 6);
 
@@ -128,20 +167,174 @@ public class PruebaSistemaBancario {
                                         pantallaClientesCajero();
                                         opc3 = entrada.nextInt();
 
-                                        switch(opc3) {
+                                        switch (opc3) {
+                                            case 1: // Añadir cliente
+                                                System.out.println("Ingrese el nombre del cliente: ");
+                                                String nombre = entrada.next();
+                                                System.out.println("Ingrese el apellido del cliente: ");
+                                                String apellido = entrada.next();
+                                                clientes[contadorCuentas] = new Cliente(nombre, apellido,"","","","","","","","",null,null,null,
+                                                        null,null,0);
+                                                System.out.println("Cliente añadido exitosamente.");
+                                                contadorCuentas++;
+                                                break;
 
+                                            case 2: // Modificar información del cliente
+                                                System.out.println("Ingrese el índice del cliente a modificar: ");
+                                                int index = entrada.nextInt();
+                                                if (index < contadorCuentas && clientes[index] != null) {
+                                                    System.out.println("Ingrese el nuevo nombre: ");
+                                                    clientes[index].setNombresCliente(entrada.next());
+                                                    System.out.println("Información modificada.");
+                                                } else {
+                                                    System.out.println("Cliente no encontrado.");
+                                                }
+                                                break;
+
+                                            case 3: // Eliminar cliente
+                                                System.out.println("Ingrese el índice del cliente a eliminar: ");
+                                                int idx = entrada.nextInt();
+                                                if (idx < contadorCuentas && clientes[idx] != null) {
+                                                    clientes[idx] = null;
+                                                    System.out.println("Cliente eliminado.");
+                                                } else {
+                                                    System.out.println("Cliente no encontrado.");
+                                                }
+                                                break;
+
+                                            case 4: // Mostrar información del cliente
+                                                System.out.println("Ingrese el índice del cliente a mostrar: ");
+                                                int idMostrar = entrada.nextInt();
+                                                if (idMostrar < contadorCuentas && clientes[idMostrar] != null) {
+                                                    System.out.println(clientes[idMostrar]);
+                                                } else {
+                                                    System.out.println("Cliente no encontrado.");
+                                                }
+                                                break;
+
+                                            case 5: // Añadir saldo
+                                                System.out.println("Ingrese el monto a añadir: ");
+                                                double saldo = entrada.nextDouble();
+                                                // Aquí se puede vincular con el metodo de CuentaBancaria correspondiente.
+                                                System.out.println("Saldo añadido.");
+                                                break;
+
+                                            case 6: // Retirar saldo
+                                                System.out.println("Ingrese el monto a retirar: ");
+                                                double retiro = entrada.nextDouble();
+                                                // Aquí se puede vincular con el metodo de CuentaBancaria correspondiente.
+                                                System.out.println("Saldo retirado.");
+                                                break;
+
+                                            case 7: // Regresar
+                                                break;
+
+                                            default:
+                                                System.out.println("Opción inválida.");
                                         }
-                                    } while(opc3 != 7);
-
+                                    } while (opc3 != 7);
                                     break;
                                 case 2:
                                     do{
                                         System.out.println("\n");
                                         pantallaCuentasCajero();
                                         opc3 = entrada.nextInt();
-
+                                        String dni;
                                         switch(opc3) {
+                                            //OPCIONES CUENTAS CAJERO
+                                            case 1:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.agregarCuentaCorriente(clientes,dni);
+                                                break;
+                                            case 2:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.eliminaCuentaCorriente(clientes,dni);
+                                                break;
+                                            case 3:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.agregarCuentaAhorro(clientes,dni);
+                                                break;
+                                            case 4:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.eliminaCuentaAhorro(clientes,dni);
+                                                break;
+                                            case 5:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.agregarCuentaPlazoFijo(clientes,dni);
+                                                break;
+                                            case 6:
+                                                System.out.print("Ingrese el DNI del cliente: ");
+                                                dni = entrada.next();
+                                                cajero.eliminaCuentaPlazoFijo(clientes,dni);
+                                                break;
+                                            case 7:
+                                                //int tipoCuenta, double cantidadDeposito, String numeroCuenta
+                                                System.out.println("Ingrese el tipo de cuenta:");
+                                                System.out.println("1. Cuenta Ahorro");
+                                                System.out.println("2. Cuenta Corriente");
+                                                System.out.print("3. Cuenta Deposito Plazo Fijo");
+                                                int tipoC = entrada.nextInt();
+                                                System.out.print("Ingrese el monto que quiere depositar: ");
+                                                double monto = entrada.nextDouble();
+                                                System.out.print("Ingrese el numero de cuenta: ");
+                                                String numC = entrada.nextLine();
+                                                clientes[0].depositarCuenta(tipoC,monto,numC);
+                                                break;
+                                            case 8:
+                                                System.out.println("Ingrese el tipo de cuenta:");
+                                                System.out.println("1. Cuenta Ahorro");
+                                                System.out.println("2. Cuenta Corriente");
+                                                System.out.print("3. Cuenta Deposito Plazo Fijo");
+                                                tipoC = entrada.nextInt();
+                                                System.out.print("Ingrese el monto que quiere depositar: ");
+                                                monto = entrada.nextDouble();
+                                                System.out.print("Ingrese su contraseña de cuenta: ");
+                                                numC = entrada.nextLine();
+                                                clientes[0].retirarCuenta(tipoC,monto,numC);
+                                                break;
+                                            case 9:
+                                                System.out.println("Ingrese el tipo de cuenta:");
+                                                System.out.println("1. Cuenta Ahorro");
+                                                System.out.println("2. Cuenta Corriente");
+                                                System.out.print("3. Cuenta Deposito Plazo Fijo");
+                                                tipoC = entrada.nextInt();
+                                                System.out.print("Ingrese el numero de cuenta");
+                                                numC = entrada.nextLine();
 
+                                                if(tipoC==1){
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaAhorros().equals(numC)){
+                                                            clientes[i].getCuentaAhorros().getHistorialCuenta();
+                                                        }
+
+                                                    }
+                                                }
+                                                else if(tipoC==2){
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaCorriente().equals(numC)){
+                                                            clientes[i].getCuentaCorriente().getHistorialCuenta();
+                                                        }
+
+                                                    }
+
+                                                }
+                                                else{
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaDepositoPlazoFijo().equals(numC)){
+                                                            clientes[i].getCuentaDepositoPlazoFijo().getHistorialCuenta();
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case 10:
+                                                break;
+                                            default:
+                                                System.out.println("Digite una opcion valida");
                                         }
                                     } while(opc3 != 10);
 
@@ -151,23 +344,208 @@ public class PruebaSistemaBancario {
                                         System.out.println("\n");
                                         pantallaTarjetasCajero();
                                         opc3 = entrada.nextInt();
-
+                                        /*        System.out.println("1. Generar una tarjeta de crédito para un cliente");
+        System.out.println("2. Anular la tarjeta de crédito de un cliente");
+        System.out.println("3. Generar una tarjeta de débito para un cliente");
+        System.out.println("4. Anular la tarjeta de débito de un cliente");
+        System.out.println("5. Vincular la tarjeta de crédito a una cuenta bancaria");
+        System.out.println("6. Vincular la tarjeta de débito a una cuenta bancaria");
+        System.out.println("7. Mostrar la información de la tarjeta de un cliente");
+        System.out.println("8. Regresar");*/
                                         switch(opc3) {
+                                            case 1:
+                                                System.out.print("Ingrese el plazo para la cuenta ");
+                                                int plazo= entrada.nextInt();
+                                                System.out.print("Ingrese el numero de cuenta");
+                                                String numC = entrada.nextLine();
+                                                for(int i=0;i< clientes.length;i++){
+                                                    if(numC.equals(clientes[i].getCuentaCorriente().getNumeroCuenta())){
+                                                        cajero.generarTarjetaCredito(clientes[i],plazo);
 
+                                                    }
+
+                                                }
+                                                break;
+                                            case 2:
+
+                                                break;
+                                            case 3:
+
+                                                break;
+                                            case 4:
+
+                                                break;
+                                            case 5:
+
+                                                break;
+                                            case 6:
+
+                                                break;
+                                            case 7:
+
+                                                break;
+                                            case 8:
+
+                                                break;
+                                            default:System.out.println("Digite una opcion valida");
                                         }
                                     } while(opc3 != 8);
 
                                     break;
                                 case 4:
-                                    do{
+                                    CuentaBancaria cuentaVinculada = null;
+                                    System.out.print("Ingrese el número de cuenta vinculada: ");
+                                    String numeroCuenta = entrada.nextLine();
+                                    for (int i = 0; i < contadorCuentas; i++) {
+                                        if (cuentas[i].getNumeroCuenta().equals(numeroCuenta)) {
+                                            cuentaVinculada = cuentas[i];
+                                            break;
+                                        }
+                                    }
+
+                                    if (cuentaVinculada == null) {
+                                        System.out.println("La cuenta vinculada no existe.");
+                                        return;
+                                    }
+
+                                    Prestamo prestamo = null;
+
+                                    do {
                                         System.out.println("\n");
                                         pantallaOperaciones();
                                         opc3 = entrada.nextInt();
 
-                                        switch(opc3) {
+                                        switch (opc3) {
+                                            case 1: // Realizar un préstamo
+                                                if (prestamo == null) {
+                                                    System.out.print("Ingrese el monto del préstamo: ");
+                                                    double montoPrestamo = entrada.nextDouble();
 
+                                                    System.out.print("Ingrese la tasa de interés anual (en porcentaje): ");
+                                                    double tasaInteres = entrada.nextDouble();
+
+                                                    System.out.print("Ingrese el plazo del préstamo en meses: ");
+                                                    int plazoPrestamo = entrada.nextInt();
+
+                                                    System.out.print("Ingrese el periodo de gracia en meses: ");
+                                                    int periodoGracia = entrada.nextInt();
+
+                                                    System.out.print("¿Desea capitalizar intereses durante el periodo de gracia? (true/false): ");
+                                                    boolean capitalizarIntereses = entrada.nextBoolean();
+
+                                                    // Crear instancia de Prestamo
+                                                    prestamo = new Prestamo(montoPrestamo, tasaInteres, plazoPrestamo, cuentaVinculada, periodoGracia, capitalizarIntereses);
+                                                    System.out.println("Préstamo configurado exitosamente.");
+                                                    prestamo.calcularCuotaMensual();
+                                                } else {
+                                                    System.out.println("Ya existe un préstamo asociado a esta cuenta.");
+                                                }
+                                                break;
+
+                                            case 2: // Realizar el pago de un préstamo
+                                                if (prestamo != null) {
+                                                    System.out.print("Ingrese el monto a pagar: ");
+                                                    double montoPago = entrada.nextDouble();
+                                                    System.out.print("Ingrese el monto adicional al pago regular (opcional, ingrese 0 si no aplica): ");
+                                                    double pagoAdicional = entrada.nextDouble();
+                                                    prestamo.actualizarCuentaPrestamo(cuentaVinculada, montoPago + pagoAdicional);
+                                                } else {
+                                                    System.out.println("No hay préstamo asociado para realizar el pago.");
+                                                }
+                                                break;
+
+                                            case 3: // Verificar el estado del préstamo
+                                                if (prestamo != null) {
+                                                    System.out.println(prestamo.estadoPrestamo());
+                                                } else {
+                                                    System.out.println("No hay préstamo asociado para verificar el estado.");
+                                                }
+                                                break;
+
+                                            case 4: // Renegociar plazo de un préstamo
+                                                if (prestamo != null) {
+                                                    System.out.print("Ingrese el nuevo plazo en meses: ");
+                                                    int nuevoPlazo = entrada.nextInt();
+                                                    prestamo.renegociarPlazo(nuevoPlazo);
+                                                } else {
+                                                    System.out.println("No hay préstamo asociado para renegociar.");
+                                                }
+                                                break;
+
+                                            case 5: // Mostrar detalles del préstamo
+                                                if (prestamo != null) {
+                                                    prestamo.mostrarDetalles();
+                                                } else {
+                                                    System.out.println("No hay préstamo asociado para mostrar detalles.");
+                                                }
+                                                break;
+
+                                            case 6: // Realizar una transacción
+                                                System.out.print("Ingrese el tipo de transacción (deposito/retiro/transferencia): ");
+                                                String tipoTransaccion = entrada.next();
+                                                System.out.print("Ingrese el monto de la transacción: ");
+                                                double montoTransaccion = entrada.nextDouble();
+
+                                                Transaccion transaccion = null;
+
+                                                if (tipoTransaccion.equalsIgnoreCase("deposito")) {
+                                                    transaccion = new Transaccion("Deposito", montoTransaccion, fecha, null);
+                                                    transaccion.ejecutarTransaccion(cuentaVinculada);
+                                                } else if (tipoTransaccion.equalsIgnoreCase("retiro")) {
+                                                    transaccion = new Transaccion("Retiro", montoTransaccion, fecha, null);
+                                                    transaccion.ejecutarTransaccion(cuentaVinculada);
+                                                } else if (tipoTransaccion.equalsIgnoreCase("transferencia")) {
+                                                    // Solicitar la cuenta de destino para la transferencia
+                                                    System.out.print("Ingrese el número de cuenta de destino: ");
+                                                    String numeroCuentaDestino = entrada.next();
+
+                                                    // Buscar la cuenta de destino en el arreglo de cuentas
+                                                    CuentaBancaria cuentaDestino = null;
+                                                    for (int i = 0; i < contadorCuentas; i++) {
+                                                        if (cuentas[i].getNumeroCuenta().equals(numeroCuentaDestino)) {
+                                                            cuentaDestino = cuentas[i];
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (cuentaDestino != null) {
+                                                        transaccion = new Transaccion("Transferencia", montoTransaccion, fecha, cuentaDestino);
+                                                        transaccion.ejecutarTransaccion(cuentaVinculada);
+                                                    } else {
+                                                        System.out.println("La cuenta de destino no existe.");
+                                                    }
+                                                } else {
+                                                    System.out.println("Tipo de transacción no válido.");
+                                                }
+
+                                                break;
+
+                                            case 7: // Mostrar detalles de la transacción más reciente
+                                                System.out.println("Detalle de la transacción más reciente:");
+                                                if (cuentaVinculada.getHistorialCuenta() != null && cuentaVinculada.getHistorialCuenta().length > 0) {
+                                                    int indiceReciente = cuentaVinculada.getHistorialCuenta().length - 1; // Obtener el índice de la transacción más reciente
+                                                    if (indiceReciente >= 0) {
+                                                        cuentaVinculada.getHistorialCuenta()[indiceReciente].mostrarDetalles();
+                                                    } else {
+                                                        System.out.println("No hay transacciones registradas.");
+                                                    }
+                                                } else {
+                                                    System.out.println("No hay transacciones registradas.");
+                                                }
+                                                break;
+
+                                            case 8: // Revisar el historial de la cuenta
+                                                System.out.println("Historial de cuenta:");
+                                                cuentaVinculada.mostrarHistorial();
+                                                break;
+
+                                            case 9: // Salir
+                                                break;
+
+                                            default:
+                                                System.out.println("Opción no válida. Intente nuevamente.");
                                         }
-                                    } while(opc3 != 4);
+                                    } while (opc3 != 9);
 
                                     break;
                                 case 5:
@@ -212,7 +590,7 @@ public class PruebaSistemaBancario {
             cambiarCredenciales = sc.nextInt();
             sc.nextLine(); // Consumir la nueva línea después del entero
 
-            if (cambiarCredenciales == 1) {
+            if (cambiarCredenciales == 1) {//andre estuvo aqui
                 System.out.print("Escriba su nuevo usuario: ");
                 userGenerado = sc.nextLine();
                 System.out.print("Escriba su nueva contraseña: ");
@@ -280,9 +658,10 @@ public class PruebaSistemaBancario {
         System.out.println("7. Regresar");
         System.out.print("Opción: ");
     }
+
     public static void pantallaClientesCajero(){
         System.out.println("CLIENTES");
-        System.out.println("1. Añadir un nuevo cliente");
+        System.out.println("1. Añadir un nuevo cliente"); //
         System.out.println("2. Modificar la información de un cliente");
         System.out.println("3. Eliminar cliente");
         System.out.println("4. Mostrar la información de un cliente");
@@ -344,9 +723,14 @@ public class PruebaSistemaBancario {
     public static void pantallaOperaciones(){
         System.out.println("OPERACIONES");
         System.out.println("1. Realizar un préstamo");
-        System.out.println("2. Realizar una transacción");
-        System.out.println("3. Revisar el historial de cuenta");
-        System.out.println("4. Regresar");
+        System.out.println("2. Realizar el pago de un préstamo");
+        System.out.println("3. Verificar el estado de un préstamo");
+        System.out.println("4. Renegociar plazo de un préstamo");
+        System.out.println("5. Mostrar detalles de un préstamo");
+        System.out.println("6. Realizar una transacción");
+        System.out.println("7. Mostrar detalles de una transacción");
+        System.out.println("8. Revisar el historial de una cuenta");
+        System.out.println("9. Regresar");
         System.out.print("Opcion: ");
     }
 }

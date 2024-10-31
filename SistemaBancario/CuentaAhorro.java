@@ -3,8 +3,11 @@ package Banco.SistemaBancario;
 public class CuentaAhorro extends CuentaBancaria {
     private double tasaInteres;
     private int limiteRetiros;
-    public CuentaAhorro(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
-                        String tipoCuenta,double tasaInteres,int limiteRetiros) {
+    public CuentaAhorro(){
+        super();
+    }
+    public CuentaAhorro(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
+                        String tipoCuenta, Object tasaInteres, Object limiteRetiros) {
         super(numeroCuenta,saldoCuenta,historialCuenta,tipoCuenta);
         this.tasaInteres = tasaInteres;
         this.limiteRetiros = limiteRetiros;

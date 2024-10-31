@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class Transaccion {
+public class Transaccion implements Operaciones{
     private String tipoTransaccion;
     private double cantidadTransaccion;
     private Fecha fechaTransaccion;
@@ -60,7 +60,7 @@ public class Transaccion {
     }
 
     // Mostrar los detalles de la transacción
-    public void mostrarDetallesTransaccion() {
+    public void mostrarDetalles() {
         System.out.println("Tipo de transacción: " + tipoTransaccion);
         System.out.println("Cantidad: " + cantidadTransaccion);
         System.out.println("Fecha: " + fechaTransaccion.toString());

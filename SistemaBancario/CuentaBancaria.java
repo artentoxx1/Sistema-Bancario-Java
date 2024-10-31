@@ -5,7 +5,11 @@ public class CuentaBancaria {
     protected double saldoCuenta;
     protected Transaccion[] historialCuenta;
     protected String tipoCuenta;
+    private int indiceTransaccion = 0;
 
+    public CuentaBancaria() {
+
+    }
     public CuentaBancaria(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
                           String tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
@@ -38,28 +42,49 @@ public class CuentaBancaria {
         this.tipoCuenta = tipoCuenta;
     }
     Scanner sc = new Scanner(System.in);
-    public void depositar(double monto){
-        saldoCuenta=saldoCuenta+monto;
-        setSaldoCuenta(saldoCuenta);
-        System.out.println("Depositado exitoso");
+    private void registrarTransaccion(Transaccion transaccion) {
+        if (indiceTransaccion >= historialCuenta.length) {
+            // Duplicar el tamaño del arreglo si se llena
+            Transaccion[] nuevoHistorial = new Transaccion[historialCuenta.length * 2];
+            System.arraycopy(historialCuenta, 0, nuevoHistorial, 0, historialCuenta.length);
+            historialCuenta = nuevoHistorial;
+        }
+        historialCuenta[indiceTransaccion] = transaccion;
+        indiceTransaccion++;
     }
-    public void retirar(double monto){
-        saldoCuenta=saldoCuenta-monto;
-        setSaldoCuenta(saldoCuenta);
-        System.out.println("Retiro exitoso");
 
+    public void depositar(double monto) {
+        saldoCuenta += monto;
+        setSaldoCuenta(saldoCuenta);
+        Transaccion transaccion = new Transaccion("Depósito", monto, new Fecha(), null);
+        registrarTransaccion(transaccion);
+        System.out.println("Depósito exitoso");
     }
-    public Transaccion[] obtenerHistorial(){
 
-        return historialCuenta;
-    }
-    public void mostrarHistorial(){
-        for(int i=0;i<historialCuenta.length;i++){
-            System.out.println(historialCuenta[i]);
+    public void retirar(double monto) {
+        if (saldoCuenta >= monto) {
+            saldoCuenta -= monto;
+            setSaldoCuenta(saldoCuenta);
+            Transaccion transaccion = new Transaccion("Retiro", monto, new Fecha(), null);
+            registrarTransaccion(transaccion);
+            System.out.println("Retiro exitoso");
+        } else {
+            System.out.println("Fondos insuficientes.");
         }
     }
-    public void mostrarSaldo(){
-        System.out.println("Su saldo de cuenta es: "+ getSaldoCuenta());
 
+    public void mostrarSaldo(){
+        System.out.println("El saldo de la cuenta es S/. " + saldoCuenta);
+    }
+
+    // Mostrar el historial de transacciones usando el metodo de detalle de la clase Transaccion
+    public void mostrarHistorial() {
+        if (indiceTransaccion == 0) {
+            System.out.println("No hay transacciones en el historial.");
+        } else {
+            for (int i = 0; i < indiceTransaccion; i++) {
+                historialCuenta[i].mostrarDetalles();
+            }
+        }
     }
 }
