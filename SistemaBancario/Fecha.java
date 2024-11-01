@@ -26,7 +26,6 @@ public class Fecha {
         return obtenerFechaActual("dd-MM-yyyy HH:mm:ss"); // Formato por defecto
     }
 
-    @Override
     public String toString() {
         return obtenerFechaActual(); // Por defecto, retorna el formato estándar
     }
