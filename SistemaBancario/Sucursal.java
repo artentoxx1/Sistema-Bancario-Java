@@ -47,4 +47,5 @@ public class Sucursal{
     public void setCiudad(String ciudad){
         this.ciudadSurcursal = ciudad;
     }
+
 }

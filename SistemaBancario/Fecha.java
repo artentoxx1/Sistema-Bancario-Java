@@ -1,37 +1,26 @@
 package Banco.SistemaBancario;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Fecha {
-    private int dia;
-    private int mes;
-    private int anio;
-    public Fecha() {
-        dia=0;
-        mes=0;
-        anio=0;
+    // Obtener la fecha y hora actuales
+    public static LocalDateTime obtenerFechaHoraActual() {
+        return LocalDateTime.now();
     }
-    public Fecha(int dia, int mes, int anio) {
-        this.dia = dia;
-        this.mes = mes;
-        this.anio = anio;
+
+    // Obtener la fecha actual como String en un formato específico
+    public static String obtenerFechaActual(String formato) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+        return obtenerFechaHoraActual().format(formatter);
     }
-    public int getDia() {
-        return dia;
+
+    // Ejemplo de uso: Obtener la fecha en formato predeterminado
+    public static String obtenerFechaActual() {
+        return obtenerFechaActual("dd-MM-yyyy HH:mm:ss"); // Formato por defecto
     }
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-    public int getMes() {
-        return mes;
-    }
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-    public int getAnio() {
-        return anio;
-    }
-    public void setAnio(int anio) {this.anio = anio;}
 
     public String toString() {
-        return dia+"/"+mes+"/"+anio;
+        return obtenerFechaActual(); // Por defecto, retorna el formato estándar
     }
 }

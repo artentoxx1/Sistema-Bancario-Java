@@ -2,8 +2,11 @@ package Banco.SistemaBancario;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
-    public Administrador(String nombreEmpleado, String apellidoEmpleado, String sexoEmpleado, String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado, String puestoEmpleado,String sucursalEmpleado) {
-        super(nombreEmpleado, apellidoEmpleado, sexoEmpleado, telefonoEmpleado,edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+    public Administrador(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado,
+                         String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
+                         String puestoEmpleado,String sucursalEmpleado) {
+        super(nombreEmpleado, apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado, telefonoEmpleado,
+                edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
 
     Scanner entrada = new Scanner(System.in);
@@ -15,8 +18,10 @@ public class Administrador extends Empleado {
     public void AniadirEmpleado(Empleado[] empleados){
         System.out.println("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el apellido del empleado: ");
-        String apellidoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido paterno del empleado: ");
+        String apellidoPaternoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido materno del empleado: ");
+        String apellidoMaternoEmpleado = entrada.nextLine();
         System.out.println("Ingrese el sexo del empleado: ");
         String sexoEmpleado = entrada.nextLine();
         System.out.println("Ingrese el telefono del empleado: ");
@@ -29,17 +34,19 @@ public class Administrador extends Empleado {
         double salarioEmpleado = entrada.nextDouble();
         System.out.println("Ingrese el puesto del empleado: ");
         String puestoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese la sucursal del empleado:");
+        System.out.println("Ingrese el codigo de la sucursal del empleado:");
         String sucursalEmpleado = entrada.nextLine();
 
-        Empleado nuevoEmpleado = new Empleado(nombreEmpleado, apellidoEmpleado, sexoEmpleado, telefonoEmpleado, edadEmpleado, dniEmpleado, salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+        Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
+                apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
+                telefonoEmpleado, edadEmpleado, dniEmpleado,
+                salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
-
 
 
     public static void eliminarEmpleadoSucursal(Empleado[] empleados, String numDni){
         for(int i=0;i<empleados.length;i++){
-            if(empleados[i].getDniEmpleado().equals(numDni)){
+            if(empleados[i].getDni().equals(numDni)){
                 empleados[i].setSucursalEmpleado(null);
             }
         }
@@ -92,9 +99,16 @@ public class Administrador extends Empleado {
 
     public static void eliminarSucursal(Sucursal[] sucursal, String Codigo ){
         int existencia=0;
+        boolean flag = false;
         for(int i=0;i<sucursal.length;i++){
-            if(sucursal[i].getCodigo().equals(Codigo)) {
-                sucursal[i]=null;
+            if(sucursal[i].getCodigo().equals(Codigo) || flag) {
+             if(sucursal[i+1] == null){
+                sucursal[i] = null;
+                i = sucursal.length;
+             }else{
+                 sucursal[i] = sucursal[i+1];
+             }
+            flag = true;
             }
         }
         if (existencia==0){
@@ -105,7 +119,7 @@ public class Administrador extends Empleado {
         if(clientes.length>0){
             for (int i = 0; i < clientes.length - 1; i++) {
                 for (int j = 0; j < clientes.length - i - 1; j++) {
-                    if (clientes[j].getApellidoMaternoCliente().compareToIgnoreCase(clientes[j + 1].getApellidoMaternoCliente()) > 0) {
+                    if (clientes[j].getApellidoMaterno().compareToIgnoreCase(clientes[j + 1].getApellidoMaterno()) > 0) {
                         Cliente temp = clientes[j];
                         clientes[j] = clientes[j + 1];
                         clientes[j + 1] = temp;
@@ -114,7 +128,7 @@ public class Administrador extends Empleado {
             }
             System.out.println("\n--------------------------\n");
             for(int i=0;i<clientes.length;i++){
-                System.out.println(clientes[i].getApellidoMaternoCliente()+" "+clientes[i].getApellidoPaternoCliente()+" "+clientes[i].getNombresCliente());
+                System.out.println(clientes[i].getApellidoMaterno()+" "+clientes[i].getApellidoPaterno()+" "+clientes[i].getNombres());
             }
             System.out.println("\n--------------------------\n");
         }
@@ -144,7 +158,7 @@ public class Administrador extends Empleado {
         if(clientes.length>0){
             System.out.println("\n--------------------------\n");
             for(int i=0;i<clientes.length;i++){
-                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefonoCliente());
+                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefono());
             }
             System.out.println("\n--------------------------\n");
         }
@@ -171,5 +185,31 @@ public class Administrador extends Empleado {
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
+    }
+    public void agregarSucursal(Sucursal [] sucursales){
+        System.out.println("Ingrese la direccion de la sucursal : ");
+        String direccion = entrada.nextLine();
+        System.out.println("Ingrese el codigo de la sucursal: ");
+        String codigo = entrada.nextLine();
+        System.out.println("Ingrese la ciudad en donde se encuentra la sucursal: ");
+        String ciudad = entrada.nextLine();
+        System.out.println("Ingrese la cantidad de empleados de la sucursal: ");
+        int cantidadEmple = entrada.nextInt();
+        Empleado[] empleados;
+        empleados = new Empleado[100];
+        Sucursal su1= new Sucursal(direccion,codigo,ciudad,cantidadEmple,empleados);
+        for(int i =0;i<sucursales.length;i++){
+            if(sucursales[i]==null){
+                sucursales[i]=su1;
+            }
+            else if(i+1==sucursales.length && sucursales[i]!=null){
+                Sucursal[] sucursales2;
+                sucursales2 = new Sucursal[(sucursales.length + 10)];
+                for(int a =0;a<sucursales.length;a++) {
+                    sucursales2[i]=sucursales[i];
+                }
+                sucursales2[sucursales.length]=su1;
+            }
+        }
     }
 }

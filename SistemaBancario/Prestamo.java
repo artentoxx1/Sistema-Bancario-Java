@@ -178,17 +178,6 @@ public class Prestamo implements Operaciones{
         return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
     }
 
-    // Simulacion de pago anticipado
-    public void realizarPagoAnticipado(double cantidad) {
-        if (cantidad > saldoRestante) {
-            System.out.println("El pago anticipado excede el saldo restante del préstamo.");
-        } else {
-            saldoRestante -= cantidad;
-            pagosRealizados++;
-            System.out.println("Pago anticipado realizado: S/." + cantidad + ". Nuevo saldo restante: S/." + saldoRestante);
-        }
-    }
-
     // Metodo para renegociar el plazo del prestamo
     public void renegociarPlazo(int nuevoPlazo) {
         if (nuevoPlazo > plazoPrestamo) {

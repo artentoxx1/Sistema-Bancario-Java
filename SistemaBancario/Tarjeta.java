@@ -4,10 +4,17 @@ public class Tarjeta {
     protected String numeroTarjeta;
     protected String claveTarjeta;
     protected CuentaBancaria cuentaVinculada;
-    public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria Cuenta) {
+    protected boolean estadoTarjeta = true;
+
+    public Tarjeta(){
+
+    }
+
+    public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria Cuenta, boolean estadoTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
         this.claveTarjeta = claveTarjeta;
         this.cuentaVinculada=Cuenta;
+        this.estadoTarjeta =estadoTarjeta;
     }
     public String getNumeroTarjeta() {
         return numeroTarjeta;
@@ -24,9 +31,14 @@ public class Tarjeta {
     public CuentaBancaria getCuentaVinculada() {
         return cuentaVinculada;
     }
-
     public void setCuentaVinculada(CuentaBancaria cuentaVinculada) {
         this.cuentaVinculada = cuentaVinculada;
+    }
+    public boolean getEstadoTarjeta() {
+        return estadoTarjeta;
+    }
+    public void setEstadoTarjeta(boolean estadoTarjeta) {
+        this.estadoTarjeta = estadoTarjeta;
     }
     public static String generarNumeroTarjeta(){
         String numeroTarjeta = "";
@@ -47,7 +59,9 @@ public class Tarjeta {
             int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
             claveTarjeta += digito; // Concatenar el dígito a la cadena
         }
-
         return claveTarjeta;
+    }
+    public void bloquearTarjeta(){
+        estadoTarjeta = false;
     }
 }

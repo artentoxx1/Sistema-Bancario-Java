@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class Transaccion implements Operaciones {
+public class Transaccion implements Operaciones{
     private String tipoTransaccion;
     private double cantidadTransaccion;
     private Fecha fechaTransaccion;
