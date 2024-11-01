@@ -15,6 +15,12 @@ public class Fecha {
         return obtenerFechaHoraActual().format(formatter);
     }
 
+    // Obtener una fecha específica como String en un formato específico
+    public static String formatearFecha(LocalDateTime fecha, String formato) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+        return fecha.format(formatter);
+    }
+
     // Ejemplo de uso: Obtener la fecha en formato predeterminado
     public static String obtenerFechaActual() {
         return obtenerFechaActual("dd-MM-yyyy HH:mm:ss"); // Formato por defecto
