@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class Prestamo {
+public class Prestamo implements Operaciones{
     private double montoPrestamo;
     private double tasaInteres;
     private int plazoPrestamo;

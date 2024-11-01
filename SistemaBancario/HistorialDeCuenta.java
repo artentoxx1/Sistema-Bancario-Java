@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class HistorialDeCuenta {
+public class HistorialDeCuenta implements Operaciones {
     private Transaccion[] transacciones;
     private CuentaBancaria cuentaBancaria;
     private int indiceTransaccion; // Para controlar el índice de las transacciones
@@ -37,10 +37,10 @@ public class HistorialDeCuenta {
         }
     }
 
-    public void obtenerHistorial() {
+    public void mostrarDetalles() {
         System.out.println("Historial de Transacciones de la cuenta: " + cuentaBancaria.getNumeroCuenta());
         for (int i = 0; i < indiceTransaccion; i++) {
-            transacciones[i].mostrarDetallesTransaccion();
+            transacciones[i].mostrarDetalles();
         }
     }
 }

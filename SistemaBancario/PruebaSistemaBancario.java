@@ -58,7 +58,8 @@ public class PruebaSistemaBancario {
                                             case 6:
                                                 Administrador.mostrarCargaFamiliarClientes(clientes);
                                                 break;
-                                            case 7:break;
+                                            case 7:
+                                                break;
                                             default:
                                                 System.out.println("Digite una opcion valida");
                                         }
