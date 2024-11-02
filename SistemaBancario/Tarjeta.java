@@ -9,7 +9,6 @@ public class Tarjeta {
     public Tarjeta(){
 
     }
-
     public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria Cuenta, boolean estadoTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
         this.claveTarjeta = claveTarjeta;

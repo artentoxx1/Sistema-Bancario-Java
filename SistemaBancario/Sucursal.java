@@ -28,7 +28,6 @@ public class Sucursal{
         System.out.println("Ciudad Surcursal: " + ciudadSurcursal);
         System.out.println("Cantidad Empleados: " + cantidadEmpleados);
     }
-    //Get y Set
     public String getDireccion(){
         return direccionSucursal;
     }

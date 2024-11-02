@@ -44,5 +44,4 @@ public class TarjetaDeCredito extends Tarjeta{
         limiteTarjeta = limiteTarjeta+nuevoLimite;
         System.out.println("Limite de credito: " + limiteTarjeta);
     }
-
 }

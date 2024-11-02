@@ -52,7 +52,6 @@ public class CuentaBancaria {
         historialCuenta[indiceTransaccion] = transaccion;
         indiceTransaccion++;
     }
-
     public void depositar(double monto) {
         saldoCuenta += monto;
         setSaldoCuenta(saldoCuenta);
@@ -60,7 +59,6 @@ public class CuentaBancaria {
         registrarTransaccion(transaccion);
         System.out.println("Depósito exitoso");
     }
-
     public void retirar(double monto) {
         if (saldoCuenta >= monto) {
             saldoCuenta -= monto;
@@ -72,11 +70,9 @@ public class CuentaBancaria {
             System.out.println("Fondos insuficientes.");
         }
     }
-
     public void mostrarSaldo(){
         System.out.println("El saldo de la cuenta es S/. " + saldoCuenta);
     }
-
     // Mostrar el historial de transacciones usando el metodo de detalle de la clase Transaccion
     public void mostrarHistorial() {
         if (indiceTransaccion == 0) {

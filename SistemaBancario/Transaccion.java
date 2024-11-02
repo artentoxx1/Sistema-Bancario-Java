@@ -16,36 +16,27 @@ public class Transaccion implements Operaciones{
     public String getTipoTransaccion() {
         return tipoTransaccion;
     }
-
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
-
     public double getCantidadTransaccion() {
         return cantidadTransaccion;
     }
-
     public void setCantidadTransaccion(double cantidadTransaccion) {
         this.cantidadTransaccion = cantidadTransaccion;
     }
-
     public Fecha getFechaTransaccion() {
         return fechaTransaccion;
     }
-
     public void setFechaTransaccion(Fecha fechaTransaccion) {
         this.fechaTransaccion = fechaTransaccion;
     }
-
     public CuentaBancaria getCuentaDestino() {
         return cuentaDestino;
     }
-
     public void setCuentaDestino(CuentaBancaria cuentaDestino) {
         this.cuentaDestino = cuentaDestino;
     }
-
-    // Ejecutar la transacción dependiendo del tipo (depósito, retiro, transferencia)
     public void ejecutarTransaccion(CuentaBancaria c) {
         if (tipoTransaccion.equalsIgnoreCase("deposito")) {
             c.depositar(cantidadTransaccion);
@@ -58,8 +49,6 @@ public class Transaccion implements Operaciones{
             System.out.println("Transacción no válida.");
         }
     }
-
-    // Mostrar los detalles de la transacción
     public void mostrarDetalles() {
         System.out.println("Tipo de transacción: " + tipoTransaccion);
         System.out.println("Cantidad: " + cantidadTransaccion);

@@ -56,19 +56,16 @@ public class Empleado extends Persona {
     public void setTelefono(String telefono){
         this.telefono = telefono;
     }
-
     public String getApellidoEmpleado() {
         String apellidos= apellidoPaterno+" "+apellidoMaterno;
         return apellidos;
     }
-
     public int getEdadEmpleado() {
         return edadEmpleado;
     }
     public void setEdadEmpleado(int edadEmpleado) {
         this.edadEmpleado = edadEmpleado;
     }
-
     public double getSalarioEmpleado() {
         return salarioEmpleado;
     }
@@ -87,7 +84,6 @@ public class Empleado extends Persona {
     public void setSucursalEmpleado(String sucursalEmpleado) {
         this.sucursalEmpleado = sucursalEmpleado;
     }
-
     public static void buscarEmpleado(Empleado[] empleados, String numDni) {
         int existencia=0;
         for(int i = 0; i < empleados.length; i++) {
@@ -107,7 +103,6 @@ public class Empleado extends Persona {
         }
         if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
     }
-
     public void actualizarEmpleado(Empleado[] empleados, String numDni) {
         int existencia=0;
         for (int i = 0; i < empleados.length; i++) {
@@ -158,7 +153,6 @@ public class Empleado extends Persona {
         System.out.println("Empleado eliminado correctamente");
         if (flag==false){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
     }
-
     //Por revisar
     public void mostrarEmpleado(Empleado empleado){
         System.out.println("Nombre: "+empleado.getNombres());
@@ -171,5 +165,4 @@ public class Empleado extends Persona {
         System.out.println("Puesto: "+empleado.getPuestoEmpleado());
         System.out.println("Sucursa"+empleado.getSucursalEmpleado());
     }
-
 }

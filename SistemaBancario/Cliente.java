@@ -85,81 +85,62 @@ public class Cliente extends Persona {
     public String getCorreoCliente() {
         return correoCliente;
     }
-
     public void setCorreoCliente(String correoCliente) {
         this.correoCliente = correoCliente;
     }
-
     public String getProfesionCliente() {
         return profesionCliente;
     }
-
     public void setProfesionCliente(String profesionCliente) {
         this.profesionCliente = profesionCliente;
     }
-
     public String getCargaFamiliarCliente() {
         return cargaFamiliarCliente;
 
     }
-
     public void setCargaFamiliarCliente(String cargaFamiliarCliente) {
         this.cargaFamiliarCliente = cargaFamiliarCliente;
 
     }
-
     public String getDireccionCliente() {
         return direccionCliente;
     }
-
     public void setDireccionCliente(String direccionCliente) {
         this.direccionCliente = direccionCliente;
     }
-
     public CuentaAhorro getCuentaAhorros() {
         return cuentaAhorros;
     }
-
     public void setCuentaAhorros(CuentaAhorro cuentaAhorros) {
         this.cuentaAhorros = cuentaAhorros;
     }
-
     public CuentaCorriente getCuentaCorriente() {
         return cuentaCorriente;
     }
-
     public void setCuentaCorriente(CuentaCorriente cuentaCorriente) {
         this.cuentaCorriente = cuentaCorriente;
     }
-
     public CuentaDepositoaPlazoFijo getCuentaDepositoPlazoFijo() {
         return cuentaDepositoPlazoFijo;
     }
-
     public void setCuentaDepositoPlazoFijo(CuentaDepositoaPlazoFijo cuentaDepositoPlazoFijo) {
         this.cuentaDepositoPlazoFijo = cuentaDepositoPlazoFijo;
     }
-
     public TarjetaDeDebito getTarjetaDeDebito() {
         return tarjetaDeDebito;
     }
-
     public void setTarjetaDeDebito(TarjetaDeDebito tarjetaDeDebito) {
         this.tarjetaDeDebito = tarjetaDeDebito;
     }
-
     public TarjetaDeCredito getTarjetaDeCredito() {
         return tarjetaDeCredito;
     }
-
     public void setTarjetaDeCredito(TarjetaDeCredito tarjetaDeCredito) {
         this.tarjetaDeCredito = tarjetaDeCredito;
     }
-
     public double getLiquidezFinanciera() {
         return liquidezFinanciera;
     }
-
     public void setLiquidezFinanciera(double liquidezFinanciera) {
         this.liquidezFinanciera = liquidezFinanciera;
     }
@@ -195,7 +176,6 @@ public class Cliente extends Persona {
                 System.out.println("Digite una opcion correcta.");
         }
     }
-
     public void retirarCuenta(int tipoCuenta, double cantidadRetiro, String contraseniaTarjeta) {
         switch (tipoCuenta) {
             case 1:

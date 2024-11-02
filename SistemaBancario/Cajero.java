@@ -316,10 +316,6 @@ public class Cajero extends Empleado{
             System.out.println("Fecha de pago de la tarjeta: " + fechaPago);
         }
     }
-
-
-
-
     public void generarTarjetaDebito(Cliente cliente) {
         boolean puedeOtorgarTarjeta = true;
         if (cliente.getTarjetaDeDebito() != null) {
