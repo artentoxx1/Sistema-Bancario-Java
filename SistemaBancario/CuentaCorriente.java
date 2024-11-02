@@ -6,7 +6,7 @@ public class CuentaCorriente extends CuentaBancaria{
     public CuentaCorriente(){
         super();
     }
-    public CuentaCorriente(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
+    public CuentaCorriente(String numeroCuenta, double saldoCuenta, Transaccion[] historialCuenta,
                            String tipoCuenta, double limiteSobregiro, double comisionPorSobregiro) {
         super(numeroCuenta, saldoCuenta, historialCuenta, tipoCuenta);
         this.limiteSobregiro = limiteSobregiro;
