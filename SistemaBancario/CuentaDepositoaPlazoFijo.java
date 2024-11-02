@@ -28,9 +28,18 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
     public double getTasaInteresPlazoFijo() {
         return tasaInteresPlazoFijo;
     }
+    public void setTasaInteresPlazoFijo(double tasaInteresPlazoFijo){
+        this.tasaInteresPlazoFijo = tasaInteresPlazoFijo;
+    }
+    public int getPenalizacion(){
+        return penalizacion;
+    }
+    public void setPenalizacion(int penalizacion){
+        this.penalizacion=penalizacion;
+    }
     public double calcularInteresAlVencimiento(){
         double intereses;
-        intereses=saldoCuenta*tasaInteresPlazoFijo*plazo*0.01*(1/12);
+        intereses=saldoCuenta*tasaInteresPlazoFijo*plazo/12;
         return intereses;
     }
     public LocalDate calcularFechaVencimiento() {
@@ -51,7 +60,10 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
         }
         return 0;  // Sin penalización si no es retiro anticipado
     }
-    public String obtenerFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 }

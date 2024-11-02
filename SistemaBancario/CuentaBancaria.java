@@ -83,4 +83,14 @@ public class CuentaBancaria {
             }
         }
     }
+    public static String generarNumeroCuenta(){
+        String numeroCuenta = "";
+
+        for (int i = 0; i < 16; i++) {
+            int digito = (int) (Math.random() * 10);
+            numeroCuenta += digito;
+        }
+
+        return numeroCuenta;
+    }
 }
