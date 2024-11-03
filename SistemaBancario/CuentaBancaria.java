@@ -8,7 +8,6 @@ public class CuentaBancaria {
     private int indiceTransaccion = 0;
 
     public CuentaBancaria() {
-
     }
     public CuentaBancaria(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
                           String tipoCuenta) {

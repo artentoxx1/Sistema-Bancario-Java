@@ -2,6 +2,9 @@ package Banco.SistemaBancario;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
+    public Administrador(){
+        super();
+    }
     public Administrador(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado,
                          String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
                          String puestoEmpleado,String sucursalEmpleado) {
@@ -78,7 +81,7 @@ public class Administrador extends Empleado {
             }
         }
     }
-    public static void  buscarSucursal(Sucursal[] sucursal, String Codigo) {
+    public static void buscarSucursal(Sucursal[] sucursal, String Codigo) {
         int existencia=0;
         for(int i=0;i<sucursal.length;i++){
             if(sucursal[i].getCodigo().equals(Codigo)) {

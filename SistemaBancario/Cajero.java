@@ -6,7 +6,11 @@ public class Cajero extends Empleado{
     private String usuario;
     private String clave;
     static Scanner entrada = new Scanner(System.in);
-
+    public Cajero(){
+        super();
+        usuario="";
+        clave="";
+    }
     public Cajero(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado, String
                   telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
                   String puestoEmpleado, String sucursalEmpleado, String clave, String usuario) {
@@ -77,8 +81,6 @@ public class Cajero extends Empleado{
                 liquidezFinanciera
         );
     }
-
-
     public void añadirCajero(String user, String clave,String dni){
         Empleado[] empleados;
             empleados = new Empleado[100];
@@ -139,7 +141,6 @@ public class Cajero extends Empleado{
         }
 
     }
-
     public void eliminarCliente(Cliente[] clientes, String dni){
         boolean flag = false;
         for (int i = 0; i < clientes.length; i++) {
@@ -153,8 +154,7 @@ public class Cajero extends Empleado{
         System.out.println("Empleado eliminado correctamente");
         if (flag==false){System.out.println("No existe cliente, que esta asociado al dni proporcionado");}
     }
-
-    public void buscarMostrarCliente(Cliente[] clientes,String dni){
+    public void mostrarCliente(Cliente[] clientes,String dni){
         int existencia=0;
         for(int i = 0; i < clientes.length; i++) {
             if (clientes[i].getDni().equals(dni)) {
@@ -183,7 +183,6 @@ public class Cajero extends Empleado{
        System.out.println("No existe cliente, que esta asociado al dni proporcionado");
         return null; // Retorna null si no encuentra al cliente
     }
-
     public  void agregarCuentaCorriente (Cliente[] clientes, String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();

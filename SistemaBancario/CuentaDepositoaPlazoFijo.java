@@ -39,7 +39,7 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
     }
     public double calcularInteresAlVencimiento(){
         double intereses;
-        intereses=saldoCuenta*tasaInteresPlazoFijo*plazo/12;
+        intereses=saldoCuenta*tasaInteresPlazoFijo*0.01*plazo/12;
         return intereses;
     }
     public LocalDate calcularFechaVencimiento() {

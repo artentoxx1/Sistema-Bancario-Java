@@ -8,7 +8,13 @@ public class Empleado extends Persona {
     protected String sucursalEmpleado;
 
     Scanner entrada=new Scanner(System.in);
-
+    public Empleado() {
+        super();
+        edadEmpleado=0;
+        salarioEmpleado=0;
+        puestoEmpleado="";
+        sucursalEmpleado="";
+    }
     public Empleado(String nombreEmpleado, String apellidoPaternoEmpleado,
                     String apellidoMaternoEmpleado, String sexoEmpleado,
                     String telefonoEmpleado, int edadEmpleado,
@@ -84,25 +90,6 @@ public class Empleado extends Persona {
     public void setSucursalEmpleado(String sucursalEmpleado) {
         this.sucursalEmpleado = sucursalEmpleado;
     }
-    public static void buscarEmpleado(Empleado[] empleados, String numDni) {
-        int existencia=0;
-        for(int i = 0; i < empleados.length; i++) {
-            if (empleados[i].getDni().equals(numDni)) {
-                System.out.println("Empleado: " + empleados[i].getNombres());
-                System.out.println("Apellido: " + empleados[i].getApellidoEmpleado());
-                System.out.println("Sexo: " + empleados[i].getSexo());
-                System.out.println("Telefono: " + empleados[i].getTelefono());
-                System.out.println("Edad: " + empleados[i].getEdadEmpleado());
-                System.out.println("Dni: " + empleados[i].getDni());
-                System.out.println("Salario: " + empleados[i].getSalarioEmpleado());
-                System.out.println("Puesto: " + empleados[i].getPuestoEmpleado());
-                System.out.println("Sucursal: " + empleados[i].getSucursalEmpleado());
-                existencia=1;
-            }
-
-        }
-        if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
-    }
     public void actualizarEmpleado(Empleado[] empleados, String numDni) {
         int existencia=0;
         for (int i = 0; i < empleados.length; i++) {
@@ -139,30 +126,51 @@ public class Empleado extends Persona {
     }
     public void eliminarEmpleado(Empleado [] empleados, String numDni) {
         boolean flag = false;
-        for (int i = 0; i < empleados.length; i++) {
-            if(empleados[i].getDni().equals(numDni) || flag) {
-                if(empleados[i+1] == null){
-                    empleados[i] = null;
-                    i = empleados.length;
-                }else{
-                    empleados[i] = empleados[i+1];
+        int total=empleados.length;
+        for (int i = 0; i < total; i++) {
+            if (empleados[i]!=null && empleados[i].getDni().equals(numDni)) {
+                flag=true;
+                for (int j = i; j < total-1; j++) { // j= 0
+                    empleados[j] = empleados[j+1];
                 }
-                flag = true;
+                empleados[total-1]= null;
             }
         }
         System.out.println("Empleado eliminado correctamente");
         if (flag==false){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
     }
-    //Por revisar
     public void mostrarEmpleado(Empleado empleado){
-        System.out.println("Nombre: "+empleado.getNombres());
-        System.out.println("Apellido: "+empleado.getApellidoEmpleado());
-        System.out.println("Sexo: "+empleado.getSexo());
-        System.out.println("Telefono: "+empleado.getTelefono());
-        System.out.println("Edad: "+empleado.getEdadEmpleado());
-        System.out.println("Dni: "+empleado.getDni());
-        System.out.println("Salario: "+empleado.getSalarioEmpleado());
-        System.out.println("Puesto: "+empleado.getPuestoEmpleado());
-        System.out.println("Sucursa"+empleado.getSucursalEmpleado());
+        if(empleado!=null){
+            System.out.println("Nombre: "+empleado.getNombres());
+            System.out.println("Apellido: "+empleado.getApellidoEmpleado());
+            System.out.println("Sexo: "+empleado.getSexo());
+            System.out.println("Telefono: "+empleado.getTelefono());
+            System.out.println("Edad: "+empleado.getEdadEmpleado());
+            System.out.println("Dni: "+empleado.getDni());
+            System.out.println("Salario: "+empleado.getSalarioEmpleado());
+            System.out.println("Puesto: "+empleado.getPuestoEmpleado());
+            System.out.println("Sucursa"+empleado.getSucursalEmpleado());
+        }
     }
+    /*
+        public static void buscarEmpleado(Empleado[] empleados, String numDni) {
+        int existencia=0;
+        for(int i = 0; i < empleados.length; i++) {
+            if (empleados[i].getDni().equals(numDni)) {
+                System.out.println("Empleado: " + empleados[i].getNombres());
+                System.out.println("Apellido: " + empleados[i].getApellidoEmpleado());
+                System.out.println("Sexo: " + empleados[i].getSexo());
+                System.out.println("Telefono: " + empleados[i].getTelefono());
+                System.out.println("Edad: " + empleados[i].getEdadEmpleado());
+                System.out.println("Dni: " + empleados[i].getDni());
+                System.out.println("Salario: " + empleados[i].getSalarioEmpleado());
+                System.out.println("Puesto: " + empleados[i].getPuestoEmpleado());
+                System.out.println("Sucursal: " + empleados[i].getSucursalEmpleado());
+                existencia=1;
+            }
+
+        }
+        if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
+    }
+     */
 }
