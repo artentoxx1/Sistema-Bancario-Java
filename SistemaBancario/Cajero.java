@@ -204,7 +204,7 @@ public class Cajero extends Empleado{
         }
     }
     public  void eliminaCuentaCorriente (Cliente[] clientes,String dni){
-        CuentaCorriente CuentaC=new CuentaCorriente(null,null,null,
+        CuentaCorriente CuentaC=new CuentaCorriente(null,0,null,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
