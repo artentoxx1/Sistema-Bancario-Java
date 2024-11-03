@@ -16,26 +16,30 @@ public class Administrador extends Empleado {
     }
 
     public void AniadirEmpleado(Empleado[] empleados){
-        System.out.println("Ingrese el nombre del empleado: ");
+        System.out.print("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el apellido paterno del empleado: ");
+        System.out.print("Ingrese el apellido paterno del empleado: ");
         String apellidoPaternoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el apellido materno del empleado: ");
+        System.out.print("Ingrese el apellido materno del empleado: ");
         String apellidoMaternoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el sexo del empleado: ");
+        System.out.print("Ingrese el sexo del empleado: ");
         String sexoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el telefono del empleado: ");
+        System.out.print("Ingrese el telefono del empleado: ");
         String telefonoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el edad del empleado: ");
+        System.out.print("Ingrese el edad del empleado: ");
         int edadEmpleado = entrada.nextInt();
-        System.out.println("Ingrese el dni del empleado: ");
+        System.out.print("Ingrese el dni del empleado: ");
         String dniEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el salario del empleado: ");
+        entrada.nextLine();
+        System.out.print("Ingrese el salario del empleado: ");
         double salarioEmpleado = entrada.nextDouble();
-        System.out.println("Ingrese el puesto del empleado: ");
+        entrada.nextLine();
+        System.out.print("Ingrese el puesto del empleado: ");
         String puestoEmpleado = entrada.nextLine();
-        System.out.println("Ingrese el codigo de la sucursal del empleado:");
+        entrada.nextLine();
+        System.out.print("Ingrese el codigo de la sucursal del empleado: ");
         String sucursalEmpleado = entrada.nextLine();
+        entrada.nextLine();
 
         Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
                 apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
