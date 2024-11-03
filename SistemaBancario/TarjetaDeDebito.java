@@ -14,7 +14,6 @@ public class TarjetaDeDebito extends Tarjeta {
         this.cuentaVinculada= CuentaAhorro;
     }
 
-
     public void retirarDineros(double montoR){
         cuentaVinculada.retirar(montoR);
     }
@@ -29,4 +28,4 @@ public class TarjetaDeDebito extends Tarjeta {
         System.out.println("Cuenta Vinculada: " + cuentaVinculada);
     }
 
-    }
+}

@@ -24,53 +24,45 @@ public class Prestamo implements Operaciones{
         this.periodoGracia = periodoGracia;
         this.capitalizarIntereses = capitalizarIntereses;
     }
-
     public double getMontoPrestamo() {
         return montoPrestamo;
     }
     public void setMontoPrestamo(double montoPrestamo) {
         this.montoPrestamo = montoPrestamo;
     }
-
     public double getTasaInteres() {
         return tasaInteres;
     }
     public void setTasaInteres(double tasaInteres) {
         this.tasaInteres = tasaInteres;
     }
-
     public int getPlazoPrestamo() {
         return plazoPrestamo;
     }
     public void setPlazoPrestamo(int plazoPrestamo) {
         this.plazoPrestamo = plazoPrestamo;
     }
-
     public double getSaldoRestante() {
         return saldoRestante;
     }
-
     public int getPagosAtrasados() {
         return pagosAtrasados;
     }
     public void setPagosAtrasados(int pagosAtrasados) {
         this.pagosAtrasados = pagosAtrasados;
     }
-
     public int getPeriodoGracia() {
         return periodoGracia;
     }
     public void setPeriodoGracia(int periodoGracia) {
         this.periodoGracia = periodoGracia;
     }
-
     public boolean getCapitalizarIntereses() {
         return capitalizarIntereses;
     }
     public void setCapitalizarIntereses(boolean capitalizarIntereses) {
         this.capitalizarIntereses = capitalizarIntereses;
     }
-
     // Metodo para calcular la cuota mensual, ajustado para manejar el periodo de gracia
     public double calcularCuotaMensual() {
         if (periodoGracia > 0 && !capitalizarIntereses) {
@@ -81,7 +73,6 @@ public class Prestamo implements Operaciones{
             return (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazoPrestamo));
         }
     }
-
     // Metodo para calcular intereses durante el periodo de gracia
     public double calcularInteresesPeriodoGracia() {
         if (capitalizarIntereses) {
@@ -93,7 +84,6 @@ public class Prestamo implements Operaciones{
         }
         return 0;
     }
-
     // Metodo para realizar un pago con la opción de incluir pagos adicionales
     public void realizarPago(double cantidad, double pagoAdicional) {
         double totalPago = cantidad + pagoAdicional;
@@ -106,7 +96,6 @@ public class Prestamo implements Operaciones{
             System.out.println("El pago excede el saldo restante del préstamo.");
         }
     }
-
     // Metodo para aplicar pagos adicionales fuera del esquema regular
     public void realizarPagoAdicional(double cantidad) {
         if (cantidad <= saldoRestante) {
@@ -117,7 +106,6 @@ public class Prestamo implements Operaciones{
             System.out.println("El pago adicional excede el saldo restante del préstamo.");
         }
     }
-
     // Metodo para verificar el estado del prestamo
     public void verificarMora() {
         if (pagosAtrasados > 3) {
@@ -127,7 +115,6 @@ public class Prestamo implements Operaciones{
             enMora = false;
         }
     }
-
     // Metodo para aplicar penalización si el prestamo está en mora
     public void penalizarMora() {
         if (enMora) {
@@ -136,18 +123,15 @@ public class Prestamo implements Operaciones{
             System.out.println("Se ha aplicado una penalización por mora de: S/." + penalizacion);
         }
     }
-
     // Metodo para calcular el interes total pagado durante la vida del prestamo
     public double calcularInteresTotal() {
         double cuotaMensual = calcularCuotaMensual();
         return (cuotaMensual * plazoPrestamo) - montoPrestamo;
     }
-
     // Metodo para verificar si el préstamo ha sido pagado completamente
     public boolean prestamoPagado() {
         return saldoRestante <= 0;
     }
-
     // Metodo para actualizar la cuenta bancaria tras realizar un pago
     public void actualizarCuentaPrestamo(CuentaBancaria cuenta, double montoPago) {
         if (cuenta.getSaldoCuenta() >= montoPago) {
@@ -157,7 +141,6 @@ public class Prestamo implements Operaciones{
             System.out.println("Saldo insuficiente en la cuenta para realizar el pago.");
         }
     }
-
     // Metodo para mostrar los detalles completos del prestamo
     public void mostrarDetalles() {
         System.out.println("Detalles del Préstamo:");
@@ -172,12 +155,10 @@ public class Prestamo implements Operaciones{
         System.out.println("Pagos atrasados: " + pagosAtrasados);
         System.out.println("Estado del préstamo: " + (enMora ? "En mora" : "Al día"));
     }
-
     // Metodo para generar el estado actual del prestamo
     public String estadoPrestamo() {
         return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
     }
-
     // Metodo para renegociar el plazo del prestamo
     public void renegociarPlazo(int nuevoPlazo) {
         if (nuevoPlazo > plazoPrestamo) {

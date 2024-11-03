@@ -54,5 +54,4 @@ public class CuentaCorriente extends CuentaBancaria{
         System.out.println("Su sobregiro disponible es:"+getLimiteSobregiro());
 
     }
-
 }

@@ -25,7 +25,6 @@ public class CuentaAhorro extends CuentaBancaria {
     public void setLimiteRetiros(int limiteRetiros) {
         this.limiteRetiros = limiteRetiros;
     }
-
     public double calcularIntereses(){
         double b;
         b=tasaInteres*0.01*saldoCuenta;
@@ -43,5 +42,4 @@ public class CuentaAhorro extends CuentaBancaria {
             return b;
         }
     }
-
 }
