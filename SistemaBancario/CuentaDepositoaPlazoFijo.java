@@ -13,7 +13,7 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
     }
     public CuentaDepositoaPlazoFijo(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
                                     String tipoCuenta, int plazo, double tasaInteresPlazoFijo, LocalDate fechaInicio, int penalizacion) {
-        super(numeroCuenta,saldoCuenta,historialCuenta,tipoCuenta);
+        super(numeroCuenta,saldoCuenta,tipoCuenta);
         this.plazo = plazo;
         this.tasaInteresPlazoFijo = tasaInteresPlazoFijo;
         this.fechaInicio = fechaInicio;

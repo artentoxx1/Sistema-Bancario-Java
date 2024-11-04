@@ -152,7 +152,7 @@ public class Empleado extends Persona {
             System.out.println("Sucursa"+empleado.getSucursalEmpleado());
         }
     }
-    /*
+
         public static void buscarEmpleado(Empleado[] empleados, String numDni) {
         int existencia=0;
         for(int i = 0; i < empleados.length; i++) {
@@ -172,5 +172,5 @@ public class Empleado extends Persona {
         }
         if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
     }
-     */
+
 }

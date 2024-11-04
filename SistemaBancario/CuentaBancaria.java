@@ -9,11 +9,11 @@ public class CuentaBancaria {
 
     public CuentaBancaria() {
     }
-    public CuentaBancaria(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
+    public CuentaBancaria(String numeroCuenta, double saldoCuenta,
                           String tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
         this.saldoCuenta = saldoCuenta;
-        this.historialCuenta = historialCuenta;
+        this.historialCuenta = null;
         this.tipoCuenta = tipoCuenta;
     }
     public String getNumeroCuenta() {

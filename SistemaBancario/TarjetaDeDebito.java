@@ -1,17 +1,16 @@
+
 package Banco.SistemaBancario;
 
 public class TarjetaDeDebito extends Tarjeta {
     public TarjetaDeDebito() {
         super();
     }
-    public TarjetaDeDebito(String numeroTarjetaGenerado, String claveTarjetaGenerada,CuentaAhorro CuentaAhorro, boolean estadoTarjeta) {
-        super(numeroTarjetaGenerado, claveTarjetaGenerada, CuentaAhorro, estadoTarjeta); {
+    public TarjetaDeDebito(String numeroTarjetaGenerado, String claveTarjetaGenerada,CuentaAhorro cuentaAhorro, boolean estadoTarjeta) {
+        super(numeroTarjetaGenerado, claveTarjetaGenerada, cuentaAhorro, estadoTarjeta); {
             this.numeroTarjeta = numeroTarjetaGenerado;
             this.claveTarjeta = claveTarjetaGenerada;
-            this.cuentaVinculada= CuentaAhorro;
-
+            this.cuentaVinculada= cuentaAhorro;
         }
-        this.cuentaVinculada= CuentaAhorro;
     }
 
     public void retirarDineros(double montoR){
@@ -27,5 +26,4 @@ public class TarjetaDeDebito extends Tarjeta {
         System.out.println("Numero de cuenta: " + cuentaVinculada.getNumeroCuenta());
         System.out.println("Cuenta Vinculada: " + cuentaVinculada);
     }
-
 }

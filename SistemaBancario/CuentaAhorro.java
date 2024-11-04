@@ -7,9 +7,9 @@ public class CuentaAhorro extends CuentaBancaria {
     public CuentaAhorro(){
         super();
     }
-    public CuentaAhorro(String numeroCuenta, Double saldoCuenta, Transaccion[] historialCuenta,
+    public CuentaAhorro(String numeroCuenta, Double saldoCuenta,
                         String tipoCuenta, double tasaInteres, int limiteRetiros) {
-        super(numeroCuenta,saldoCuenta,historialCuenta,tipoCuenta);
+        super(numeroCuenta,saldoCuenta,tipoCuenta);
         this.tasaInteres = tasaInteres;
         this.limiteRetiros = limiteRetiros;
     }
