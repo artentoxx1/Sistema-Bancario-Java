@@ -195,7 +195,7 @@ public class Cajero extends Empleado{
         double limite = entrada.nextDouble();
         System.out.println("Ingrese comision por sobregiro: ");
         double comision = entrada.nextDouble();
-       CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,historialCuenta,tipoCuenta,limite,comision);
+       CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaCorriente(CuentaC);
@@ -203,7 +203,7 @@ public class Cajero extends Empleado{
         }
     }
     public  void eliminaCuentaCorriente (Cliente[] clientes,String dni){
-        CuentaCorriente CuentaC=new CuentaCorriente(null,0,null,
+        CuentaCorriente CuentaC=new CuentaCorriente(null,0,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
@@ -223,7 +223,7 @@ public class Cajero extends Empleado{
         int limite = entrada.nextInt();
         System.out.println("Ingrese tasa de interes : ");
         double interes = entrada.nextDouble();
-        CuentaAhorro CuentaC= new CuentaAhorro(numCuenta,saldo,historialCuenta,tipoCuenta,interes,limite);
+        CuentaAhorro CuentaC= new CuentaAhorro(numCuenta,saldo,tipoCuenta,interes,limite);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaAhorros(CuentaC);
@@ -231,7 +231,7 @@ public class Cajero extends Empleado{
         }
     }
     public  void eliminaCuentaAhorro (Cliente[] clientes,String dni){
-        CuentaAhorro CuentaC=new CuentaAhorro(null,null,null,
+        CuentaAhorro CuentaC=new CuentaAhorro(null,null,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){

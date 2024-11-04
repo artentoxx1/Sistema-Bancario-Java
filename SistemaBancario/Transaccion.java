@@ -50,11 +50,13 @@ public class Transaccion implements Operaciones{
         }
     }
     public void mostrarDetalles() {
+        System.out.println("-------------------------------------");
         System.out.println("Tipo de transacción: " + tipoTransaccion);
         System.out.println("Cantidad: " + cantidadTransaccion);
         System.out.println("Fecha: " + fechaTransaccion.toString());
         if (cuentaDestino != null) {
             System.out.println("Cuenta destino: " + cuentaDestino.getNumeroCuenta());
         }
+        System.out.println("-------------------------------------");
     }
 }
