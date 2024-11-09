@@ -3,7 +3,7 @@ package Banco.SistemaBancario;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class CuentaDepositoaPlazoFijo extends CuentaBancaria{
+public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHija{
     private int plazo;
     private double tasaInteresPlazoFijo;
     private LocalDate fechaInicio;

@@ -1,6 +1,6 @@
 package Banco.SistemaBancario;
 
-public class CuentaAhorro extends CuentaBancaria {
+public class CuentaAhorro extends CuentaBancaria implements CuentaHija{
     private double tasaInteres;
     private int limiteRetiros;
 
