@@ -2,6 +2,9 @@ package Banco.SistemaBancario;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
+    public Administrador(){
+        super();
+    }
     public Administrador(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado,
                          String telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
                          String puestoEmpleado,String sucursalEmpleado) {
@@ -14,7 +17,6 @@ public class Administrador extends Empleado {
     public void mostrar(Empleado empleado) {
         mostrarEmpleado(empleado);
     }
-
     public void AniadirEmpleado(Empleado[] empleados){
         System.out.print("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
@@ -46,8 +48,6 @@ public class Administrador extends Empleado {
                 telefonoEmpleado, edadEmpleado, dniEmpleado,
                 salarioEmpleado, puestoEmpleado,sucursalEmpleado);
     }
-
-
     public static void eliminarEmpleadoSucursal(Empleado[] empleados, String numDni){
         for(int i=0;i<empleados.length;i++){
             if(empleados[i].getDni().equals(numDni)){
@@ -55,7 +55,6 @@ public class Administrador extends Empleado {
             }
         }
     }
-
     public void  modificarDatosSucursal(Sucursal[] sucursal, String Codigo){
 
         for(int i=0;i<sucursal.length;i++){
@@ -86,8 +85,7 @@ public class Administrador extends Empleado {
             }
         }
     }
-
-    public static void  buscarSucursal(Sucursal[] sucursal, String Codigo) {
+    public static void buscarSucursal(Sucursal[] sucursal, String Codigo) {
         int existencia=0;
         for(int i=0;i<sucursal.length;i++){
             if(sucursal[i].getCodigo().equals(Codigo)) {
@@ -100,7 +98,6 @@ public class Administrador extends Empleado {
             System.out.println("No hay sucursal asociado al codigo proporcionado.");
         }
     }
-
     public static void eliminarSucursal(Sucursal[] sucursal, String Codigo ){
         int existencia=0;
         boolean flag = false;

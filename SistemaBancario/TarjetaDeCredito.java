@@ -1,6 +1,5 @@
 package Banco.SistemaBancario;
 import java.time.LocalDate;
-import java.time.LocalDate;
 public class TarjetaDeCredito extends Tarjeta{
     private String numeroTarjeta;
     private String claveTarjeta;
@@ -44,5 +43,4 @@ public class TarjetaDeCredito extends Tarjeta{
         limiteTarjeta = limiteTarjeta+nuevoLimite;
         System.out.println("Limite de credito: " + limiteTarjeta);
     }
-
 }

@@ -8,13 +8,12 @@ public class CuentaBancaria {
     private int indiceTransaccion = 0;
 
     public CuentaBancaria() {
-
     }
-    public CuentaBancaria(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
+    public CuentaBancaria(String numeroCuenta, double saldoCuenta,
                           String tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
         this.saldoCuenta = saldoCuenta;
-        this.historialCuenta = historialCuenta;
+        this.historialCuenta = null;
         this.tipoCuenta = tipoCuenta;
     }
     public String getNumeroCuenta() {
@@ -52,7 +51,6 @@ public class CuentaBancaria {
         historialCuenta[indiceTransaccion] = transaccion;
         indiceTransaccion++;
     }
-
     public void depositar(double monto) {
         saldoCuenta += monto;
         setSaldoCuenta(saldoCuenta);
@@ -60,7 +58,6 @@ public class CuentaBancaria {
         registrarTransaccion(transaccion);
         System.out.println("Depósito exitoso");
     }
-
     public void retirar(double monto) {
         if (saldoCuenta >= monto) {
             saldoCuenta -= monto;
@@ -72,11 +69,9 @@ public class CuentaBancaria {
             System.out.println("Fondos insuficientes.");
         }
     }
-
     public void mostrarSaldo(){
         System.out.println("El saldo de la cuenta es S/. " + saldoCuenta);
     }
-
     // Mostrar el historial de transacciones usando el metodo de detalle de la clase Transaccion
     public void mostrarHistorial() {
         if (indiceTransaccion == 0) {
@@ -86,5 +81,15 @@ public class CuentaBancaria {
                 historialCuenta[i].mostrarDetalles();
             }
         }
+    }
+    public static String generarNumeroCuenta(){
+        String numeroCuenta = "";
+
+        for (int i = 0; i < 16; i++) {
+            int digito = (int) (Math.random() * 10);
+            numeroCuenta += digito;
+        }
+
+        return numeroCuenta;
     }
 }

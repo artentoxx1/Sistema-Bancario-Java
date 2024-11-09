@@ -7,6 +7,7 @@ public abstract class Persona {
     protected String sexo;
     protected String dni;
     protected String telefono;
+
     public Persona(){
         nombres="";
         apellidoPaterno="";
@@ -23,28 +24,16 @@ public abstract class Persona {
         this.dni=dni;
         this.telefono=telefono;
     }
-
     public abstract String getNombres();
-
     public abstract void setNombres(String nombres);
-
     public abstract String getApellidoPaterno();
-
     public abstract void setApellidoPaterno(String apellidoPaterno);
-
     public abstract String getApellidoMaterno();
-
     public abstract void setApellidoMaterno(String apellidoMaterno);
-
     public abstract String getSexo();
-
     public abstract void setSexo(String sexo);
-
     public abstract String getDni();
-
     public abstract void setDni(String dni);
-
     public abstract String getTelefono();
-
     public abstract void setTelefono(String telefono);
 }

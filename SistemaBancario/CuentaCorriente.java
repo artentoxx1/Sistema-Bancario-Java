@@ -6,9 +6,9 @@ public class CuentaCorriente extends CuentaBancaria{
     public CuentaCorriente(){
         super();
     }
-    public CuentaCorriente(String numeroCuenta, double saldoCuenta, Transaccion[] historialCuenta,
+    public CuentaCorriente(String numeroCuenta, double saldoCuenta,
                            String tipoCuenta, double limiteSobregiro, double comisionPorSobregiro) {
-        super(numeroCuenta, saldoCuenta, historialCuenta, tipoCuenta);
+        super(numeroCuenta, saldoCuenta, tipoCuenta);
         this.limiteSobregiro = limiteSobregiro;
         this.comisionPorSobregiro = comisionPorSobregiro;
     }
@@ -54,5 +54,4 @@ public class CuentaCorriente extends CuentaBancaria{
         System.out.println("Su sobregiro disponible es:"+getLimiteSobregiro());
 
     }
-
 }
