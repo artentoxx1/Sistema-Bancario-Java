@@ -5,4 +5,6 @@ public interface CuentaHija {
     void retirar(double monto);
     double getSaldoCuenta();
     String getNumeroCuenta();
+    Transaccion[] getHistorialCuenta();
+    void mostrarHistorial();
 }

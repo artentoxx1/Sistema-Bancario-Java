@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
-        CuentaBancaria[] cuentas = new CuentaBancaria[100];
+        CuentaHija[] cuentas = new CuentaHija[100];
         int contadorCuentas = 0;
         Scanner entrada = new Scanner(System.in);
         Cliente[] clientes;
@@ -22,7 +22,7 @@ public class PruebaSistemaBancario {
                 19,"71345893",0.10,
                 "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
 
-        Sucursal sucursales[];
+        Sucursal [] sucursales;
                 sucursales= new Sucursal[10];
         Sucursal sucursal= new Sucursal("Av. Óscar R. Benavides 5483, Callao 07006",
                 "14343","Lima" ,100, empleados);
@@ -307,26 +307,26 @@ public class PruebaSistemaBancario {
                                                 numC = entrada.nextLine();
 
                                                 if(tipoC==1){
-                                                    for(int i=0;i<clientes.length;i++){
-                                                        if(clientes[i].getCuentaAhorros().equals(numC)){
-                                                            clientes[i].getCuentaAhorros().getHistorialCuenta();
+                                                    for (Cliente cliente : clientes) {
+                                                        if (cliente.getCuentaAhorros().equals(numC)) {
+                                                            cliente.getCuentaAhorros().getHistorialCuenta();
                                                         }
 
                                                     }
                                                 }
                                                 else if(tipoC==2){
-                                                    for(int i=0;i<clientes.length;i++){
-                                                        if(clientes[i].getCuentaCorriente().equals(numC)){
-                                                            clientes[i].getCuentaCorriente().getHistorialCuenta();
+                                                    for (Cliente cliente : clientes) {
+                                                        if (cliente.getCuentaCorriente().equals(numC)) {
+                                                            cliente.getCuentaCorriente().getHistorialCuenta();
                                                         }
 
                                                     }
 
                                                 }
                                                 else{
-                                                    for(int i=0;i<clientes.length;i++){
-                                                        if(clientes[i].getCuentaDepositoPlazoFijo().equals(numC)){
-                                                            clientes[i].getCuentaDepositoPlazoFijo().getHistorialCuenta();
+                                                    for (Cliente cliente : clientes) {
+                                                        if (cliente.getCuentaDepositoPlazoFijo().equals(numC)) {
+                                                            cliente.getCuentaDepositoPlazoFijo().getHistorialCuenta();
                                                         }
                                                     }
                                                 }
@@ -352,9 +352,9 @@ public class PruebaSistemaBancario {
                                                 int plazo= entrada.nextInt();
                                                 System.out.print("Ingrese el numero de cuenta");
                                                 String numC = entrada.nextLine();
-                                                for(int i=0;i< clientes.length;i++){
-                                                    if(numC.equals(clientes[i].getCuentaCorriente().getNumeroCuenta())){
-                                                        cajero.generarTarjetaCredito(clientes[i],plazo);
+                                                for (Cliente cliente : clientes) {
+                                                    if (numC.equals(cliente.getCuentaCorriente().getNumeroCuenta())) {
+                                                        cajero.generarTarjetaCredito(cliente, plazo);
                                                     }
                                                 }
                                                 break;
@@ -368,7 +368,8 @@ public class PruebaSistemaBancario {
                                                 dni=entrada.nextLine();
                                                 Cliente nuevo= cajero.buscarCliente(clientes,dni);
                                                 cajero.generarTarjetaDebito(nuevo);
-                                            };break;
+                                                break;
+                                            }
                                             case 4:
                                                 System.out.println("Ingrese su numero de DNI: ");
                                                 dni= entrada.nextLine();
@@ -389,7 +390,7 @@ public class PruebaSistemaBancario {
 
                                     break;
                                 case 4:
-                                    CuentaBancaria cuentaVinculada = null;
+                                    CuentaHija cuentaVinculada = null;
                                     System.out.print("Ingrese el número de cuenta vinculada: ");
                                     String numeroCuenta = entrada.nextLine();
                                     for (int i = 0; i < contadorCuentas; i++) {
@@ -496,7 +497,7 @@ public class PruebaSistemaBancario {
                                                     String numeroCuentaDestino = entrada.next();
 
                                                     // Buscar la cuenta de destino en el arreglo de cuentas
-                                                    CuentaBancaria cuentaDestino = null;
+                                                    CuentaHija cuentaDestino = null;
                                                     for (int i = 0; i < contadorCuentas; i++) {
                                                         if (cuentas[i].getNumeroCuenta().equals(numeroCuentaDestino)) {
                                                             cuentaDestino = cuentas[i];
