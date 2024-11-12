@@ -81,6 +81,7 @@ public class Cajero extends Empleado{
                 liquidezFinanciera
         );
     }
+    /*
     public void añadirCajero(String user, String clave,String dni){
         Empleado[] empleados;
             empleados = new Empleado[100];
@@ -111,6 +112,7 @@ public class Cajero extends Empleado{
 
         }
     }
+    */
     public void actualizarDatosCliente(Cliente[] cliente, String dni){
         for (int i=0; i<cliente.length; i++){
             if(cliente[i].getDni().equals(dni)){
