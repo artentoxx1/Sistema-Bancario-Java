@@ -7,6 +7,8 @@ public class PruebaSistemaBancario {
         CuentaBancaria[] cuentas = new CuentaBancaria[100];
         int contadorCuentas = 0;
         Scanner entrada = new Scanner(System.in);
+        Cajero[] cajeros = new Cajero[100];
+        int totalCajeros = 0;
         Cliente[] clientes;
         clientes = new Cliente[100];
         Empleado[] empleados;
@@ -86,19 +88,19 @@ public class PruebaSistemaBancario {
                                         String dni;
                                         switch(opc3) {
                                             case 1:
-                                                admin.AniadirEmpleado(empleados);
+                                                admin.aniadirPersona(cajeros,totalCajeros);
                                             case 2:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                admin.actualizarEmpleado(empleados,dni);
+                                                admin.actualizarPersona(cajeros,totalCajeros,dni);
                                             case 3:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                admin.eliminarEmpleado(empleados,dni);
+                                                admin.eliminarPersona(cajeros,totalCajeros,dni);
                                             case 4:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                Empleado.buscarEmpleado(empleados,dni);
+                                                Empleado.buscarPersona(empleados,dni);
                                             case 5: break;
                                             default: System.out.println("Digite una opcion valida");
                                         }
@@ -113,25 +115,25 @@ public class PruebaSistemaBancario {
                                         switch(opc3) {
                                             //Opciones de sucursal
                                             case 1:
-                                                admin.agregarSucursal(sucursales);
+                                                //admin.agregarSucursal(sucursales);
                                                 break;
                                             case 2:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
                                                 cod =entrada.nextLine();
-                                                Administrador.eliminarSucursal(sucursales,cod);
+                                                //Administrador.eliminarSucursal(sucursales,cod);
                                                 break;
                                             case 3:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
                                                  cod =entrada.nextLine();
-                                                admin.modificarDatosSucursal(sucursales,cod);
+                                                //admin.modificarDatosSucursal(sucursales,cod);
                                                 break;
                                             case 4:
-                                                admin.AniadirEmpleado(empleados);
+                                                admin.aniadirPersona(cajeros,totalCajeros);
                                                 break;
                                             case 5:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 String dni =entrada.nextLine();
-                                                admin.eliminarEmpleado(empleados,dni);
+                                                admin.eliminarPersona(cajeros,totalCajeros,dni);
                                                 break;
                                             case 6:
                                                 break;
@@ -585,7 +587,8 @@ public class PruebaSistemaBancario {
             System.out.println("Clave generada: " + passGenerada);
             System.out.println("Ingrese DNI:");
             String dni= sc.nextLine();
-            cajero.añadirCajero(userGenerado,passGenerada,dni);
+            cajero.setUsuario(userGenerado);
+            cajero.setClave(passGenerada);
             System.out.print("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
             cambiarCredenciales=sc.nextInt();
             sc.nextLine(); // Consumir la nueva línea después del entero
