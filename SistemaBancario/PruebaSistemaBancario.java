@@ -171,6 +171,8 @@ public class PruebaSistemaBancario {
 
                                         switch (opc3) {
                                             case 1: // Añadir cliente
+                                                cajero.AniadirCliente(clientes);
+                                                /*
                                                 System.out.println("Ingrese el nombre del cliente: ");
                                                 String nombre = entrada.next();
                                                 System.out.println("Ingrese el apellido del cliente: ");
@@ -178,7 +180,7 @@ public class PruebaSistemaBancario {
                                                 clientes[contadorCuentas] = new Cliente(nombre, apellido,"","","","","","","","",null,null,null,
                                                         null,null,0);
                                                 System.out.println("Cliente añadido exitosamente.");
-                                                contadorCuentas++;
+                                                contadorCuentas++;*/
                                                 break;
 
                                             case 2: // Modificar información del cliente
@@ -194,24 +196,15 @@ public class PruebaSistemaBancario {
                                                 break;
 
                                             case 3: // Eliminar cliente
-                                                System.out.println("Ingrese el índice del cliente a eliminar: ");
-                                                int idx = entrada.nextInt();
-                                                if (idx < contadorCuentas && clientes[idx] != null) {
-                                                    clientes[idx] = null;
-                                                    System.out.println("Cliente eliminado.");
-                                                } else {
-                                                    System.out.println("Cliente no encontrado.");
-                                                }
+                                                System.out.println("Ingrese el dni del cliente a eliminar: ");
+                                                String idx = entrada.nextLine();
+                                                cajero.eliminarCliente(clientes,idx);
                                                 break;
 
                                             case 4: // Mostrar información del cliente
-                                                System.out.println("Ingrese el índice del cliente a mostrar: ");
-                                                int idMostrar = entrada.nextInt();
-                                                if (idMostrar < contadorCuentas && clientes[idMostrar] != null) {
-                                                    System.out.println(clientes[idMostrar]);
-                                                } else {
-                                                    System.out.println("Cliente no encontrado.");
-                                                }
+                                                System.out.println("Ingrese el dni del cliente a mostrar: ");
+                                                String idMostrar = entrada.nextLine();
+                                                cajero.mostrarCliente(clientes,idMostrar);
                                                 break;
 
                                             case 5: // Añadir saldo
