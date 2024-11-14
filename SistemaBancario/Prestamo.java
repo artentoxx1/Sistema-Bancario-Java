@@ -1,5 +1,7 @@
 package Banco.SistemaBancario;
 
+import java.util.Scanner;
+
 public class Prestamo implements Operaciones {
     private double montoPrestamo;
     private double tasaInteres;
@@ -11,6 +13,7 @@ public class Prestamo implements Operaciones {
     private boolean enMora;
     private int periodoGracia;
     private boolean capitalizarIntereses;
+    private double cuotaMensual;
 
     public Prestamo(double montoPrestamo, double tasaInteres, int plazoPrestamo, CuentaHija cuentaVinculada, int periodoGracia, boolean capitalizarIntereses) {
         this.montoPrestamo = montoPrestamo;
@@ -23,104 +26,50 @@ public class Prestamo implements Operaciones {
         this.enMora = false;
         this.periodoGracia = periodoGracia;
         this.capitalizarIntereses = capitalizarIntereses;
+        this.cuotaMensual = calcularCuotaMensual();
     }
+    
+    public static Prestamo crearPrestamo(Scanner entrada, CuentaHija cuentaVinculada) {
+        System.out.print("Ingrese el monto del préstamo: ");
+        double montoPrestamo = entrada.nextDouble();
 
-    public double getMontoPrestamo() {
-        return montoPrestamo;
-    }
+        System.out.print("Ingrese la tasa de interés anual (en decimales): ");
+        double tasaInteres = entrada.nextDouble();
 
-    public void setMontoPrestamo(double montoPrestamo) {
-        this.montoPrestamo = montoPrestamo;
-    }
+        System.out.print("Ingrese el plazo del préstamo en meses: ");
+        int plazoPrestamo = entrada.nextInt();
 
-    public double getTasaInteres() {
-        return tasaInteres;
-    }
+        System.out.print("Ingrese el periodo de gracia en meses: ");
+        int periodoGracia = entrada.nextInt();
 
-    public void setTasaInteres(double tasaInteres) {
-        this.tasaInteres = tasaInteres;
-    }
+        System.out.print("¿Desea capitalizar intereses durante el periodo de gracia? (true/false): ");
+        boolean capitalizarIntereses = entrada.nextBoolean();
 
-    public int getPlazoPrestamo() {
-        return plazoPrestamo;
-    }
-
-    public void setPlazoPrestamo(int plazoPrestamo) {
-        this.plazoPrestamo = plazoPrestamo;
-    }
-
-    public double getSaldoRestante() {
-        return saldoRestante;
-    }
-
-    public int getPagosAtrasados() {
-        return pagosAtrasados;
-    }
-
-    public void setPagosAtrasados(int pagosAtrasados) {
-        this.pagosAtrasados = pagosAtrasados;
-    }
-
-    public int getPeriodoGracia() {
-        return periodoGracia;
-    }
-
-    public void setPeriodoGracia(int periodoGracia) {
-        this.periodoGracia = periodoGracia;
-    }
-
-    public boolean getCapitalizarIntereses() {
-        return capitalizarIntereses;
-    }
-
-    public void setCapitalizarIntereses(boolean capitalizarIntereses) {
-        this.capitalizarIntereses = capitalizarIntereses;
+        return new Prestamo(montoPrestamo, tasaInteres, plazoPrestamo, cuentaVinculada, periodoGracia, capitalizarIntereses);
     }
 
     public double calcularCuotaMensual() {
         double tasaMensual = tasaInteres / 12;
-        if (periodoGracia > 0 && !capitalizarIntereses) {
-            return (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -(plazoPrestamo - periodoGracia)));
-        } else {
-            return (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazoPrestamo));
-        }
-    }
-
-    public double calcularInteresesPeriodoGracia() {
-        if (capitalizarIntereses) {
-            double tasaMensual = tasaInteres / 12;
-            double interesAcumulado = saldoRestante * Math.pow(1 + tasaMensual, periodoGracia) - saldoRestante;
-            saldoRestante += interesAcumulado;
-            System.out.println("Intereses capitalizados: S/." + interesAcumulado);
-            return interesAcumulado;
-        }
-        return 0;
+        return (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazoPrestamo));
     }
 
     public void realizarPago(double cantidad, double pagoAdicional) {
         double totalPago = cantidad + pagoAdicional;
-        if (totalPago <= saldoRestante) {
-            saldoRestante -= totalPago;
+        double intereses = saldoRestante * (tasaInteres / 12);
+        double amortizacion = totalPago - intereses;
+
+        if (amortizacion > 0) {
+            saldoRestante -= amortizacion;
             pagosRealizados++;
             System.out.println("Pago realizado: S/." + totalPago + ". Saldo restante: S/." + saldoRestante);
             verificarMora();
         } else {
-            System.out.println("El pago excede el saldo restante del préstamo.");
-        }
-    }
-
-    public void realizarPagoAdicional(double cantidad) {
-        if (cantidad <= saldoRestante) {
-            saldoRestante -= cantidad;
-            pagosRealizados++;
-            System.out.println("Pago adicional realizado: S/." + cantidad + ". Saldo restante: S/." + saldoRestante);
-        } else {
-            System.out.println("El pago adicional excede el saldo restante del préstamo.");
+            System.out.println("El pago es insuficiente para cubrir los intereses.");
         }
     }
 
     public void verificarMora() {
-        if (pagosAtrasados > 3) {
+        if (pagosRealizados < plazoPrestamo && pagosAtrasados >= 3) {
             enMora = true;
             System.out.println("El préstamo está en mora.");
         } else {
@@ -136,15 +85,6 @@ public class Prestamo implements Operaciones {
         }
     }
 
-    public double calcularInteresTotal() {
-        double cuotaMensual = calcularCuotaMensual();
-        return (cuotaMensual * plazoPrestamo) - montoPrestamo;
-    }
-
-    public boolean prestamoPagado() {
-        return saldoRestante <= 0;
-    }
-
     public void actualizarCuentaPrestamo(CuentaHija cuenta, double montoPago) {
         if (cuenta.getSaldoCuenta() >= montoPago) {
             cuenta.retirar(montoPago);
@@ -156,11 +96,11 @@ public class Prestamo implements Operaciones {
 
     public void mostrarDetalles() {
         System.out.println("Detalles del Préstamo:");
-        System.out.println("Monto del préstamo: $" + montoPrestamo);
+        System.out.println("Monto del préstamo: S/." + montoPrestamo);
         System.out.println("Tasa de interés: " + tasaInteres + "% anual");
         System.out.println("Plazo del préstamo: " + plazoPrestamo + " meses");
-        System.out.println("Saldo restante: $" + saldoRestante);
-        System.out.println("Cuota mensual: $" + calcularCuotaMensual());
+        System.out.println("Saldo restante: S/" + saldoRestante);
+        System.out.println("Cuota mensual: S/" + cuotaMensual);
         System.out.println("Periodo de gracia: " + periodoGracia + " meses");
         System.out.println("Capitalización de intereses: " + (capitalizarIntereses ? "Sí" : "No"));
         System.out.println("Pagos realizados: " + pagosRealizados);
@@ -169,15 +109,6 @@ public class Prestamo implements Operaciones {
     }
 
     public String estadoPrestamo() {
-        return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + calcularCuotaMensual() + " | Pagos realizados: " + pagosRealizados;
-    }
-
-    public void renegociarPlazo(int nuevoPlazo) {
-        if (nuevoPlazo > plazoPrestamo) {
-            System.out.println("El plazo del préstamo ha sido extendido a " + nuevoPlazo + " meses.");
-            this.plazoPrestamo = nuevoPlazo;
-        } else {
-            System.out.println("El nuevo plazo debe ser mayor al actual.");
-        }
+        return "Saldo pendiente: S/." + saldoRestante + " | Cuota mensual: S/." + cuotaMensual + " | Pagos realizados: " + pagosRealizados;
     }
 }

@@ -1,7 +1,7 @@
 package Banco.SistemaBancario;
 import java.util.Scanner;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 public class Cajero extends Empleado{
     private String usuario;
     private String clave;
@@ -31,7 +31,7 @@ public class Cajero extends Empleado{
     public void setClave(String clave){
         this.clave=clave;
     }
-    public void AniadirCliente(Cliente[] clientes){
+    public void AniadirCliente(ArrayList<Cliente> clientes){
         System.out.println("Ingrese el nombre del cliente: ");
         String nombresCliente = entrada.nextLine();
         System.out.println("Ingrese el apellido paterno del cliente: ");
@@ -62,6 +62,7 @@ public class Cajero extends Empleado{
         TarjetaDeDebito tarjetaDeDebito = new TarjetaDeDebito();
         TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
 
+
         Cliente nuevoCliente = new Cliente(
                 nombresCliente,
                 apellidoPaternoCliente,
@@ -80,6 +81,7 @@ public class Cajero extends Empleado{
                 tarjetaDeCredito,
                 liquidezFinanciera
         );
+        clientes.add(nuevoCliente);
     }
     public void añadirCajero(String user, String clave,String dni){
         Empleado[] empleados;
@@ -108,7 +110,6 @@ public class Cajero extends Empleado{
                 cajero.setClave(clave);
 
             }
-
         }
     }
     public void actualizarDatosCliente(Cliente[] cliente, String dni){
@@ -172,7 +173,7 @@ public class Cajero extends Empleado{
         if (existencia==0){System.out.println("No existe cliente, que esta asociado al dni proporcionado");}
 
     }
-    public Cliente buscarCliente(Cliente[] clientes, String dni) {
+    public Cliente buscarCliente(ArrayList<Cliente> clientes, String dni) {
         for (int i = 0; i < clientes.length; i++) {
             if (clientes[i].getDni().equals(dni)) {
                 return clientes[i]; // Devuelve el cliente si lo encuentra
@@ -183,7 +184,7 @@ public class Cajero extends Empleado{
        System.out.println("No existe cliente, que esta asociado al dni proporcionado");
         return null; // Retorna null si no encuentra al cliente
     }
-    public  void agregarCuentaCorriente (Cliente[] clientes, String dni){
+    public void agregarCuentaCorriente (ArrayList<Cliente> clientes, String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -196,22 +197,22 @@ public class Cajero extends Empleado{
         System.out.println("Ingrese comision por sobregiro: ");
         double comision = entrada.nextDouble();
        CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
-        for(int i=0;i< clientes.length ;i++){
-            if(clientes[i].getDni().equals(dni)){
-                clientes[i].setCuentaCorriente(CuentaC);
+        for(int i=0;i< clientes.size() ;i++){
+            if(clientes.get(i).getDni().equals(dni)){
+                clientes.get(i).setCuentaCorriente(CuentaC);
             }
         }
     }
-    public  void eliminaCuentaCorriente (Cliente[] clientes,String dni){
+    public  void eliminaCuentaCorriente (ArrayList<Cliente> clientes,String dni){
         CuentaCorriente CuentaC=new CuentaCorriente(null,0,
                 null,0,0);
-        for(int i=0;i< clientes.length ;i++){
-            if(clientes[i].getDni().equals(dni)){
-                clientes[i].setCuentaCorriente(CuentaC);
+        for(int i=0;i< clientes.size() ;i++){
+            if(clientes.get(i).getDni().equals(dni)){
+                clientes.get(i).setCuentaCorriente(CuentaC);
             }
         }
     }
-    public  void agregarCuentaAhorro (Cliente[] clientes,String dni){
+    public  void agregarCuentaAhorro (ArrayList<Cliente> clientes, String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -230,7 +231,7 @@ public class Cajero extends Empleado{
             }
         }
     }
-    public  void eliminaCuentaAhorro (Cliente[] clientes,String dni){
+    public  void eliminaCuentaAhorro (ArrayList<Cliente> clientes, String dni){
         CuentaAhorro CuentaC=new CuentaAhorro(null,null,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
@@ -239,7 +240,7 @@ public class Cajero extends Empleado{
             }
         }
     }
-    public  void agregarCuentaPlazoFijo (Cliente[] clientes,String dni){
+    public  void agregarCuentaPlazoFijo (ArrayList<Cliente> clientes, String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -264,7 +265,7 @@ public class Cajero extends Empleado{
         //(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
           //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
     }
-    public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
+    public  void eliminaCuentaPlazoFijo (ArrayList<Cliente> clientes, String dni){
         CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,null,null,
                 null,0,0,null,0);
         for(int i=0;i< clientes.length ;i++){
@@ -347,21 +348,21 @@ public class Cajero extends Empleado{
             System.out.println("Número de tarjeta: " + numeroTarjetaGenerado);
         }
     }
-    public void bloquearTarjetaDebito(Cliente[] clientes, String dni) {
+    public void bloquearTarjetaDebito(ArrayList<Cliente> clientes, String dni) {
         Cliente cliente = buscarCliente(clientes, dni);
         if (cliente != null) {
             cliente.getTarjetaDeDebito().bloquearTarjeta();
             System.out.println("La tarjeta de débito del cliente con DNI " + dni + " ha sido bloqueada.");
         }
     }
-    public void bloquearTarjetaCredito(Cliente[] clientes, String dni) {
+    public void bloquearTarjetaCredito(ArrayList<Cliente> clientes, String dni) {
         Cliente cliente = buscarCliente(clientes, dni);
         if (cliente != null) {
             cliente.getTarjetaDeCredito().bloquearTarjeta();
             System.out.println("La tarjeta de credito del cliente con DNI " + dni + " ha sido bloqueada.");
         }
     }
-    public void mostrarInformacionTarjeta(String claveTarjeta,String dni, Cliente[] clientes) {
+    public void mostrarInformacionTarjeta(String claveTarjeta, String dni, ArrayList<Cliente> clientes) {
         Cliente cliente= buscarCliente(clientes ,dni);
         if(cliente.getTarjetaDeDebito().getClaveTarjeta().equals(claveTarjeta)){
 

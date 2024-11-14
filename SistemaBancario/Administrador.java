@@ -1,4 +1,5 @@
 package Banco.SistemaBancario;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Administrador extends Empleado {
 
@@ -17,7 +18,7 @@ public class Administrador extends Empleado {
     public void mostrar(Empleado empleado) {
         mostrarEmpleado(empleado);
     }
-    public void AniadirEmpleado(Empleado[] empleados){
+    public void AniadirEmpleado(ArrayList<Empleado> empleados){
         System.out.print("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
         System.out.print("Ingrese el apellido paterno del empleado: ");
@@ -47,6 +48,7 @@ public class Administrador extends Empleado {
                 apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
                 telefonoEmpleado, edadEmpleado, dniEmpleado,
                 salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+        empleados.add(nuevoEmpleado);
     }
     public static void eliminarEmpleadoSucursal(Empleado[] empleados, String numDni){
         for(int i=0;i<empleados.length;i++){
@@ -116,50 +118,49 @@ public class Administrador extends Empleado {
             System.out.println("No hay sucursal asociado al codigo proporcionado.");
         }
     }
-    public static void ordenarPorApellido(Cliente[] clientes) {
-        if(clientes.length>0){
-            for (int i = 0; i < clientes.length - 1; i++) {
-                for (int j = 0; j < clientes.length - i - 1; j++) {
-                    if (clientes[j].getApellidoMaterno().compareToIgnoreCase(clientes[j + 1].getApellidoMaterno()) > 0) {
-                        Cliente temp = clientes[j];
-                        clientes[j] = clientes[j + 1];
-                        clientes[j + 1] = temp;
+    public static void ordenarPorApellido(ArrayList<Cliente> clientes) {
+        if (clientes.size() > 0) {
+            for (int i = 0; i < clientes.size() - 1; i++) {
+                for (int j = 0; j < clientes.size() - i - 1; j++) {
+                    // Obtener los clientes en las posiciones j y j+1
+                    Cliente cliente1 = clientes.get(j);
+                    Cliente cliente2 = clientes.get(j + 1);
+
+                    // Comparar apellidos de forma insensible a mayúsculas y minúsculas
+                    if (cliente1.getApellidoMaterno().compareToIgnoreCase(cliente2.getApellidoMaterno()) > 0) {
+                        // Intercambiar los elementos si están en el orden incorrecto
+                        clientes.set(j, cliente2);
+                        clientes.set(j + 1, cliente1);
                     }
                 }
             }
-            System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println(clientes[i].getApellidoMaterno()+" "+clientes[i].getApellidoPaterno()+" "+clientes[i].getNombres());
-            }
-            System.out.println("\n--------------------------\n");
         }
-        else{System.out.println("No hay clientes registrados");}
     }
-    public static void mostrarCarreraProfesional(Cliente[] clientes){
-        if(clientes.length>0){
+    public static void mostrarCarreraProfesional(ArrayList<Cliente> clientes){
+        if(clientes.size()>0){
             System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println("Carrera profesional del " + (i+1)+" cliente: " + clientes[i].getProfesionCliente());
+            for(int i=0;i<clientes.size();i++){
+                System.out.println("Carrera profesional del " + (i+1)+" cliente: " + clientes.get(i).getProfesionCliente());
             }
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
     }
-    public static void mostrarCorreosClientes(Cliente[] clientes){
-        if(clientes.length>0){
+    public static void mostrarCorreosClientes(ArrayList<Cliente> clientes){
+        if(clientes.size()>0){
             System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println("Correo del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+            for(int i=0;i<clientes.size();i++){
+                System.out.println("Correo del " + (i+1)+" cliente: " + clientes.get(i).getCorreoCliente());
             }
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
     }
-    public static void mostrarNumerosClientes(Cliente[] clientes){
-        if(clientes.length>0){
+    public static void mostrarNumerosClientes(ArrayList<Cliente> clientes){
+        if(clientes.size()>0){
             System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes[i].getTelefono());
+            for(int i=0;i<clientes.size();i++){
+                System.out.println("Numero telefonico del " + (i+1)+" cliente: " + clientes.get(i).getTelefono());
             }
             System.out.println("\n--------------------------\n");
         }
@@ -167,21 +168,21 @@ public class Administrador extends Empleado {
             System.out.println("Primero añada algunos clientes");
         }
     }
-    public static void mostrarDireccionClientes(Cliente[] clientes){
-        if(clientes.length>0){
+    public static void mostrarDireccionClientes(ArrayList<Cliente> clientes){
+        if(clientes.size()>0){
             System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println("Direccion del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+            for(int i=0;i<clientes.size();i++){
+                System.out.println("Direccion del " + (i+1)+" cliente: " + clientes.get(i).getCorreoCliente());
             }
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
     }
-    public static void mostrarCargaFamiliarClientes(Cliente[] clientes){
-        if(clientes.length>0){
+    public static void mostrarCargaFamiliarClientes(ArrayList<Cliente> clientes){
+        if(clientes.size()>0){
             System.out.println("\n--------------------------\n");
-            for(int i=0;i<clientes.length;i++){
-                System.out.println("Carga familiar del " + (i+1)+" cliente: " + clientes[i].getCorreoCliente());
+            for(int i=0;i<clientes.size();i++){
+                System.out.println("Carga familiar del " + (i+1)+" cliente: " + clientes.get(i).getCorreoCliente());
             }
             System.out.println("\n--------------------------\n");
         }

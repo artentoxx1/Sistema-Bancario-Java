@@ -1,5 +1,6 @@
 package Banco.SistemaBancario;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Empleado extends Persona {
     protected int edadEmpleado;
@@ -90,10 +91,10 @@ public class Empleado extends Persona {
     public void setSucursalEmpleado(String sucursalEmpleado) {
         this.sucursalEmpleado = sucursalEmpleado;
     }
-    public void actualizarEmpleado(Empleado[] empleados, String numDni) {
+    public void actualizarEmpleado(ArrayList<Empleado> empleados, String numDni) {
         int existencia=0;
-        for (int i = 0; i < empleados.length; i++) {
-            if (empleados[i].getDni().equals(numDni) ) {
+        for (int i = 0; i < empleados.size(); i++) {
+            if (empleados.get(i).getDni().equals(numDni) ) {
                 System.out.println("Seleccione que dato quiere actualizar");
                 System.out.println("1.Salario.");
                 System.out.println("2.Telefono.");
@@ -103,17 +104,17 @@ public class Empleado extends Persona {
                     case 1:{
                         System.out.println("Ingrese el nuevo salario: ");
                         double salario=entrada.nextDouble();
-                        empleados[i].setSalarioEmpleado(salario);
+                        empleados.get(i).setSalarioEmpleado(salario);
                     };break;
                     case 2:{
                         System.out.println("Ingrese el nuevo telefono: ");
                         String telefono=entrada.next();
-                        empleados[i].setTelefono(telefono);
+                        empleados.get(i).setTelefono(telefono);
                     };break;
                     case 3:{
                         System.out.println("Ingrese el nuevo puesto: ");
                         String puesto=entrada.next();
-                        empleados[i].setPuestoEmpleado(puesto);
+                        empleados.get(i).setPuestoEmpleado(puesto);
                     };break;
 
                 }
@@ -124,16 +125,12 @@ public class Empleado extends Persona {
         if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
 
     }
-    public void eliminarEmpleado(Empleado [] empleados, String numDni) {
+    public void eliminarEmpleado(ArrayList<Empleado> empleados, String numDni) {
         boolean flag = false;
-        int total=empleados.length;
+        int total=empleados.size();
         for (int i = 0; i < total; i++) {
-            if (empleados[i]!=null && empleados[i].getDni().equals(numDni)) {
-                flag=true;
-                for (int j = i; j < total-1; j++) { // j= 0
-                    empleados[j] = empleados[j+1];
-                }
-                empleados[total-1]= null;
+            if (empleados.get(i)!=null && empleados.get(i).getDni().equals(numDni)) {
+                empleados.remove(i);
             }
         }
         System.out.println("Empleado eliminado correctamente");
@@ -153,10 +150,10 @@ public class Empleado extends Persona {
         }
     }
 
-        public static void buscarEmpleado(Empleado[] empleados, String numDni) {
+        public static void buscarEmpleado(ArrayList<Empleado> empleados, String numDni) {
         int existencia=0;
-        for(int i = 0; i < empleados.length; i++) {
-            if (empleados[i].getDni().equals(numDni)) {
+        for(int i = 0; i < empleados.size(); i++) {
+            if (empleados.get(i).getDni().equals(numDni)) {
                 System.out.println("Empleado: " + empleados[i].getNombres());
                 System.out.println("Apellido: " + empleados[i].getApellidoEmpleado());
                 System.out.println("Sexo: " + empleados[i].getSexo());

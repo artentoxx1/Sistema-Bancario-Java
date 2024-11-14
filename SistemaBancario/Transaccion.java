@@ -1,6 +1,15 @@
 package Banco.SistemaBancario;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Transaccion implements Operaciones {
+    private static final String DIRECTORIO_TRANSACCIONES = "transacciones";
+    private static final AtomicInteger contadorTransacciones = new AtomicInteger(1);
+
     private String tipoTransaccion;
     private double cantidadTransaccion;
     private Fecha fechaTransaccion;
@@ -11,29 +20,37 @@ public class Transaccion implements Operaciones {
         this.cantidadTransaccion = cantidadTransaccion;
         this.fechaTransaccion = fechaTransaccion;
         this.cuentaDestino = cuentaDestino;
+        guardarTransaccionEnArchivo();
     }
 
     public String getTipoTransaccion() {
         return tipoTransaccion;
     }
+
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
+
     public double getCantidadTransaccion() {
         return cantidadTransaccion;
     }
+
     public void setCantidadTransaccion(double cantidadTransaccion) {
         this.cantidadTransaccion = cantidadTransaccion;
     }
+
     public Fecha getFechaTransaccion() {
         return fechaTransaccion;
     }
+
     public void setFechaTransaccion(Fecha fechaTransaccion) {
         this.fechaTransaccion = fechaTransaccion;
     }
+
     public CuentaHija getCuentaDestino() {
         return cuentaDestino;
     }
+
     public void setCuentaDestino(CuentaHija cuentaDestino) {
         this.cuentaDestino = cuentaDestino;
     }
@@ -61,6 +78,34 @@ public class Transaccion implements Operaciones {
             default:
                 System.out.println("Tipo de transacción no válido.");
         }
+    }
+
+    private void guardarTransaccionEnArchivo() {
+        // Crear el directorio si no existe
+        File directorio = new File(DIRECTORIO_TRANSACCIONES);
+        if (!directorio.exists()) {
+            directorio.mkdir();
+        }
+
+        // Crear y escribir en el archivo
+        String nombreArchivo = DIRECTORIO_TRANSACCIONES + "/transaccion_" + contadorTransacciones.getAndIncrement() + ".txt";
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nombreArchivo))) {
+            escritor.write("Tipo de transacción: " + tipoTransaccion + "\n");
+            escritor.write("Cantidad: " + cantidadTransaccion + "\n");
+            escritor.write("Fecha: " + fechaTransaccion.toString() + "\n");
+            if (cuentaDestino != null) {
+                escritor.write("Cuenta destino: " + cuentaDestino.getNumeroCuenta() + "\n");
+            }
+            escritor.write("-------------------------------------\n");
+            System.out.println("Detalles de la transacción guardados en: " + nombreArchivo);
+        } catch (IOException e) {
+            System.out.println("Error al guardar los detalles de la transacción: " + e.getMessage());
+        }
+    }
+
+    public static void crearYEjecutar(String tipo, double monto, Fecha fecha, CuentaHija cuentaOrigen, CuentaHija cuentaDestino) {
+        Transaccion transaccion = new Transaccion(tipo, monto, fecha, cuentaDestino);
+        transaccion.ejecutarTransaccion(cuentaOrigen);
     }
 
     public void mostrarDetalles() {
