@@ -1,6 +1,8 @@
 package Banco.SistemaBancario;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Cajero extends Empleado{
     private String usuario;
@@ -31,6 +33,39 @@ public class Cajero extends Empleado{
     public void setClave(String clave){
         this.clave=clave;
     }
+    /*
+    public void añadirCajero(String user, String clave,String dni){
+        Empleado[] empleados;
+            empleados = new Empleado[100];
+        Administrador admin=new Administrador("Andre",
+                "Salas","Echenique","Masculino","923826161",
+                19,"71345893",0.10,
+                "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
+
+        admin.AniadirEmpleado(empleados);
+        Cajero cajero=new Cajero(null,null,null,null,
+                null,0,null,0.0,null,null,null,null);
+        for(int i=0;i<empleados.length;i++){
+            if(empleados[i].getDni().equals(dni)){
+                cajero.setNombres(empleados[i].getNombres());
+                cajero.setApellidoMaterno(empleados[i].getApellidoMaterno());
+                cajero.setApellidoPaterno(empleados[i].getApellidoPaterno());
+                cajero.setDni(empleados[i].getDni());
+                cajero.setSexo(empleados[i].getSexo());
+                cajero.setEdadEmpleado(empleados[i].getEdadEmpleado());
+                cajero.setTelefono(empleados[i].getTelefono());
+                cajero.setSalarioEmpleado(empleados[i].getSalarioEmpleado());
+                cajero.setPuestoEmpleado(empleados[i].getPuestoEmpleado());
+                cajero.setSucursalEmpleado(empleados[i].getSucursalEmpleado());
+                cajero.setUsuario(user);
+                cajero.setClave(clave);
+
+            }
+
+        }
+    }
+    */
+
     public void AniadirCliente(Cliente[] clientes){
         System.out.println("Ingrese el nombre del cliente: ");
         String nombresCliente = entrada.nextLine();
@@ -80,69 +115,98 @@ public class Cajero extends Empleado{
                 tarjetaDeCredito,
                 liquidezFinanciera
         );
+        aniadirClienteArchivo(nuevoCliente);
+
     }
-    /*
-    public void añadirCajero(String user, String clave,String dni){
-        Empleado[] empleados;
-            empleados = new Empleado[100];
-        Administrador admin=new Administrador("Andre",
-                "Salas","Echenique","Masculino","923826161",
-                19,"71345893",0.10,
-                "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
-
-        admin.AniadirEmpleado(empleados);
-        Cajero cajero=new Cajero(null,null,null,null,
-                null,0,null,0.0,null,null,null,null);
-        for(int i=0;i<empleados.length;i++){
-            if(empleados[i].getDni().equals(dni)){
-                cajero.setNombres(empleados[i].getNombres());
-                cajero.setApellidoMaterno(empleados[i].getApellidoMaterno());
-                cajero.setApellidoPaterno(empleados[i].getApellidoPaterno());
-                cajero.setDni(empleados[i].getDni());
-                cajero.setSexo(empleados[i].getSexo());
-                cajero.setEdadEmpleado(empleados[i].getEdadEmpleado());
-                cajero.setTelefono(empleados[i].getTelefono());
-                cajero.setSalarioEmpleado(empleados[i].getSalarioEmpleado());
-                cajero.setPuestoEmpleado(empleados[i].getPuestoEmpleado());
-                cajero.setSucursalEmpleado(empleados[i].getSucursalEmpleado());
-                cajero.setUsuario(user);
-                cajero.setClave(clave);
-
-            }
-
+    public void aniadirClienteArchivo(Cliente cliente) {
+        try (FileWriter writer = new FileWriter("clientes.txt", true)) {
+            writer.append(cliente.getNombres() + ";");
+            writer.append(cliente.getApellidoPaterno() + ";");
+            writer.append(cliente.getApellidoMaterno() + ";");
+            writer.append(cliente.getSexo() + ";");
+            writer.append(cliente.getDni() + ";");
+            writer.append(cliente.getTelefono() + ";");
+            writer.append(cliente.getCorreoCliente() + ";");
+            writer.append(cliente.getProfesionCliente() + ";");
+            writer.append(cliente.getCargaFamiliarCliente() + ";");
+            writer.append(cliente.getDireccionCliente() + ";");
+            writer.append(cliente.getLiquidezFinanciera() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    */
-    public void actualizarDatosCliente(Cliente[] cliente, String dni){
-        for (int i=0; i<cliente.length; i++){
-            if(cliente[i].getDni().equals(dni)){
-                System.out.println("Seleccione una opcion: ");
-                System.out.println("1.Modificar direccion. ");
-                System.out.println("2.Modificar telefono. ");
-                System.out.println("3.Modificar correo. ");
-            }
-            int opcion2 = entrada.nextInt();
-            switch (opcion2){
-                case 1:{
-                    System.out.println("Digite la nueva direccion: ");
-                    String nuevadireccion=entrada.next();
-                    cliente[i].setDni(nuevadireccion);
-                };break;
-                case 2:{
-                    System.out.println("Digite el nuevo telefono: ");
-                    String nuevotelefono=entrada.next();
-                    cliente[i].setTelefono(nuevotelefono);
-                };break;
-                case 3:{
-                    System.out.println("Digite el nuevo correo: ");
-                    String nuevocorreo=entrada.next();
-                    cliente[i].setCorreoCliente(nuevocorreo);
-                };break;
+    public void actualizarDatosCliente(Cliente[] clientes, String dni) {
+        Scanner entrada = new Scanner(System.in);
+        boolean clienteEncontrado = false;
 
+        for (int i = 0; i < clientes.length; i++) {
+            if (clientes[i] != null && clientes[i].getDni().equals(dni)) {
+                clienteEncontrado = true;
+                System.out.println("Seleccione una opción: ");
+                System.out.println("1. Modificar dirección.");
+                System.out.println("2. Modificar teléfono.");
+                System.out.println("3. Modificar correo.");
+
+                int opcion2 = entrada.nextInt();
+                entrada.nextLine(); // Limpiar el buffer
+
+                switch (opcion2) {
+                    case 1: {
+                        System.out.println("Digite la nueva dirección: ");
+                        String nuevaDireccion = entrada.nextLine();
+                        clientes[i].setDireccionCliente(nuevaDireccion);
+                    }
+                    break;
+                    case 2: {
+                        System.out.println("Digite el nuevo teléfono: ");
+                        String nuevoTelefono = entrada.nextLine();
+                        clientes[i].setTelefono(nuevoTelefono);
+                    }
+                    break;
+                    case 3: {
+                        System.out.println("Digite el nuevo correo: ");
+                        String nuevoCorreo = entrada.nextLine();
+                        clientes[i].setCorreoCliente(nuevoCorreo);
+                    }
+                    break;
+                    default:
+                        System.out.println("Opción no válida.");
+                        return; // Salir si la opción no es válida
+                }
+
+                // Guardar los cambios en el archivo
+                guardarClientesEnArchivo(clientes);
+                System.out.println("Datos actualizados correctamente.");
+                break; // Salir del bucle una vez que se actualiza el cliente
             }
         }
 
+        if (!clienteEncontrado) {
+            System.out.println("Cliente con DNI " + dni + " no encontrado.");
+        }
     }
+    public void guardarClientesEnArchivo(Cliente[] clientes) {
+        try (FileWriter writer = new FileWriter("clientes.txt")) {
+            for (Cliente cliente : clientes) {
+                if (cliente != null) {
+                    writer.append(cliente.getNombres() + ";");
+                    writer.append(cliente.getApellidoPaterno() + ";");
+                    writer.append(cliente.getApellidoMaterno() + ";");
+                    writer.append(cliente.getSexo() + ";");
+                    writer.append(cliente.getDni() + ";");
+                    writer.append(cliente.getTelefono() + ";");
+                    writer.append(cliente.getCorreoCliente() + ";");
+                    writer.append(cliente.getProfesionCliente() + ";");
+                    writer.append(cliente.getCargaFamiliarCliente() + ";");
+                    writer.append(cliente.getDireccionCliente() + ";");
+                    writer.append(cliente.getLiquidezFinanciera() + "\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void eliminarCliente(Cliente[] clientes, String dni){
         boolean flag = false;
         for (int i = 0; i < clientes.length; i++) {
@@ -153,6 +217,7 @@ public class Cajero extends Empleado{
                 flag=true;
             }
         }
+        guardarClientesEnArchivo(clientes);
         System.out.println("Empleado eliminado correctamente");
         if (flag==false){System.out.println("No existe cliente, que esta asociado al dni proporcionado");}
     }
