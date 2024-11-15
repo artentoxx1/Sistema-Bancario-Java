@@ -172,16 +172,7 @@ public class PruebaSistemaBancario {
 
                                         switch (opc3) {
                                             case 1: // Añadir cliente
-                                                System.out.println("Ingrese el nombre del cliente: ");
-                                                String nombre = entrada.next();
-                                                System.out.println("Ingrese el apellido del cliente: ");
-                                                String apellido = entrada.next();
-                                                clientes.get(contadorCuentas) =  new Cliente(nombre,
-                                                        apellido,"","","","",""
-                                                        ,"","","",null,
-                                                        null,null, null,null,0);
-                                                System.out.println("Cliente añadido exitosamente.");
-                                                contadorCuentas++;
+
                                                 break;
 
                                             case 2: // Modificar información del cliente
@@ -502,13 +493,16 @@ public class PruebaSistemaBancario {
 
                                             case 7: // Mostrar detalles de la transacción más reciente
                                                 System.out.println("Detalle de la transacción más reciente:");
-                                                if (cuentaVinculada.getHistorialCuenta() != null && cuentaVinculada.getHistorialCuenta().length > 0) {
-                                                    int indiceReciente = cuentaVinculada.getHistorialCuenta().length - 1;
-                                                    cuentaVinculada.getHistorialCuenta()[indiceReciente].mostrarDetalles();
+                                                if (cuentaVinculada.getHistorialCuenta() != null && !cuentaVinculada.getHistorialCuenta().isEmpty()) {
+                                                    // Obtén el índice del último elemento de la lista
+                                                    int indiceReciente = cuentaVinculada.getHistorialCuenta().size() - 1;
+                                                    // Usa get() para acceder a la transacción más reciente
+                                                    cuentaVinculada.getHistorialCuenta().get(indiceReciente).mostrarDetalles();
                                                 } else {
                                                     System.out.println("No hay transacciones registradas.");
                                                 }
                                                 break;
+
 
                                             case 8: // Revisar el historial de la cuenta
                                                 System.out.println("Historial de cuenta:");
