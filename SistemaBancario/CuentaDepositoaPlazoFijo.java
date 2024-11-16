@@ -20,7 +20,7 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
 
     // Constructor parametrizado
     public CuentaDepositoaPlazoFijo(String numeroCuenta, double saldoCuenta, String tipoCuenta,
-                                    int plazo, double tasaInteresPlazoFijo, LocalDate fechaInicio, double penalizacion) {
+                                    int plazo, double tasaInteresPlazoFijo, LocalDate fechaInicio, double penalizacion, List<Transaccion> historialCuenta) {
         super(numeroCuenta, saldoCuenta, tipoCuenta);
         this.plazo = plazo;
         this.tasaInteresPlazoFijo = tasaInteresPlazoFijo;

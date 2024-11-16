@@ -1,4 +1,7 @@
 package Banco.SistemaBancario;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.io.FileWriter;
@@ -298,7 +301,7 @@ public class Cajero extends Empleado{
         }
     }
     public  void eliminaCuentaAhorro (Cliente[] clientes,String dni){
-        CuentaAhorro CuentaC=new CuentaAhorro(null,null,
+        CuentaAhorro CuentaC=new CuentaAhorro(null,0,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
@@ -310,8 +313,10 @@ public class Cajero extends Empleado{
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
-        Transaccion[] historialCuenta;
-        historialCuenta= new Transaccion[100];
+
+        //Transaccion[] historialC;
+        //historialC= new Transaccion[100];
+        List<Transaccion> historialCuenta = new ArrayList<>();
         System.out.println("Ingrese el tipo de cuenta: ");
         String tipoCuenta = entrada.nextLine();
         System.out.println("Ingrese el plazo: ");
@@ -322,7 +327,7 @@ public class Cajero extends Empleado{
         LocalDate inicio = LocalDate.parse(entrada.nextLine());
         System.out.println("Ingrese la penalizacion: ");
         int penalizacion = entrada.nextInt();
-        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,historialCuenta,tipoCuenta,plazo,interes,inicio,penalizacion);
+        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,tipoCuenta,plazo,interes,inicio,penalizacion,historialCuenta);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);
@@ -332,8 +337,8 @@ public class Cajero extends Empleado{
         //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
     }
     public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
-        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,null,null,
-                null,0,0,null,0);
+        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,0,null,
+                0,0,null,0,null);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);
