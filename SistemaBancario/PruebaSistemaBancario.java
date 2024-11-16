@@ -124,7 +124,9 @@ public class PruebaSistemaBancario {
                                                 break;
                                             case 3:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
-                                                cod =entrada.nextLine();
+
+                                                 cod =entrada.nextLine();
+
                                                 //admin.modificarDatosSucursal(sucursales,cod);
                                                 break;
                                             case 4:

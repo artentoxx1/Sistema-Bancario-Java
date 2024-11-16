@@ -91,52 +91,101 @@ public class Empleado extends Persona {
     public void setSucursalEmpleado(String sucursalEmpleado) {
         this.sucursalEmpleado = sucursalEmpleado;
     }
-    public void actualizarEmpleado(ArrayList<Empleado> empleados, String numDni) {
-        int existencia=0;
-        for (int i = 0; i < empleados.size(); i++) {
-            if (empleados.get(i).getDni().equals(numDni) ) {
-                System.out.println("Seleccione que dato quiere actualizar");
-                System.out.println("1.Salario.");
-                System.out.println("2.Telefono.");
-                System.out.println("3.Puesto.");
-                int opcion=entrada.nextInt();
-                switch (opcion){
-                    case 1:{
-                        System.out.println("Ingrese el nuevo salario: ");
-                        double salario=entrada.nextDouble();
-                        empleados.get(i).setSalarioEmpleado(salario);
-                    };break;
-                    case 2:{
-                        System.out.println("Ingrese el nuevo telefono: ");
-                        String telefono=entrada.next();
-                        empleados.get(i).setTelefono(telefono);
-                    };break;
-                    case 3:{
-                        System.out.println("Ingrese el nuevo puesto: ");
-                        String puesto=entrada.next();
-                        empleados.get(i).setPuestoEmpleado(puesto);
-                    };break;
 
-                }
-                existencia=1;
-            }
+    public void aniadirPersona(Empleado[] empleados, int totalEmpleados){
+        System.out.println("Ingrese el nombre del empleado: ");
+        String nombreEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido paterno del empleado: ");
+        String apellidoPaternoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el apellido materno del empleado: ");
+        String apellidoMaternoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el sexo del empleado: ");
+        String sexoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el telefono del empleado: ");
+        String telefonoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el edad del empleado: ");
+        int edadEmpleado = entrada.nextInt();
+        System.out.println("Ingrese el dni del empleado: ");
+        String dniEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el salario del empleado: ");
+        double salarioEmpleado = entrada.nextDouble();
+        System.out.println("Ingrese el puesto del empleado: ");
+        String puestoEmpleado = entrada.nextLine();
+        System.out.println("Ingrese el codigo de la sucursal del empleado:");
+        String sucursalEmpleado = entrada.nextLine();
 
-        }
-        if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
 
+        Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
+                apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
+                telefonoEmpleado, edadEmpleado, dniEmpleado,
+                salarioEmpleado, puestoEmpleado,sucursalEmpleado);
+        empleados[totalEmpleados] = nuevoEmpleado;
+        totalEmpleados++;
+        //guardarCajerosEnArchivo(cajeros, totalCajeros)
     }
-    public void eliminarEmpleado(ArrayList<Empleado> empleados, String numDni) {
-        boolean flag = false;
-        int total=empleados.size();
-        for (int i = 0; i < total; i++) {
-            if (empleados.get(i)!=null && empleados.get(i).getDni().equals(numDni)) {
-                empleados.remove(i);
+    public void actualizarPersona(Empleado[] empleados,int totalEmpleados, String numDni) {
+        int index = buscarPersona(empleados, numDni); // Usamos la búsqueda para obtener el índice
+        if (index != -1) {  // Si se encuentra el empleado
+            // Realizar las actualizaciones (por ejemplo, actualizar el salario)
+            System.out.println("Seleccione qué dato quiere actualizar:");
+            System.out.println("1. Salario.");
+            System.out.println("2. Teléfono.");
+            System.out.println("3. Puesto.");
+            int opcion = entrada.nextInt();
+            entrada.nextLine();  // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("Ingrese el nuevo salario: ");
+                    double salario = entrada.nextDouble();
+                    empleados[index].setSalarioEmpleado(salario);
+                    break;
+                case 2:
+                    System.out.println("Ingrese el nuevo teléfono: ");
+                    String telefono = entrada.nextLine();
+                    empleados[index].setTelefono(telefono);
+                    break;
+                case 3:
+                    System.out.println("Ingrese el nuevo puesto: ");
+                    String puesto = entrada.nextLine();
+                    empleados[index].setPuestoEmpleado(puesto);
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+            //guardarEmpleadoEnArchivo(empleados,totalEmpleados);
+        }
+        else{
+            System.out.println("Empleado no encontrado");
+        }
+    }
+
+    public void eliminarPersona(Empleado [] empleados,int totalEmpleados, String numDni) {
+        int index = buscarPersona(empleados, numDni); // Usamos la búsqueda para obtener el índice
+        if (index != -1) {  // Si se encuentra el empleado
+            // Desplazamos los elementos a la izquierda para eliminar el empleado
+            for (int i = index; i < totalEmpleados - 1; i++) {
+                empleados[i] = empleados[i + 1];
+
+            }
+            totalEmpleados--;
+            //empleados[empleados.length - 1] = null;  // Eliminamos el último elemento (ahora duplicado)
+            System.out.println("Empleado eliminado correctamente.");
+            //guardarEmpleadosEnArchivo
+        }
+        else{
+            System.out.println("Empleado no encontrado");
+        }
+    }
+    public static int buscarPersona(Empleado[] empleados, String numDni) {
+        for (int i = 0; i < empleados.length; i++) {
+            if (empleados[i] != null && empleados[i].getDni().equals(numDni)) {
+                return i; // Devuelve el índice del empleado encontrado
             }
         }
-        System.out.println("Empleado eliminado correctamente");
-        if (flag==false){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
+        return -1; // Si no se encuentra, se devuelve -1
     }
-    public void mostrarEmpleado(Empleado empleado){
+    public void mostrarPersona(Empleado empleado){
         if(empleado!=null){
             System.out.println("Nombre: "+empleado.getNombres());
             System.out.println("Apellido: "+empleado.getApellidoEmpleado());
@@ -150,24 +199,5 @@ public class Empleado extends Persona {
         }
     }
 
-        public static void buscarEmpleado(ArrayList<Empleado> empleados, String numDni) {
-        int existencia=0;
-        for(int i = 0; i < empleados.size(); i++) {
-            if (empleados.get(i).getDni().equals(numDni)) {
-                System.out.println("Empleado: " + empleados[i].getNombres());
-                System.out.println("Apellido: " + empleados[i].getApellidoEmpleado());
-                System.out.println("Sexo: " + empleados[i].getSexo());
-                System.out.println("Telefono: " + empleados[i].getTelefono());
-                System.out.println("Edad: " + empleados[i].getEdadEmpleado());
-                System.out.println("Dni: " + empleados[i].getDni());
-                System.out.println("Salario: " + empleados[i].getSalarioEmpleado());
-                System.out.println("Puesto: " + empleados[i].getPuestoEmpleado());
-                System.out.println("Sucursal: " + empleados[i].getSucursalEmpleado());
-                existencia=1;
-            }
-
-        }
-        if (existencia==0){System.out.println("No existe empleado, que esta asociado al dni proporcionado");}
-    }
 
 }

@@ -16,107 +16,66 @@ public class Administrador extends Empleado {
     Scanner entrada = new Scanner(System.in);
 
     public void mostrar(Empleado empleado) {
-        mostrarEmpleado(empleado);
+        mostrarPersona(empleado);
     }
-    public void AniadirEmpleado(ArrayList<Empleado> empleados){
-        System.out.print("Ingrese el nombre del empleado: ");
+
+    public void aniadirPersona(Cajero[] cajeros, int totalCajeros){
+        System.out.println("Ingrese el nombre del cajero: ");
         String nombreEmpleado = entrada.nextLine();
-        System.out.print("Ingrese el apellido paterno del empleado: ");
+        System.out.println("Ingrese el apellido paterno del cajero: ");
         String apellidoPaternoEmpleado = entrada.nextLine();
-        System.out.print("Ingrese el apellido materno del empleado: ");
+        System.out.println("Ingrese el apellido materno del cajero: ");
         String apellidoMaternoEmpleado = entrada.nextLine();
-        System.out.print("Ingrese el sexo del empleado: ");
+        System.out.println("Ingrese el sexo del cajero: ");
         String sexoEmpleado = entrada.nextLine();
-        System.out.print("Ingrese el telefono del empleado: ");
+        System.out.println("Ingrese el telefono del cajero: ");
         String telefonoEmpleado = entrada.nextLine();
-        System.out.print("Ingrese el edad del empleado: ");
+        System.out.println("Ingrese el edad del cajero: ");
         int edadEmpleado = entrada.nextInt();
-        System.out.print("Ingrese el dni del empleado: ");
+        System.out.println("Ingrese el dni del cajero: ");
         String dniEmpleado = entrada.nextLine();
-        entrada.nextLine();
-        System.out.print("Ingrese el salario del empleado: ");
+        System.out.println("Ingrese el salario del cajero: ");
         double salarioEmpleado = entrada.nextDouble();
-        entrada.nextLine();
-        System.out.print("Ingrese el puesto del empleado: ");
+        System.out.println("Ingrese el puesto del cajero: ");
         String puestoEmpleado = entrada.nextLine();
-        entrada.nextLine();
-        System.out.print("Ingrese el codigo de la sucursal del empleado: ");
+        System.out.println("Ingrese el codigo de la sucursal del cajero:");
+
         String sucursalEmpleado = entrada.nextLine();
         entrada.nextLine();
 
-        Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
+        Cajero nuevoCajero = new Cajero(nombreEmpleado,
                 apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
                 telefonoEmpleado, edadEmpleado, dniEmpleado,
-                salarioEmpleado, puestoEmpleado,sucursalEmpleado);
-        empleados.add(nuevoEmpleado);
-    }
-    public static void eliminarEmpleadoSucursal(Empleado[] empleados, String numDni){
-        for(int i=0;i<empleados.length;i++){
-            if(empleados[i].getDni().equals(numDni)){
-                empleados[i].setSucursalEmpleado(null);
-            }
-        }
-    }
-    public void  modificarDatosSucursal(Sucursal[] sucursal, String Codigo){
 
-        for(int i=0;i<sucursal.length;i++){
-            if(sucursal[i].getCodigo().equals(Codigo)){
-                System.out.println("Seleccione una opcion: ");
-                System.out.println("1.Modificar direccion de la sucursal. ");
-                System.out.println("2.Modificar codigo de la sucursal. ");
-                System.out.println("3.Modificar ciudad de la sucursal. ");
-                int opcion1= entrada.nextInt();
-                switch(opcion1){
-                    case 1:{
-                        System.out.println("Ingrese la nueva direccion: ");
-                        String direccion = entrada.next();
-                        sucursal[i].setDireccion(direccion);
-                    };break;
-                    case 2:{
-                        System.out.println("Ingrese el nuevo codigo de la sucursal: ");
-                        String nuevo = entrada.next();
-                        sucursal[i].setCodigo(nuevo);
-                        System.out.println(sucursal[i].getCodigo());
-                    };break;
-                    case 3:{
-                        System.out.println("Ingrese la nueva ciudad de la sucursal: ");
-                        String ciudad = entrada.next();
-                        sucursal[i].setCiudad(ciudad);
-                    };break;
-                }
+                salarioEmpleado, puestoEmpleado,sucursalEmpleado,"","");
+        cajeros[totalCajeros] = nuevoCajero;
+        totalCajeros++;
+        //guardarCajerosEnArchivo(cajeros, totalCajeros)
+
+    }
+    public void eliminarPersona(Cajero[] cajeros,int totalCajeros, String numDni){
+        int index = buscarPersona(cajeros, numDni); // Usamos la búsqueda para obtener el índice
+        if (index != -1) {  // Si se encuentra el empleado
+            // Desplazamos los elementos a la izquierda para eliminar el empleado
+            for (int i = index; i < totalCajeros - 1; i++) {
+                cajeros[i] = cajeros[i + 1];
             }
+            totalCajeros--;
+            //empleados[empleados.length - 1] = null;  // Eliminamos el último elemento (ahora duplicado)
+            System.out.println("Cajero eliminado correctamente.");
+            //guardarEmpleadosEnArchivo
+        }
+        else{
+            System.out.println("Cajero no encontrado");
         }
     }
-    public static void buscarSucursal(Sucursal[] sucursal, String Codigo) {
-        int existencia=0;
-        for(int i=0;i<sucursal.length;i++){
-            if(sucursal[i].getCodigo().equals(Codigo)) {
-                sucursal[i].mostrarInfoSucursal();
-                existencia = 1;
-                System.out.println("Si existe el sucursal buscado, los datos son: " + sucursal[i].getCiudad() + sucursal[i].getDireccion() + sucursal[i].getCodigo());
+    public static int buscarPersona(Cajero[] cajeros, String numDni) {
+        for (int i = 0; i < cajeros.length; i++) {
+            if (cajeros[i] != null && cajeros[i].getDni().equals(numDni)) {
+                return i; // Devuelve el índice del empleado encontrado
             }
         }
-        if (existencia==0){
-            System.out.println("No hay sucursal asociado al codigo proporcionado.");
-        }
-    }
-    public static void eliminarSucursal(Sucursal[] sucursal, String Codigo ){
-        int existencia=0;
-        boolean flag = false;
-        for(int i=0;i<sucursal.length;i++){
-            if(sucursal[i].getCodigo().equals(Codigo) || flag) {
-             if(sucursal[i+1] == null){
-                sucursal[i] = null;
-                i = sucursal.length;
-             }else{
-                 sucursal[i] = sucursal[i+1];
-             }
-            flag = true;
-            }
-        }
-        if (existencia==0){
-            System.out.println("No hay sucursal asociado al codigo proporcionado.");
-        }
+        return -1; // Si no se encuentra, se devuelve -1
     }
     public static void ordenarPorApellido(ArrayList<Cliente> clientes) {
         if (clientes.size() > 0) {
@@ -187,31 +146,5 @@ public class Administrador extends Empleado {
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
-    }
-    public void agregarSucursal(Sucursal [] sucursales){
-        System.out.println("Ingrese la direccion de la sucursal : ");
-        String direccion = entrada.nextLine();
-        System.out.println("Ingrese el codigo de la sucursal: ");
-        String codigo = entrada.nextLine();
-        System.out.println("Ingrese la ciudad en donde se encuentra la sucursal: ");
-        String ciudad = entrada.nextLine();
-        System.out.println("Ingrese la cantidad de empleados de la sucursal: ");
-        int cantidadEmple = entrada.nextInt();
-        Empleado[] empleados;
-        empleados = new Empleado[100];
-        Sucursal su1= new Sucursal(direccion,codigo,ciudad,cantidadEmple,empleados);
-        for(int i =0;i<sucursales.length;i++){
-            if(sucursales[i]==null){
-                sucursales[i]=su1;
-            }
-            else if(i+1==sucursales.length && sucursales[i]!=null){
-                Sucursal[] sucursales2;
-                sucursales2 = new Sucursal[(sucursales.length + 10)];
-                for(int a =0;a<sucursales.length;a++) {
-                    sucursales2[i]=sucursales[i];
-                }
-                sucursales2[sucursales.length]=su1;
-            }
-        }
     }
 }
