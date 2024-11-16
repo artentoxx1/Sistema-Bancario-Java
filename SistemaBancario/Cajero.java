@@ -1,7 +1,9 @@
 package Banco.SistemaBancario;
 import java.util.Scanner;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Cajero extends Empleado{
     private String usuario;
     private String clave;
@@ -12,7 +14,7 @@ public class Cajero extends Empleado{
         clave="";
     }
     public Cajero(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado, String
-                  telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
+                          telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
                   String puestoEmpleado, String sucursalEmpleado, String clave, String usuario) {
         super(nombreEmpleado, apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado, telefonoEmpleado,
                 edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
@@ -31,7 +33,40 @@ public class Cajero extends Empleado{
     public void setClave(String clave){
         this.clave=clave;
     }
-    public void AniadirCliente(ArrayList<Cliente> clientes){
+    /*
+    public void añadirCajero(String user, String clave,String dni){
+        Empleado[] empleados;
+            empleados = new Empleado[100];
+        Administrador admin=new Administrador("Andre",
+                "Salas","Echenique","Masculino","923826161",
+                19,"71345893",0.10,
+                "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
+
+        admin.AniadirEmpleado(empleados);
+        Cajero cajero=new Cajero(null,null,null,null,
+                null,0,null,0.0,null,null,null,null);
+        for(int i=0;i<empleados.length;i++){
+            if(empleados[i].getDni().equals(dni)){
+                cajero.setNombres(empleados[i].getNombres());
+                cajero.setApellidoMaterno(empleados[i].getApellidoMaterno());
+                cajero.setApellidoPaterno(empleados[i].getApellidoPaterno());
+                cajero.setDni(empleados[i].getDni());
+                cajero.setSexo(empleados[i].getSexo());
+                cajero.setEdadEmpleado(empleados[i].getEdadEmpleado());
+                cajero.setTelefono(empleados[i].getTelefono());
+                cajero.setSalarioEmpleado(empleados[i].getSalarioEmpleado());
+                cajero.setPuestoEmpleado(empleados[i].getPuestoEmpleado());
+                cajero.setSucursalEmpleado(empleados[i].getSucursalEmpleado());
+                cajero.setUsuario(user);
+                cajero.setClave(clave);
+
+            }
+
+        }
+    }
+    */
+
+    public void AniadirCliente(Cliente[] clientes){
         System.out.println("Ingrese el nombre del cliente: ");
         String nombresCliente = entrada.nextLine();
         System.out.println("Ingrese el apellido paterno del cliente: ");
@@ -62,7 +97,6 @@ public class Cajero extends Empleado{
         TarjetaDeDebito tarjetaDeDebito = new TarjetaDeDebito();
         TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
 
-
         Cliente nuevoCliente = new Cliente(
                 nombresCliente,
                 apellidoPaternoCliente,
@@ -81,67 +115,98 @@ public class Cajero extends Empleado{
                 tarjetaDeCredito,
                 liquidezFinanciera
         );
-        clientes.add(nuevoCliente);
+        aniadirClienteArchivo(nuevoCliente);
+
     }
-    public void añadirCajero(String user, String clave,String dni){
-        Empleado[] empleados;
-            empleados = new Empleado[100];
-        Administrador admin=new Administrador("Andre",
-                "Salas","Echenique","Masculino","923826161",
-                19,"71345893",0.10,
-                "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
-
-        admin.AniadirEmpleado(empleados);
-        Cajero cajero=new Cajero(null,null,null,null,
-                null,0,null,0.0,null,null,null,null);
-        for(int i=0;i<empleados.length;i++){
-            if(empleados[i].getDni().equals(dni)){
-                cajero.setNombres(empleados[i].getNombres());
-                cajero.setApellidoMaterno(empleados[i].getApellidoMaterno());
-                cajero.setApellidoPaterno(empleados[i].getApellidoPaterno());
-                cajero.setDni(empleados[i].getDni());
-                cajero.setSexo(empleados[i].getSexo());
-                cajero.setEdadEmpleado(empleados[i].getEdadEmpleado());
-                cajero.setTelefono(empleados[i].getTelefono());
-                cajero.setSalarioEmpleado(empleados[i].getSalarioEmpleado());
-                cajero.setPuestoEmpleado(empleados[i].getPuestoEmpleado());
-                cajero.setSucursalEmpleado(empleados[i].getSucursalEmpleado());
-                cajero.setUsuario(user);
-                cajero.setClave(clave);
-
-            }
+    public void aniadirClienteArchivo(Cliente cliente) {
+        try (FileWriter writer = new FileWriter("clientes.txt", true)) {
+            writer.append(cliente.getNombres() + ";");
+            writer.append(cliente.getApellidoPaterno() + ";");
+            writer.append(cliente.getApellidoMaterno() + ";");
+            writer.append(cliente.getSexo() + ";");
+            writer.append(cliente.getDni() + ";");
+            writer.append(cliente.getTelefono() + ";");
+            writer.append(cliente.getCorreoCliente() + ";");
+            writer.append(cliente.getProfesionCliente() + ";");
+            writer.append(cliente.getCargaFamiliarCliente() + ";");
+            writer.append(cliente.getDireccionCliente() + ";");
+            writer.append(cliente.getLiquidezFinanciera() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    public void actualizarDatosCliente(Cliente[] cliente, String dni){
-        for (int i=0; i<cliente.length; i++){
-            if(cliente[i].getDni().equals(dni)){
-                System.out.println("Seleccione una opcion: ");
-                System.out.println("1.Modificar direccion. ");
-                System.out.println("2.Modificar telefono. ");
-                System.out.println("3.Modificar correo. ");
-            }
-            int opcion2 = entrada.nextInt();
-            switch (opcion2){
-                case 1:{
-                    System.out.println("Digite la nueva direccion: ");
-                    String nuevadireccion=entrada.next();
-                    cliente[i].setDni(nuevadireccion);
-                };break;
-                case 2:{
-                    System.out.println("Digite el nuevo telefono: ");
-                    String nuevotelefono=entrada.next();
-                    cliente[i].setTelefono(nuevotelefono);
-                };break;
-                case 3:{
-                    System.out.println("Digite el nuevo correo: ");
-                    String nuevocorreo=entrada.next();
-                    cliente[i].setCorreoCliente(nuevocorreo);
-                };break;
+    public void actualizarDatosCliente(Cliente[] clientes, String dni) {
+        Scanner entrada = new Scanner(System.in);
+        boolean clienteEncontrado = false;
 
+        for (int i = 0; i < clientes.length; i++) {
+            if (clientes[i] != null && clientes[i].getDni().equals(dni)) {
+                clienteEncontrado = true;
+                System.out.println("Seleccione una opción: ");
+                System.out.println("1. Modificar dirección.");
+                System.out.println("2. Modificar teléfono.");
+                System.out.println("3. Modificar correo.");
+
+                int opcion2 = entrada.nextInt();
+                entrada.nextLine(); // Limpiar el buffer
+
+                switch (opcion2) {
+                    case 1: {
+                        System.out.println("Digite la nueva dirección: ");
+                        String nuevaDireccion = entrada.nextLine();
+                        clientes[i].setDireccionCliente(nuevaDireccion);
+                    }
+                    break;
+                    case 2: {
+                        System.out.println("Digite el nuevo teléfono: ");
+                        String nuevoTelefono = entrada.nextLine();
+                        clientes[i].setTelefono(nuevoTelefono);
+                    }
+                    break;
+                    case 3: {
+                        System.out.println("Digite el nuevo correo: ");
+                        String nuevoCorreo = entrada.nextLine();
+                        clientes[i].setCorreoCliente(nuevoCorreo);
+                    }
+                    break;
+                    default:
+                        System.out.println("Opción no válida.");
+                        return; // Salir si la opción no es válida
+                }
+
+                // Guardar los cambios en el archivo
+                guardarClientesEnArchivo(clientes);
+                System.out.println("Datos actualizados correctamente.");
+                break; // Salir del bucle una vez que se actualiza el cliente
             }
         }
 
+        if (!clienteEncontrado) {
+            System.out.println("Cliente con DNI " + dni + " no encontrado.");
+        }
     }
+    public void guardarClientesEnArchivo(Cliente[] clientes) {
+        try (FileWriter writer = new FileWriter("clientes.txt")) {
+            for (Cliente cliente : clientes) {
+                if (cliente != null) {
+                    writer.append(cliente.getNombres() + ";");
+                    writer.append(cliente.getApellidoPaterno() + ";");
+                    writer.append(cliente.getApellidoMaterno() + ";");
+                    writer.append(cliente.getSexo() + ";");
+                    writer.append(cliente.getDni() + ";");
+                    writer.append(cliente.getTelefono() + ";");
+                    writer.append(cliente.getCorreoCliente() + ";");
+                    writer.append(cliente.getProfesionCliente() + ";");
+                    writer.append(cliente.getCargaFamiliarCliente() + ";");
+                    writer.append(cliente.getDireccionCliente() + ";");
+                    writer.append(cliente.getLiquidezFinanciera() + "\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void eliminarCliente(Cliente[] clientes, String dni){
         boolean flag = false;
         for (int i = 0; i < clientes.length; i++) {
@@ -152,6 +217,7 @@ public class Cajero extends Empleado{
                 flag=true;
             }
         }
+        guardarClientesEnArchivo(clientes);
         System.out.println("Empleado eliminado correctamente");
         if (flag==false){System.out.println("No existe cliente, que esta asociado al dni proporcionado");}
     }
@@ -173,7 +239,7 @@ public class Cajero extends Empleado{
         if (existencia==0){System.out.println("No existe cliente, que esta asociado al dni proporcionado");}
 
     }
-    public Cliente buscarCliente(ArrayList<Cliente> clientes, String dni) {
+    public Cliente buscarCliente(Cliente[] clientes, String dni) {
         for (int i = 0; i < clientes.length; i++) {
             if (clientes[i].getDni().equals(dni)) {
                 return clientes[i]; // Devuelve el cliente si lo encuentra
@@ -181,10 +247,10 @@ public class Cajero extends Empleado{
             }
 
         }
-       System.out.println("No existe cliente, que esta asociado al dni proporcionado");
+        System.out.println("No existe cliente, que esta asociado al dni proporcionado");
         return null; // Retorna null si no encuentra al cliente
     }
-    public void agregarCuentaCorriente (ArrayList<Cliente> clientes, String dni){
+    public  void agregarCuentaCorriente (Cliente[] clientes, String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -196,23 +262,23 @@ public class Cajero extends Empleado{
         double limite = entrada.nextDouble();
         System.out.println("Ingrese comision por sobregiro: ");
         double comision = entrada.nextDouble();
-       CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
-        for(int i=0;i< clientes.size() ;i++){
-            if(clientes.get(i).getDni().equals(dni)){
-                clientes.get(i).setCuentaCorriente(CuentaC);
+        CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
+        for(int i=0;i< clientes.length ;i++){
+            if(clientes[i].getDni().equals(dni)){
+                clientes[i].setCuentaCorriente(CuentaC);
             }
         }
     }
-    public  void eliminaCuentaCorriente (ArrayList<Cliente> clientes,String dni){
+    public  void eliminaCuentaCorriente (Cliente[] clientes,String dni){
         CuentaCorriente CuentaC=new CuentaCorriente(null,0,
                 null,0,0);
-        for(int i=0;i< clientes.size() ;i++){
-            if(clientes.get(i).getDni().equals(dni)){
-                clientes.get(i).setCuentaCorriente(CuentaC);
+        for(int i=0;i< clientes.length ;i++){
+            if(clientes[i].getDni().equals(dni)){
+                clientes[i].setCuentaCorriente(CuentaC);
             }
         }
     }
-    public  void agregarCuentaAhorro (ArrayList<Cliente> clientes, String dni){
+    public  void agregarCuentaAhorro (Cliente[] clientes,String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -231,7 +297,7 @@ public class Cajero extends Empleado{
             }
         }
     }
-    public  void eliminaCuentaAhorro (ArrayList<Cliente> clientes, String dni){
+    public  void eliminaCuentaAhorro (Cliente[] clientes,String dni){
         CuentaAhorro CuentaC=new CuentaAhorro(null,null,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
@@ -240,7 +306,7 @@ public class Cajero extends Empleado{
             }
         }
     }
-    public  void agregarCuentaPlazoFijo (ArrayList<Cliente> clientes, String dni){
+    public  void agregarCuentaPlazoFijo (Cliente[] clientes,String dni){
         System.out.println("Ingrese el numero de cuenta : ");
         String numCuenta = entrada.nextLine();
         double saldo = 0;
@@ -263,9 +329,9 @@ public class Cajero extends Empleado{
             }
         }
         //(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
-          //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
+        //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
     }
-    public  void eliminaCuentaPlazoFijo (ArrayList<Cliente> clientes, String dni){
+    public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
         CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,null,null,
                 null,0,0,null,0);
         for(int i=0;i< clientes.length ;i++){
@@ -348,21 +414,21 @@ public class Cajero extends Empleado{
             System.out.println("Número de tarjeta: " + numeroTarjetaGenerado);
         }
     }
-    public void bloquearTarjetaDebito(ArrayList<Cliente> clientes, String dni) {
+    public void bloquearTarjetaDebito(Cliente[] clientes, String dni) {
         Cliente cliente = buscarCliente(clientes, dni);
         if (cliente != null) {
             cliente.getTarjetaDeDebito().bloquearTarjeta();
             System.out.println("La tarjeta de débito del cliente con DNI " + dni + " ha sido bloqueada.");
         }
     }
-    public void bloquearTarjetaCredito(ArrayList<Cliente> clientes, String dni) {
+    public void bloquearTarjetaCredito(Cliente[] clientes, String dni) {
         Cliente cliente = buscarCliente(clientes, dni);
         if (cliente != null) {
             cliente.getTarjetaDeCredito().bloquearTarjeta();
             System.out.println("La tarjeta de credito del cliente con DNI " + dni + " ha sido bloqueada.");
         }
     }
-    public void mostrarInformacionTarjeta(String claveTarjeta, String dni, ArrayList<Cliente> clientes) {
+    public void mostrarInformacionTarjeta(String claveTarjeta,String dni, Cliente[] clientes) {
         Cliente cliente= buscarCliente(clientes ,dni);
         if(cliente.getTarjetaDeDebito().getClaveTarjeta().equals(claveTarjeta)){
 

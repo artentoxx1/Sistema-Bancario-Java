@@ -1,21 +1,20 @@
 package Banco.SistemaBancario;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class PruebaSistemaBancario {
     public static void main(String[] args) {
-        CuentaHija[] cuentas = new CuentaHija[100];
+        CuentaBancaria[] cuentas = new CuentaBancaria[100];
         int contadorCuentas = 0;
         Scanner entrada = new Scanner(System.in);
-        ArrayList<Cliente> clientes= new ArrayList<>();
-
-        ArrayList<Cajero> cajero= new ArrayList<>();
-        cajero.add(new Cajero(null,null,null,null,null,
-                0,"",0.0,null,"",null,null));
-        ArrayList<Empleado> empleados = new ArrayList<>();
+        Cajero[] cajeros = new Cajero[100];
+        int totalCajeros = 0;
+        Cliente[] clientes;
+        clientes = new Cliente[100];
+        Empleado[] empleados;
+        empleados = new Empleado[100];
         int opc, opc2, opc3;
-        Cajero cajero1= new Cajero(null,null,null,null,null,
+        Cajero cajero= new Cajero(null,null,null,null,null,
                 0,"",0.0,null,"",null,null);
         Fecha fecha = new Fecha();
 
@@ -25,7 +24,7 @@ public class PruebaSistemaBancario {
                 19,"71345893",0.10,
                 "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
 
-        Sucursal [] sucursales;
+        Sucursal sucursales[];
         sucursales= new Sucursal[10];
         Sucursal sucursal= new Sucursal("Av. Óscar R. Benavides 5483, Callao 07006",
                 "14343","Lima" ,100, empleados);
@@ -89,19 +88,19 @@ public class PruebaSistemaBancario {
                                         String dni;
                                         switch(opc3) {
                                             case 1:
-                                                admin.AniadirEmpleado(empleados);
+                                                admin.aniadirPersona(cajeros,totalCajeros);
                                             case 2:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                admin.actualizarEmpleado(empleados,dni);
+                                                admin.actualizarPersona(cajeros,totalCajeros,dni);
                                             case 3:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                admin.eliminarEmpleado(empleados,dni);
+                                                admin.eliminarPersona(cajeros,totalCajeros,dni);
                                             case 4:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 dni=entrada.nextLine();
-                                                Empleado.buscarEmpleado(empleados,dni);
+                                                Empleado.buscarPersona(empleados,dni);
                                             case 5: break;
                                             default: System.out.println("Digite una opcion valida");
                                         }
@@ -116,25 +115,25 @@ public class PruebaSistemaBancario {
                                         switch(opc3) {
                                             //Opciones de sucursal
                                             case 1:
-                                                admin.agregarSucursal(sucursales);
+                                                //admin.agregarSucursal(sucursales);
                                                 break;
                                             case 2:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
                                                 cod =entrada.nextLine();
-                                                Administrador.eliminarSucursal(sucursales,cod);
+                                                //Administrador.eliminarSucursal(sucursales,cod);
                                                 break;
                                             case 3:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
                                                 cod =entrada.nextLine();
-                                                admin.modificarDatosSucursal(sucursales,cod);
+                                                //admin.modificarDatosSucursal(sucursales,cod);
                                                 break;
                                             case 4:
-                                                admin.AniadirEmpleado(empleados);
+                                                admin.aniadirPersona(cajeros,totalCajeros);
                                                 break;
                                             case 5:
                                                 System.out.println("Ingrese el DNI del empleado: ");
                                                 String dni =entrada.nextLine();
-                                                admin.eliminarEmpleado(empleados,dni);
+                                                admin.eliminarPersona(cajeros,totalCajeros,dni);
                                                 break;
                                             case 6:
                                                 break;
@@ -172,15 +171,24 @@ public class PruebaSistemaBancario {
 
                                         switch (opc3) {
                                             case 1: // Añadir cliente
-
+                                                cajero.AniadirCliente(clientes);
+                                                /*
+                                                System.out.println("Ingrese el nombre del cliente: ");
+                                                String nombre = entrada.next();
+                                                System.out.println("Ingrese el apellido del cliente: ");
+                                                String apellido = entrada.next();
+                                                clientes[contadorCuentas] = new Cliente(nombre, apellido,"","","","","","","","",null,null,null,
+                                                        null,null,0);
+                                                System.out.println("Cliente añadido exitosamente.");
+                                                contadorCuentas++;*/
                                                 break;
 
                                             case 2: // Modificar información del cliente
                                                 System.out.println("Ingrese el índice del cliente a modificar: ");
                                                 int index = entrada.nextInt();
-                                                if (index < contadorCuentas && clientes.get(index) != null) {
+                                                if (index < contadorCuentas && clientes[index] != null) {
                                                     System.out.println("Ingrese el nuevo nombre: ");
-                                                    clientes.get(index).setNombres(entrada.next());
+                                                    clientes[index].setNombres(entrada.next());
                                                     System.out.println("Información modificada.");
                                                 } else {
                                                     System.out.println("Cliente no encontrado.");
@@ -188,24 +196,15 @@ public class PruebaSistemaBancario {
                                                 break;
 
                                             case 3: // Eliminar cliente
-                                                System.out.println("Ingrese el índice del cliente a eliminar: ");
-                                                int idx = entrada.nextInt();
-                                                if (idx < contadorCuentas && clientes.get(idx) != null) {
-                                                    clientes.get(idx).dni= null;
-                                                    System.out.println("Cliente eliminado.");
-                                                } else {
-                                                    System.out.println("Cliente no encontrado.");
-                                                }
+                                                System.out.println("Ingrese el dni del cliente a eliminar: ");
+                                                String idx = entrada.nextLine();
+                                                cajero.eliminarCliente(clientes,idx);
                                                 break;
 
                                             case 4: // Mostrar información del cliente
-                                                System.out.println("Ingrese el índice del cliente a mostrar: ");
-                                                int idMostrar = entrada.nextInt();
-                                                if (idMostrar < contadorCuentas && clientes.get(idMostrar) != null) {
-                                                    System.out.println(clientes.get(idMostrar));
-                                                } else {
-                                                    System.out.println("Cliente no encontrado.");
-                                                }
+                                                System.out.println("Ingrese el dni del cliente a mostrar: ");
+                                                String idMostrar = entrada.nextLine();
+                                                cajero.mostrarCliente(clientes,idMostrar);
                                                 break;
 
                                             case 5: // Añadir saldo
@@ -241,32 +240,32 @@ public class PruebaSistemaBancario {
                                             case 1:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.agregarCuentaCorriente(clientes,dni);
+                                                cajero.agregarCuentaCorriente(clientes,dni);
                                                 break;
                                             case 2:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.eliminaCuentaCorriente(clientes,dni);
+                                                cajero.eliminaCuentaCorriente(clientes,dni);
                                                 break;
                                             case 3:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.agregarCuentaAhorro(clientes,dni);
+                                                cajero.agregarCuentaAhorro(clientes,dni);
                                                 break;
                                             case 4:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.eliminaCuentaAhorro(clientes,dni);
+                                                cajero.eliminaCuentaAhorro(clientes,dni);
                                                 break;
                                             case 5:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.agregarCuentaPlazoFijo(clientes,dni);
+                                                cajero.agregarCuentaPlazoFijo(clientes,dni);
                                                 break;
                                             case 6:
                                                 System.out.print("Ingrese el DNI del cliente: ");
                                                 dni = entrada.next();
-                                                cajero1.eliminaCuentaPlazoFijo(clientes,dni);
+                                                cajero.eliminaCuentaPlazoFijo(clientes,dni);
                                                 break;
                                             case 7:
                                                 //int tipoCuenta, double cantidadDeposito, String numeroCuenta
@@ -279,7 +278,7 @@ public class PruebaSistemaBancario {
                                                 double monto = entrada.nextDouble();
                                                 System.out.print("Ingrese el numero de cuenta: ");
                                                 String numC = entrada.nextLine();
-                                                clientes.get(0).depositarCuenta(tipoC,monto,numC);
+                                                clientes[0].depositarCuenta(tipoC,monto,numC);
                                                 break;
                                             case 8:
                                                 System.out.println("Ingrese el tipo de cuenta:");
@@ -291,7 +290,7 @@ public class PruebaSistemaBancario {
                                                 monto = entrada.nextDouble();
                                                 System.out.print("Ingrese su contraseña de cuenta: ");
                                                 numC = entrada.nextLine();
-                                                clientes.get(0).retirarCuenta(tipoC,monto,numC);
+                                                clientes[0].retirarCuenta(tipoC,monto,numC);
                                                 break;
                                             case 9:
                                                 System.out.println("Ingrese el tipo de cuenta:");
@@ -303,26 +302,26 @@ public class PruebaSistemaBancario {
                                                 numC = entrada.nextLine();
 
                                                 if(tipoC==1){
-                                                    for (Cliente cliente : clientes) {
-                                                        if (cliente.getCuentaAhorros().equals(numC)) {
-                                                            cliente.getCuentaAhorros().getHistorialCuenta();
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaAhorros().equals(numC)){
+                                                            clientes[i].getCuentaAhorros().getHistorialCuenta();
                                                         }
 
                                                     }
                                                 }
                                                 else if(tipoC==2){
-                                                    for (Cliente cliente : clientes) {
-                                                        if (cliente.getCuentaCorriente().equals(numC)) {
-                                                            cliente.getCuentaCorriente().getHistorialCuenta();
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaCorriente().equals(numC)){
+                                                            clientes[i].getCuentaCorriente().getHistorialCuenta();
                                                         }
 
                                                     }
 
                                                 }
                                                 else{
-                                                    for (Cliente cliente : clientes) {
-                                                        if (cliente.getCuentaDepositoPlazoFijo().equals(numC)) {
-                                                            cliente.getCuentaDepositoPlazoFijo().getHistorialCuenta();
+                                                    for(int i=0;i<clientes.length;i++){
+                                                        if(clientes[i].getCuentaDepositoPlazoFijo().equals(numC)){
+                                                            clientes[i].getCuentaDepositoPlazoFijo().getHistorialCuenta();
                                                         }
                                                     }
                                                 }
@@ -348,35 +347,34 @@ public class PruebaSistemaBancario {
                                                 int plazo= entrada.nextInt();
                                                 System.out.print("Ingrese el numero de cuenta");
                                                 String numC = entrada.nextLine();
-                                                for (Cliente cliente : clientes) {
-                                                    if (numC.equals(cliente.getCuentaCorriente().getNumeroCuenta())) {
-                                                        cajero1.generarTarjetaCredito(cliente, plazo);
+                                                for(int i=0;i< clientes.length;i++){
+                                                    if(numC.equals(clientes[i].getCuentaCorriente().getNumeroCuenta())){
+                                                        cajero.generarTarjetaCredito(clientes[i],plazo);
                                                     }
                                                 }
                                                 break;
                                             case 2:
                                                 System.out.println("Ingrese su numero de DNI: ");
                                                 dni= entrada.nextLine();
-                                                cajero1.bloquearTarjetaCredito(clientes, dni);
+                                                cajero.bloquearTarjetaCredito(clientes, dni);
                                                 break;
                                             case 3: {
                                                 System.out.println("Ingrese su dni");
                                                 dni=entrada.nextLine();
-                                                Cliente nuevo= cajero1.buscarCliente(clientes,dni);
-                                                cajero1.generarTarjetaDebito(nuevo);
-                                                break;
-                                            }
+                                                Cliente nuevo= cajero.buscarCliente(clientes,dni);
+                                                cajero.generarTarjetaDebito(nuevo);
+                                            };break;
                                             case 4:
                                                 System.out.println("Ingrese su numero de DNI: ");
                                                 dni= entrada.nextLine();
-                                                cajero1.bloquearTarjetaDebito(clientes, dni);
+                                                cajero.bloquearTarjetaDebito(clientes, dni);
                                                 break;
                                             case 5:
                                                 System.out.println("Ingrese su numero de DNI: ");
                                                 dni= entrada.nextLine();
                                                 System.out.println("Ingrese su clave de tarjeta: ");
                                                 String clave= entrada.nextLine();
-                                                cajero1.mostrarInformacionTarjeta(clave,dni,clientes);
+                                                cajero.mostrarInformacionTarjeta(clave,dni,clientes);
                                                 break;
                                             case 6:
                                                 break;
@@ -386,11 +384,9 @@ public class PruebaSistemaBancario {
 
                                     break;
                                 case 4:
-                                    CuentaHija cuentaVinculada = null;
+                                    CuentaBancaria cuentaVinculada = null;
                                     System.out.print("Ingrese el número de cuenta vinculada: ");
                                     String numeroCuenta = entrada.nextLine();
-
-                                    // Buscar la cuenta vinculada en el arreglo de cuentas
                                     for (int i = 0; i < contadorCuentas; i++) {
                                         if (cuentas[i].getNumeroCuenta().equals(numeroCuenta)) {
                                             cuentaVinculada = cuentas[i];
@@ -559,7 +555,8 @@ public class PruebaSistemaBancario {
             System.out.println("Clave generada: " + passGenerada);
             System.out.println("Ingrese DNI:");
             String dni= sc.nextLine();
-            cajero.añadirCajero(userGenerado,passGenerada,dni);
+            cajero.setUsuario(userGenerado);
+            cajero.setClave(passGenerada);
             System.out.print("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
             cambiarCredenciales=sc.nextInt();
             sc.nextLine(); // Consumir la nueva línea después del entero
@@ -697,11 +694,11 @@ public class PruebaSistemaBancario {
         System.out.println("1. Realizar un préstamo");
         System.out.println("2. Realizar el pago de un préstamo");
         System.out.println("3. Verificar el estado de un préstamo");
-        System.out.println("4. Penalización por mora");
-        System.out.println("5. Mostrar detalles del préstamo");
+        System.out.println("4. Renegociar plazo de un préstamo");
+        System.out.println("5. Mostrar detalles de un préstamo");
         System.out.println("6. Realizar una transacción");
-        System.out.println("7. Mostrar detalles de la transacción más reciente");
-        System.out.println("8. Revisar el historial de la cuenta vinculada");
+        System.out.println("7. Mostrar detalles de una transacción");
+        System.out.println("8. Revisar el historial de una cuenta");
         System.out.println("9. Regresar");
         System.out.print("Opcion: ");
     }
