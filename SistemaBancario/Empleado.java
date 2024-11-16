@@ -1,5 +1,6 @@
 package Banco.SistemaBancario;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Empleado extends Persona {
     protected int edadEmpleado;
@@ -90,6 +91,7 @@ public class Empleado extends Persona {
     public void setSucursalEmpleado(String sucursalEmpleado) {
         this.sucursalEmpleado = sucursalEmpleado;
     }
+
     public void aniadirPersona(Empleado[] empleados, int totalEmpleados){
         System.out.println("Ingrese el nombre del empleado: ");
         String nombreEmpleado = entrada.nextLine();
@@ -111,6 +113,7 @@ public class Empleado extends Persona {
         String puestoEmpleado = entrada.nextLine();
         System.out.println("Ingrese el codigo de la sucursal del empleado:");
         String sucursalEmpleado = entrada.nextLine();
+
 
         Empleado nuevoEmpleado = new Empleado(nombreEmpleado,
                 apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado,
@@ -156,12 +159,14 @@ public class Empleado extends Persona {
             System.out.println("Empleado no encontrado");
         }
     }
+
     public void eliminarPersona(Empleado [] empleados,int totalEmpleados, String numDni) {
         int index = buscarPersona(empleados, numDni); // Usamos la búsqueda para obtener el índice
         if (index != -1) {  // Si se encuentra el empleado
             // Desplazamos los elementos a la izquierda para eliminar el empleado
             for (int i = index; i < totalEmpleados - 1; i++) {
                 empleados[i] = empleados[i + 1];
+
             }
             totalEmpleados--;
             //empleados[empleados.length - 1] = null;  // Eliminamos el último elemento (ahora duplicado)
@@ -193,5 +198,6 @@ public class Empleado extends Persona {
             System.out.println("Sucursa"+empleado.getSucursalEmpleado());
         }
     }
+
 
 }

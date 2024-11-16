@@ -14,7 +14,7 @@ public class Cajero extends Empleado{
         clave="";
     }
     public Cajero(String nombreEmpleado, String apellidoPaternoEmpleado,String apellidoMaternoEmpleado, String sexoEmpleado, String
-                  telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
+                          telefonoEmpleado, int edadEmpleado, String dniEmpleado, double salarioEmpleado,
                   String puestoEmpleado, String sucursalEmpleado, String clave, String usuario) {
         super(nombreEmpleado, apellidoPaternoEmpleado,apellidoMaternoEmpleado, sexoEmpleado, telefonoEmpleado,
                 edadEmpleado, dniEmpleado,salarioEmpleado, puestoEmpleado,sucursalEmpleado);
@@ -247,7 +247,7 @@ public class Cajero extends Empleado{
             }
 
         }
-       System.out.println("No existe cliente, que esta asociado al dni proporcionado");
+        System.out.println("No existe cliente, que esta asociado al dni proporcionado");
         return null; // Retorna null si no encuentra al cliente
     }
     public  void agregarCuentaCorriente (Cliente[] clientes, String dni){
@@ -262,7 +262,7 @@ public class Cajero extends Empleado{
         double limite = entrada.nextDouble();
         System.out.println("Ingrese comision por sobregiro: ");
         double comision = entrada.nextDouble();
-       CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
+        CuentaCorriente CuentaC= new CuentaCorriente(numCuenta,saldo,tipoCuenta,limite,comision);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaCorriente(CuentaC);
@@ -329,7 +329,7 @@ public class Cajero extends Empleado{
             }
         }
         //(String numeroCuenta, double saldoCuenta,Transaccion[] historialCuenta,
-          //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
+        //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
     }
     public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
         CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,null,null,
