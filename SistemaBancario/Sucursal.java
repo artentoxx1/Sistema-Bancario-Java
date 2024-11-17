@@ -1,5 +1,5 @@
 package Banco.SistemaBancario;
-
+import java.util.ArrayList;
 public class Sucursal{
     private String direccionSucursal;
     private String codigoSucursal;
@@ -7,11 +7,11 @@ public class Sucursal{
     private int cantidadEmpleados;
     private Empleado[] conjuntoEmpleados;
 
-    public Sucursal(){
-        direccionSucursal = "";
+    public Sucursal(String direccionSucursal, String number, String lima, int cantidadEmpleados, ArrayList<Empleado> empleados){
+        this.direccionSucursal = "";
         codigoSucursal = "";
         ciudadSurcursal = "";
-        cantidadEmpleados = 0;
+        this.cantidadEmpleados = 0;
         conjuntoEmpleados = new Empleado[0];
     }
     public Sucursal(String direccionSucursal, String codigoSucursal,

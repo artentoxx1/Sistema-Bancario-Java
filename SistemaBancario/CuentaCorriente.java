@@ -1,6 +1,8 @@
 package Banco.SistemaBancario;
+
 import java.util.Scanner;
-public class CuentaCorriente extends CuentaBancaria{
+
+public class CuentaCorriente extends CuentaBancaria implements CuentaHija{
     private double limiteSobregiro;
     private double comisionPorSobregiro;
     public CuentaCorriente(){

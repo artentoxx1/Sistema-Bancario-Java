@@ -1,95 +1,112 @@
 package Banco.SistemaBancario;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-public class CuentaBancaria {
+
+public class CuentaBancaria implements CuentaHija{
     protected String numeroCuenta;
     protected double saldoCuenta;
-    protected Transaccion[] historialCuenta;
+    protected List<Transaccion> historialCuenta; // Cambiado a List para mejor gestión
     protected String tipoCuenta;
-    private int indiceTransaccion = 0;
 
+    // Constructor por defecto
     public CuentaBancaria() {
+        this.historialCuenta = new ArrayList<>(); // Inicializar la lista
     }
-    public CuentaBancaria(String numeroCuenta, double saldoCuenta,
-                          String tipoCuenta) {
+
+    // Constructor parametrizado
+    public CuentaBancaria(String numeroCuenta, double saldoCuenta, String tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
         this.saldoCuenta = saldoCuenta;
-        this.historialCuenta = null;
+        this.historialCuenta = new ArrayList<>(); // Inicializar la lista
         this.tipoCuenta = tipoCuenta;
     }
+
     public String getNumeroCuenta() {
         return numeroCuenta;
     }
+
     public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
+
     public double getSaldoCuenta() {
         return saldoCuenta;
     }
+
     public void setSaldoCuenta(double saldoCuenta) {
         this.saldoCuenta = saldoCuenta;
     }
-    public Transaccion[] getHistorialCuenta() {
+
+    public List<Transaccion> getHistorialCuenta() {
         return historialCuenta;
     }
-    public void setHistorialCuenta(Transaccion[] historialCuenta) {
+
+    public void setHistorialCuenta(List<Transaccion> historialCuenta) {
         this.historialCuenta = historialCuenta;
     }
+
     public String getTipoCuenta() {
         return tipoCuenta;
     }
+
     public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
     }
+
     Scanner sc = new Scanner(System.in);
-    private void registrarTransaccion(Transaccion transaccion) {
-        if (indiceTransaccion >= historialCuenta.length) {
-            // Duplicar el tamaño del arreglo si se llena
-            Transaccion[] nuevoHistorial = new Transaccion[historialCuenta.length * 2];
-            System.arraycopy(historialCuenta, 0, nuevoHistorial, 0, historialCuenta.length);
-            historialCuenta = nuevoHistorial;
-        }
-        historialCuenta[indiceTransaccion] = transaccion;
-        indiceTransaccion++;
+
+    // Metodo para registrar una transacción
+    public void registrarTransaccion(Transaccion transaccion) {
+        historialCuenta.add(transaccion); // Añadir la transacción a la lista
     }
+
+    // Metodo para depositar
     public void depositar(double monto) {
         saldoCuenta += monto;
         setSaldoCuenta(saldoCuenta);
-        Transaccion transaccion = new Transaccion("Depósito", monto, new Fecha(), null);
+        Transaccion transaccion = new Transaccion("Depósito", monto, new Fecha(), this, this);
         registrarTransaccion(transaccion);
         System.out.println("Depósito exitoso");
     }
+
+    // Metodo para retirar
     public void retirar(double monto) {
         if (saldoCuenta >= monto) {
             saldoCuenta -= monto;
             setSaldoCuenta(saldoCuenta);
-            Transaccion transaccion = new Transaccion("Retiro", monto, new Fecha(), null);
+            Transaccion transaccion = new Transaccion("Retiro", monto, new Fecha(), this, this);
             registrarTransaccion(transaccion);
             System.out.println("Retiro exitoso");
         } else {
             System.out.println("Fondos insuficientes.");
         }
     }
-    public void mostrarSaldo(){
+
+    // Metodo para mostrar el saldo
+    public void mostrarSaldo() {
         System.out.println("El saldo de la cuenta es S/. " + saldoCuenta);
     }
-    // Mostrar el historial de transacciones usando el metodo de detalle de la clase Transaccion
+
+    // Metodo para mostrar el historial de transacciones
     public void mostrarHistorial() {
-        if (indiceTransaccion == 0) {
+        if (historialCuenta.isEmpty()) {
             System.out.println("No hay transacciones en el historial.");
         } else {
-            for (int i = 0; i < indiceTransaccion; i++) {
-                historialCuenta[i].mostrarDetalles();
+            for (Transaccion transaccion : historialCuenta) {
+                transaccion.mostrarDetalles();
             }
         }
     }
-    public static String generarNumeroCuenta(){
-        String numeroCuenta = "";
 
+    // Metodo para generar un número de cuenta aleatorio
+    public static String generarNumeroCuenta() {
+        StringBuilder numeroCuenta = new StringBuilder();
         for (int i = 0; i < 16; i++) {
             int digito = (int) (Math.random() * 10);
-            numeroCuenta += digito;
+            numeroCuenta.append(digito);
         }
-
-        return numeroCuenta;
+        return numeroCuenta.toString();
     }
 }

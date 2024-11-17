@@ -25,7 +25,7 @@ public class PruebaSistemaBancario {
                 "Administrador","Av. Óscar R. Benavides 5483, Callao 07006");
 
         Sucursal sucursales[];
-                sucursales= new Sucursal[10];
+        sucursales= new Sucursal[10];
         Sucursal sucursal= new Sucursal("Av. Óscar R. Benavides 5483, Callao 07006",
                 "14343","Lima" ,100, empleados);
         sucursales[0]= sucursal;
@@ -124,7 +124,9 @@ public class PruebaSistemaBancario {
                                                 break;
                                             case 3:
                                                 System.out.println("Ingrese el codigo de sucursal: ");
+
                                                  cod =entrada.nextLine();
+
                                                 //admin.modificarDatosSucursal(sucursales,cod);
                                                 break;
                                             case 4:
@@ -406,29 +408,13 @@ public class PruebaSistemaBancario {
                                         System.out.println("\n");
                                         pantallaOperaciones();
                                         opc3 = entrada.nextInt();
+                                        entrada.nextLine(); // Limpiar el buffer
 
                                         switch (opc3) {
                                             case 1: // Realizar un préstamo
                                                 if (prestamo == null) {
-                                                    System.out.print("Ingrese el monto del préstamo: ");
-                                                    double montoPrestamo = entrada.nextDouble();
-
-                                                    System.out.print("Ingrese la tasa de interés anual (en porcentaje): ");
-                                                    double tasaInteres = entrada.nextDouble();
-
-                                                    System.out.print("Ingrese el plazo del préstamo en meses: ");
-                                                    int plazoPrestamo = entrada.nextInt();
-
-                                                    System.out.print("Ingrese el periodo de gracia en meses: ");
-                                                    int periodoGracia = entrada.nextInt();
-
-                                                    System.out.print("¿Desea capitalizar intereses durante el periodo de gracia? (true/false): ");
-                                                    boolean capitalizarIntereses = entrada.nextBoolean();
-
-                                                    // Crear instancia de Prestamo
-                                                    prestamo = new Prestamo(montoPrestamo, tasaInteres, plazoPrestamo, cuentaVinculada, periodoGracia, capitalizarIntereses);
+                                                    prestamo = Prestamo.crearPrestamo(entrada, cuentaVinculada);
                                                     System.out.println("Préstamo configurado exitosamente.");
-                                                    prestamo.calcularCuotaMensual();
                                                 } else {
                                                     System.out.println("Ya existe un préstamo asociado a esta cuenta.");
                                                 }
@@ -438,8 +424,11 @@ public class PruebaSistemaBancario {
                                                 if (prestamo != null) {
                                                     System.out.print("Ingrese el monto a pagar: ");
                                                     double montoPago = entrada.nextDouble();
+
                                                     System.out.print("Ingrese el monto adicional al pago regular (opcional, ingrese 0 si no aplica): ");
                                                     double pagoAdicional = entrada.nextDouble();
+
+                                                    // Verificar y realizar el pago desde la cuenta vinculada
                                                     prestamo.actualizarCuentaPrestamo(cuentaVinculada, montoPago + pagoAdicional);
                                                 } else {
                                                     System.out.println("No hay préstamo asociado para realizar el pago.");
@@ -454,13 +443,11 @@ public class PruebaSistemaBancario {
                                                 }
                                                 break;
 
-                                            case 4: // Renegociar plazo de un préstamo
+                                            case 4: // Penalización por mora
                                                 if (prestamo != null) {
-                                                    System.out.print("Ingrese el nuevo plazo en meses: ");
-                                                    int nuevoPlazo = entrada.nextInt();
-                                                    prestamo.renegociarPlazo(nuevoPlazo);
+                                                    prestamo.penalizarMora();
                                                 } else {
-                                                    System.out.println("No hay préstamo asociado para renegociar.");
+                                                    System.out.println("No hay préstamo asociado para penalizar mora.");
                                                 }
                                                 break;
 
@@ -477,22 +464,15 @@ public class PruebaSistemaBancario {
                                                 String tipoTransaccion = entrada.next();
                                                 System.out.print("Ingrese el monto de la transacción: ");
                                                 double montoTransaccion = entrada.nextDouble();
+                                                entrada.nextLine(); // Limpiar el buffer
 
-                                                Transaccion transaccion = null;
-
-                                                if (tipoTransaccion.equalsIgnoreCase("deposito")) {
-                                                    transaccion = new Transaccion("Deposito", montoTransaccion, fecha, null);
-                                                    transaccion.ejecutarTransaccion(cuentaVinculada);
-                                                } else if (tipoTransaccion.equalsIgnoreCase("retiro")) {
-                                                    transaccion = new Transaccion("Retiro", montoTransaccion, fecha, null);
-                                                    transaccion.ejecutarTransaccion(cuentaVinculada);
+                                                if (tipoTransaccion.equalsIgnoreCase("deposito") || tipoTransaccion.equalsIgnoreCase("retiro")) {
+                                                    Transaccion.crearYEjecutar(tipoTransaccion, montoTransaccion, fecha, cuentaVinculada, null);
                                                 } else if (tipoTransaccion.equalsIgnoreCase("transferencia")) {
-                                                    // Solicitar la cuenta de destino para la transferencia
                                                     System.out.print("Ingrese el número de cuenta de destino: ");
-                                                    String numeroCuentaDestino = entrada.next();
+                                                    String numeroCuentaDestino = entrada.nextLine();
 
-                                                    // Buscar la cuenta de destino en el arreglo de cuentas
-                                                    CuentaBancaria cuentaDestino = null;
+                                                    CuentaHija cuentaDestino = null;
                                                     for (int i = 0; i < contadorCuentas; i++) {
                                                         if (cuentas[i].getNumeroCuenta().equals(numeroCuentaDestino)) {
                                                             cuentaDestino = cuentas[i];
@@ -501,30 +481,27 @@ public class PruebaSistemaBancario {
                                                     }
 
                                                     if (cuentaDestino != null) {
-                                                        transaccion = new Transaccion("Transferencia", montoTransaccion, fecha, cuentaDestino);
-                                                        transaccion.ejecutarTransaccion(cuentaVinculada);
+                                                        Transaccion.crearYEjecutar("Transferencia", montoTransaccion, fecha, cuentaVinculada, cuentaDestino);
                                                     } else {
                                                         System.out.println("La cuenta de destino no existe.");
                                                     }
                                                 } else {
                                                     System.out.println("Tipo de transacción no válido.");
                                                 }
-
                                                 break;
 
                                             case 7: // Mostrar detalles de la transacción más reciente
                                                 System.out.println("Detalle de la transacción más reciente:");
-                                                if (cuentaVinculada.getHistorialCuenta() != null && cuentaVinculada.getHistorialCuenta().length > 0) {
-                                                    int indiceReciente = cuentaVinculada.getHistorialCuenta().length - 1; // Obtener el índice de la transacción más reciente
-                                                    if (indiceReciente >= 0) {
-                                                        cuentaVinculada.getHistorialCuenta()[indiceReciente].mostrarDetalles();
-                                                    } else {
-                                                        System.out.println("No hay transacciones registradas.");
-                                                    }
+                                                if (cuentaVinculada.getHistorialCuenta() != null && !cuentaVinculada.getHistorialCuenta().isEmpty()) {
+                                                    // Obtén el índice del último elemento de la lista
+                                                    int indiceReciente = cuentaVinculada.getHistorialCuenta().size() - 1;
+                                                    // Usa get() para acceder a la transacción más reciente
+                                                    cuentaVinculada.getHistorialCuenta().get(indiceReciente).mostrarDetalles();
                                                 } else {
                                                     System.out.println("No hay transacciones registradas.");
                                                 }
                                                 break;
+
 
                                             case 8: // Revisar el historial de la cuenta
                                                 System.out.println("Historial de cuenta:");
@@ -565,11 +542,13 @@ public class PruebaSistemaBancario {
     public static int inicioDeSesionCajero(Cajero[] cajeros, int totalCajeros) {
         Scanner sc = new Scanner(System.in);
         String userIngresado, passIngresada;
-        int index = -1; // Variable para almacenar el índice del cajero
+        int index = -1,opcion; // Variable para almacenar el índice del cajero
 
         System.out.println("¿Es nuevo usuario? (1 = Sí, 2 = No): ");
-        int opcion = sc.nextInt();
-        sc.nextLine();
+        opcion = sc.nextInt();
+        sc.nextLine(); // Consumir la nueva línea después del entero
+        Cajero cajero=new Cajero(null,null,null,null,
+                null,0,null,0,null,null,null,null);
 
         if (opcion == 1) {
             String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
