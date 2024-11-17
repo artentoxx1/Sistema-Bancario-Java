@@ -156,7 +156,8 @@ public class PruebaSistemaBancario {
                     }
                     break;
                 case 2:
-                    if(inicioDeSesionCajero()){
+                    int pos = inicioDeSesionCajero(cajeros,totalCajeros);
+                    if(pos!=-1){
                         do{
                             System.out.println("\n");
                             pantallaDeInicioCajero();
@@ -171,7 +172,7 @@ public class PruebaSistemaBancario {
 
                                         switch (opc3) {
                                             case 1: // Añadir cliente
-                                                cajero.AniadirCliente(clientes);
+                                                cajeros[pos].AniadirCliente(clientes);
                                                 /*
                                                 System.out.println("Ingrese el nombre del cliente: ");
                                                 String nombre = entrada.next();
@@ -561,48 +562,60 @@ public class PruebaSistemaBancario {
         } while(opc != 3);
     }
 
-    public static boolean inicioDeSesionCajero() {
-        // Todos los empleados deberán especificar sus credenciales de inicio de sesión dentro del programa
-        String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
-        String passGenerada = String.format("%04d", (int) (Math.random() * 1_000)).trim();
-        String userIngresado, passIngresada;
-        int opcion, cambiarCredenciales=0;
-
+    public static int inicioDeSesionCajero(Cajero[] cajeros, int totalCajeros) {
         Scanner sc = new Scanner(System.in);
+        String userIngresado, passIngresada;
+        int index = -1; // Variable para almacenar el índice del cajero
+
         System.out.println("¿Es nuevo usuario? (1 = Sí, 2 = No): ");
-        opcion = sc.nextInt();
-        sc.nextLine(); // Consumir la nueva línea después del entero
-        Cajero cajero=new Cajero(null,null,null,null,
-                null,0,null,0,null,null,null,null);
-        
+        int opcion = sc.nextInt();
+        sc.nextLine();
+
         if (opcion == 1) {
+            String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
+            String passGenerada = String.format("%04d", (int) (Math.random() * 1_000)).trim();
+
             System.out.println("Usuario generado: " + userGenerado);
             System.out.println("Clave generada: " + passGenerada);
-            System.out.println("Ingrese DNI:");
-            String dni= sc.nextLine();
-            cajero.setUsuario(userGenerado);
-            cajero.setClave(passGenerada);
+
+            cajeros[totalCajeros].setUsuario(userGenerado);
+            cajeros[totalCajeros].setClave(passGenerada);
+            index = totalCajeros;
+
             System.out.print("¿Desea cambiar sus credenciales? (1 = Sí, 2 = No): ");
-            cambiarCredenciales=sc.nextInt();
-            sc.nextLine(); // Consumir la nueva línea después del entero
+            int cambiarCredenciales = sc.nextInt();
+            sc.nextLine();
 
             if (cambiarCredenciales == 1) {
                 System.out.print("Escriba su nuevo usuario: ");
                 userGenerado = sc.nextLine();
                 System.out.print("Escriba su nueva contraseña: ");
                 passGenerada = sc.nextLine();
+
+                cajeros[totalCajeros].setUsuario(userGenerado);
+                cajeros[totalCajeros].setClave(passGenerada);
+            }
+        } else if (opcion == 2) {
+            System.out.println("\nComplete sus credenciales de inicio de sesión:");
+            System.out.print("Ingrese su usuario: ");
+            userIngresado = sc.nextLine();
+            System.out.print("Ingrese su contraseña: ");
+            passIngresada = sc.nextLine();
+
+            for (int i = 0; i < totalCajeros; i++) {
+                if (cajeros[i].getUsuario().equals(userIngresado) &&
+                        cajeros[i].getClave().equals(passIngresada)) {
+                    index = i;
+                }
+            }
+
+            if (index == -1) {
+                // Credenciales incorrectas
+                System.out.println("Credenciales incorrectas. Intente nuevamente.");
             }
         }
 
-        // Proceso de inicio de sesión
-        System.out.println("\nComplete sus credenciales de inicio de sesión:");
-        System.out.print("Ingrese su usuario: ");
-        userIngresado = sc.nextLine();
-        System.out.print("Ingrese su contraseña: ");
-        passIngresada = sc.nextLine();
-
-        // Validar credenciales ingresadas con las generadas o cambiadas
-        return userGenerado.equals(userIngresado) && passGenerada.equals(passIngresada);
+        return index; // Devuelve el índice del cajero o -1 si no se encuentra
     }
 
     public static boolean inicioDeSesionAdministrador(){    //El administrador debe especificar sus credenciales de inicio de sesion dentro del programa
