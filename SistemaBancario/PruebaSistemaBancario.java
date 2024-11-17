@@ -542,13 +542,12 @@ public class PruebaSistemaBancario {
     public static int inicioDeSesionCajero(Cajero[] cajeros, int totalCajeros) {
         Scanner sc = new Scanner(System.in);
         String userIngresado, passIngresada;
-        int index = -1,opcion; // Variable para almacenar el índice del cajero
+        int index = -1; // Variable para almacenar el índice del cajero
 
         System.out.println("¿Es nuevo usuario? (1 = Sí, 2 = No): ");
-        opcion = sc.nextInt();
+        int opcion = sc.nextInt();
         sc.nextLine(); // Consumir la nueva línea después del entero
-        Cajero cajero=new Cajero(null,null,null,null,
-                null,0,null,0,null,null,null,null);
+       
 
         if (opcion == 1) {
             String userGenerado = String.format("%10d", (long) (Math.random() * 1_000_000_000)).trim();
