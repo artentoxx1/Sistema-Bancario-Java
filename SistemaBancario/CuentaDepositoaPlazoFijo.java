@@ -35,6 +35,9 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
     }
 
     public void setPlazo(int plazo) {
+        if (plazo <= 0) {
+            throw new IllegalArgumentException("El plazo debe ser mayor a 0 meses.");
+        }
         this.plazo = plazo;
     }
 
@@ -43,6 +46,9 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
     }
 
     public void setTasaInteresPlazoFijo(double tasaInteresPlazoFijo) {
+        if (tasaInteresPlazoFijo < 0) {
+            throw new IllegalArgumentException("La tasa de interés no puede ser negativa.");
+        }
         this.tasaInteresPlazoFijo = tasaInteresPlazoFijo;
     }
 
@@ -51,23 +57,38 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
     }
 
     public void setPenalizacion(double penalizacion) {
+        if (penalizacion < 0 || penalizacion > 1) {
+            throw new IllegalArgumentException("La penalización debe estar entre 0 y 1.");
+        }
         this.penalizacion = penalizacion;
     }
 
     public String getFechaInicio() {
+        if (fechaInicio == null) {
+            throw new IllegalStateException("La fecha de inicio no está definida.");
+        }
         return fechaInicio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setFechaInicio(LocalDate fechaInicio) {
+        if (fechaInicio == null) {
+            throw new IllegalArgumentException("La fecha de inicio no puede ser nula.");
+        }
         this.fechaInicio = fechaInicio;
     }
 
     // Métodos específicos
     public double calcularInteresAlVencimiento() {
+        if (plazo <= 0 || tasaInteresPlazoFijo < 0) {
+            throw new IllegalStateException("Los datos del plazo o tasa de interés no son válidos.");
+        }
         return saldoCuenta * (tasaInteresPlazoFijo / 100) * (plazo / 12.0);
     }
 
     public LocalDate calcularFechaVencimiento() {
+        if (fechaInicio == null) {
+            throw new IllegalStateException("La fecha de inicio no está definida.");
+        }
         return fechaInicio.plusMonths(plazo);
     }
 
@@ -80,38 +101,60 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
     }
 
     public double aplicarPenalizacion(double monto) {
+        if (monto <= 0) {
+            throw new IllegalArgumentException("El monto para calcular la penalización debe ser mayor a 0.");
+        }
         return permitirRetiroAnticipado() ? monto * penalizacion : 0;
     }
 
     @Override
     public void retirar(double monto) {
-        double penalizacionAplicada = aplicarPenalizacion(monto);
-        double montoFinal = monto - penalizacionAplicada;
-
-        if (saldoCuenta >= montoFinal) {
-            saldoCuenta -= montoFinal;
-            registrarTransaccion(new Transaccion("Retiro", montoFinal, new Fecha(), this, this));
-
-            if (penalizacionAplicada > 0) {
-                System.out.println("Se aplicó una penalización de: " + penalizacionAplicada);
+        try {
+            if (monto <= 0) {
+                throw new IllegalArgumentException("El monto a retirar debe ser mayor a 0.");
             }
 
-            System.out.println("Retiro exitoso. Saldo actual: " + saldoCuenta);
-        } else {
-            System.out.println("Fondos insuficientes para realizar el retiro.");
+            double penalizacionAplicada = aplicarPenalizacion(monto);
+            double montoFinal = monto - penalizacionAplicada;
+
+            if (saldoCuenta >= montoFinal) {
+                saldoCuenta -= montoFinal;
+                registrarTransaccion(new Transaccion("Retiro", montoFinal, new Fecha(), this, this));
+
+                if (penalizacionAplicada > 0) {
+                    System.out.println("Se aplicó una penalización de: " + penalizacionAplicada);
+                }
+
+                System.out.println("Retiro exitoso. Saldo actual: " + saldoCuenta);
+            } else {
+                throw new IllegalStateException("Fondos insuficientes para realizar el retiro.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
     public void depositar(double monto) {
-        System.out.println("No se permiten depósitos adicionales en una cuenta a plazo fijo.");
+        try {
+            throw new UnsupportedOperationException("No se permiten depósitos adicionales en una cuenta a plazo fijo.");
+        } catch (UnsupportedOperationException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 
     public void registrarTransaccion(Transaccion transaccion) {
+        if (transaccion == null) {
+            throw new IllegalArgumentException("La transacción no puede ser nula.");
+        }
         historialCuenta.add(transaccion);
         System.out.println("Transacción registrada.");
     }
 
     public void mostrarHistorial() {
+        if (historialCuenta.isEmpty()) {
+            System.out.println("No hay transacciones en el historial.");
+            return;
+        }
         for (Transaccion t : historialCuenta) {
             t.mostrarDetalles();
         }

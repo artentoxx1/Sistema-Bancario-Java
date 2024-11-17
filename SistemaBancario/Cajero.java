@@ -298,7 +298,7 @@ public class Cajero extends Empleado{
         }
     }
     public  void eliminaCuentaAhorro (Cliente[] clientes,String dni){
-        CuentaAhorro CuentaC=new CuentaAhorro(null,null,
+        CuentaAhorro CuentaC=new CuentaAhorro(null,0,
                 null,0,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
@@ -322,7 +322,7 @@ public class Cajero extends Empleado{
         LocalDate inicio = LocalDate.parse(entrada.nextLine());
         System.out.println("Ingrese la penalizacion: ");
         int penalizacion = entrada.nextInt();
-        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,historialCuenta,tipoCuenta,plazo,interes,inicio,penalizacion);
+        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,tipoCuenta,plazo,interes,inicio,penalizacion);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);
@@ -332,8 +332,8 @@ public class Cajero extends Empleado{
         //      String tipoCuenta,int plazo,double tasaInteresPlazoFijo,LocalDate fechaInicio, int penalizacion)
     }
     public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
-        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,null,null,
-                null,0,0,null,0);
+        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,0,null,
+                0,0,null,0);
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);

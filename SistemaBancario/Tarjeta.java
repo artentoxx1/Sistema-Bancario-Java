@@ -6,61 +6,97 @@ public class Tarjeta {
     protected CuentaBancaria cuentaVinculada;
     protected boolean estadoTarjeta = true;
 
-    public Tarjeta(){
-
+    public Tarjeta() {
     }
-    public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria Cuenta, boolean estadoTarjeta) {
+
+    public Tarjeta(String numeroTarjeta, String claveTarjeta, CuentaBancaria cuentaVinculada, boolean estadoTarjeta) {
+        if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
+            throw new IllegalArgumentException("El número de tarjeta debe ser válido y tener 16 dígitos.");
+        }
+        if (claveTarjeta == null || claveTarjeta.length() != 4) {
+            throw new IllegalArgumentException("La clave de la tarjeta debe ser válida y tener 4 dígitos.");
+        }
+        if (cuentaVinculada == null) {
+            throw new IllegalArgumentException("La cuenta vinculada no puede ser nula.");
+        }
+
         this.numeroTarjeta = numeroTarjeta;
         this.claveTarjeta = claveTarjeta;
-        this.cuentaVinculada=Cuenta;
-        this.estadoTarjeta =estadoTarjeta;
+        this.cuentaVinculada = cuentaVinculada;
+        this.estadoTarjeta = estadoTarjeta;
     }
+
     public String getNumeroTarjeta() {
         return numeroTarjeta;
     }
+
     public void setNumeroTarjeta(String numeroTarjeta) {
+        if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
+            throw new IllegalArgumentException("El número de tarjeta debe ser válido y tener 16 dígitos.");
+        }
         this.numeroTarjeta = numeroTarjeta;
     }
+
     public String getClaveTarjeta() {
         return claveTarjeta;
     }
+
     public void setClaveTarjeta(String claveTarjeta) {
+        if (claveTarjeta == null || claveTarjeta.length() != 4) {
+            throw new IllegalArgumentException("La clave de la tarjeta debe ser válida y tener 4 dígitos.");
+        }
         this.claveTarjeta = claveTarjeta;
     }
+
     public CuentaBancaria getCuentaVinculada() {
         return cuentaVinculada;
     }
+
     public void setCuentaVinculada(CuentaBancaria cuentaVinculada) {
+        if (cuentaVinculada == null) {
+            throw new IllegalArgumentException("La cuenta vinculada no puede ser nula.");
+        }
         this.cuentaVinculada = cuentaVinculada;
     }
+
     public boolean getEstadoTarjeta() {
         return estadoTarjeta;
     }
+
     public void setEstadoTarjeta(boolean estadoTarjeta) {
         this.estadoTarjeta = estadoTarjeta;
     }
-    public static String generarNumeroTarjeta(){
-        String numeroTarjeta = "";
 
-        // Generar 16 dígitos y concatenarlos
-        for (int i = 0; i < 16; i++) {
-            int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
-            numeroTarjeta += digito; // Concatenar el dígito a la cadena
+    public static String generarNumeroTarjeta() {
+        try {
+            StringBuilder numeroTarjeta = new StringBuilder();
+            for (int i = 0; i < 16; i++) {
+                int digito = (int) (Math.random() * 10);
+                numeroTarjeta.append(digito);
+            }
+            return numeroTarjeta.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al generar el número de tarjeta: " + e.getMessage());
         }
-
-        return numeroTarjeta;
     }
-    public static String generarClaveTarjeta(){
-        String claveTarjeta = "";
 
-        // Generar 4 dígitos y concatenarlos
-        for (int i = 0; i < 4; i++) {
-            int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
-            claveTarjeta += digito; // Concatenar el dígito a la cadena
+    public static String generarClaveTarjeta() {
+        try {
+            StringBuilder claveTarjeta = new StringBuilder();
+            for (int i = 0; i < 4; i++) {
+                int digito = (int) (Math.random() * 10);
+                claveTarjeta.append(digito);
+            }
+            return claveTarjeta.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al generar la clave de la tarjeta: " + e.getMessage());
         }
-        return claveTarjeta;
     }
-    public void bloquearTarjeta(){
+
+    public void bloquearTarjeta() {
+        if (!estadoTarjeta) {
+            throw new IllegalStateException("La tarjeta ya está bloqueada.");
+        }
         estadoTarjeta = false;
     }
 }
