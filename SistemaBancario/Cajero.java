@@ -327,7 +327,9 @@ public class Cajero extends Empleado{
         LocalDate inicio = LocalDate.parse(entrada.nextLine());
         System.out.println("Ingrese la penalizacion: ");
         int penalizacion = entrada.nextInt();
-        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,tipoCuenta,plazo,interes,inicio,penalizacion,historialCuenta);
+
+        CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(numCuenta,saldo,tipoCuenta,plazo,interes,inicio,penalizacion);
+
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);
@@ -338,7 +340,9 @@ public class Cajero extends Empleado{
     }
     public  void eliminaCuentaPlazoFijo (Cliente[] clientes,String dni){
         CuentaDepositoaPlazoFijo CuentaC= new CuentaDepositoaPlazoFijo(null,0,null,
-                0,0,null,0,null);
+
+                0,0,null,0);
+
         for(int i=0;i< clientes.length ;i++){
             if(clientes[i].getDni().equals(dni)){
                 clientes[i].setCuentaDepositoPlazoFijo(CuentaC);
