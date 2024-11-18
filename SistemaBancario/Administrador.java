@@ -1,6 +1,8 @@
 package Banco.SistemaBancario;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 public class Administrador extends Empleado {
 
     public Administrador(){
@@ -146,5 +148,43 @@ public class Administrador extends Empleado {
             System.out.println("\n--------------------------\n");
         }
         else{System.out.println("Primero añada algunos clientes");}
+    }
+    public void aniadirCajeroArchivo(Cajero cajero) {
+        try (FileWriter writer = new FileWriter("cajeros.txt", true)) {
+            if(cajero != null){
+                writer.append(cajero.getNombres() + ";");
+                writer.append(cajero.getApellidoPaterno() + ";");
+                writer.append(cajero.getApellidoMaterno() + ";");
+                writer.append(cajero.getSexo() + ";");
+                writer.append(cajero.getDni() + ";");
+                writer.append(cajero.getTelefono() + ";");
+                writer.append(cajero.getPuestoEmpleado() + ";");
+                writer.append(cajero.getSalarioEmpleado() + ";");
+                writer.append(cajero.getUsuario()+";");
+                writer.append(cajero.getClave()+"\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void guardarCajerosArchivo(Cajero[] cajeros) {
+        try (FileWriter writer = new FileWriter("cajeros.txt")) {
+            for(Cajero cajero : cajeros) {
+                if(cajero != null){
+                    writer.append(cajero.getNombres() + ";");
+                    writer.append(cajero.getApellidoPaterno() + ";");
+                    writer.append(cajero.getApellidoMaterno() + ";");
+                    writer.append(cajero.getSexo() + ";");
+                    writer.append(cajero.getDni() + ";");
+                    writer.append(cajero.getTelefono() + ";");
+                    writer.append(cajero.getPuestoEmpleado() + ";");
+                    writer.append(cajero.getSalarioEmpleado() + ";");
+                    writer.append(cajero.getUsuario()+";");
+                    writer.append(cajero.getClave()+"\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
