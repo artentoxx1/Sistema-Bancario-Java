@@ -1,5 +1,7 @@
 package Banco.SistemaBancario;
 
+import java.util.InputMismatchException;
+
 public class Cliente extends Persona {
 
     private String correoCliente;
@@ -145,81 +147,89 @@ public class Cliente extends Persona {
         this.liquidezFinanciera = liquidezFinanciera;
     }
     public void depositarCuenta(int tipoCuenta, double cantidadDeposito, String numeroCuenta) {
-        switch (tipoCuenta) {
-            case 1:
-                //Cuenta Ahorro
-                if (cuentaAhorros.numeroCuenta.equals(numeroCuenta)) {
-                    if (cantidadDeposito > 0) {
-                        cuentaAhorros.depositar(cantidadDeposito);
-                        System.out.println("Nuevo saldo: " + cuentaAhorros.saldoCuenta);
+        try{
+            switch (tipoCuenta) {
+                case 1:
+                    //Cuenta Ahorro
+                    if (cuentaAhorros.numeroCuenta.equals(numeroCuenta)) {
+                        if (cantidadDeposito > 0) {
+                            cuentaAhorros.depositar(cantidadDeposito);
+                            System.out.println("Nuevo saldo: " + cuentaAhorros.saldoCuenta);
+                        } else {
+                            throw new IllegalArgumentException("Cantidad a depositar inválida. Por favor coloque otra cantidad.");
+                        }
                     } else {
-                        System.out.println("Cantidad a depositar inválida. Por favor coloque otra cantidad.");
+                        System.out.println("Error. Numero de cuenta incorrecto");
                     }
-                } else {
-                    System.out.println("Error. Numero de cuenta incorrecto");
-                }
-                break;
-            case 2:
-                //Cuenta Corriente
-                if (cuentaCorriente.numeroCuenta.equals(numeroCuenta)) {
-                    if (cantidadDeposito > 0) {
-                        cuentaCorriente.depositar(cantidadDeposito);
-                        System.out.println("Nuevo saldo: " + cuentaCorriente.saldoCuenta);
+                    break;
+                case 2:
+                    //Cuenta Corriente
+                    if (cuentaCorriente.numeroCuenta.equals(numeroCuenta)) {
+                        if (cantidadDeposito > 0) {
+                            cuentaCorriente.depositar(cantidadDeposito);
+                            System.out.println("Nuevo saldo: " + cuentaCorriente.saldoCuenta);
+                        } else {
+                            throw new IllegalArgumentException("Cantidad a depositar inválida. Por favor coloque otra cantidad.");
+
+                        }
                     } else {
-                        System.out.println("Cantidad insuficiente.");
+                        System.out.println("Error. Numero de cuenta incorrecto");
                     }
-                } else {
-                    System.out.println("Error. Numero de cuenta incorrecto");
-                }
-                break;
-            default:
-                System.out.println("Digite una opcion correcta.");
+                    break;
+                default:
+                    System.out.println("Digite una opcion correcta.");
+            }
+        }catch(InputMismatchException | IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
     }
     public void retirarCuenta(int tipoCuenta, double cantidadRetiro, String contraseniaTarjeta) {
-        switch (tipoCuenta) {
-            case 1:
-                //cuenta ahorro
-                if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
-                    if (cuentaAhorros.saldoCuenta > 0 && cuentaAhorros.saldoCuenta >= cantidadRetiro) {
-                        cuentaAhorros.retirar(cantidadRetiro);
-                        System.out.println("Saldo restante: " + cuentaAhorros.saldoCuenta);
-                    } else {
-                        System.out.println("Cantidad insuficiente dentro de la cuenta.");
-                        System.out.println("Saldo disponible: " + cuentaAhorros.saldoCuenta);
-                    }
-                } else {
-                    System.out.println("Error en la clave.");
-                }
-                break;
-            case 2:
-                //cuenta corriente
-                if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
-                    if (cantidadRetiro <= cuentaCorriente.saldoCuenta) {
-                        cuentaCorriente.retirar(cantidadRetiro);
-                        System.out.println("Cantidad a retirar: " + cantidadRetiro);
-                        System.out.println("Saldo restante: " + cuentaCorriente.saldoCuenta);
-                    } else {
-                        double diferencia = cantidadRetiro - cuentaCorriente.saldoCuenta;
-                        double montoConComision = cuentaCorriente.cobrarComisionPorSobregiro(diferencia);
-
-                        if (cuentaCorriente.getLimiteSobregiro() >= montoConComision) {
-                            cuentaCorriente.retirar(cuentaCorriente.saldoCuenta); // Agota el saldo de la cuenta
-                            cuentaCorriente.permitirSobregiro(diferencia); // Utiliza el sobregiro
-                            System.out.println("Retiro exitoso usando sobregiro. Saldo restante: " + cuentaCorriente.saldoCuenta);
-                            System.out.println("Sobregiro restante: " + cuentaCorriente.getLimiteSobregiro());
+        try{
+            switch (tipoCuenta) {
+                case 1:
+                    //cuenta ahorro
+                    if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
+                        if (cuentaAhorros.saldoCuenta > 0 && cuentaAhorros.saldoCuenta >= cantidadRetiro) {
+                            cuentaAhorros.retirar(cantidadRetiro);
+                            System.out.println("Saldo restante: " + cuentaAhorros.saldoCuenta);
                         } else {
-                            System.out.println("Fondos insuficientes. Sobregiro no permitido.");
-                            System.out.println("Saldo disponible: " + cuentaCorriente.saldoCuenta);
-                            System.out.println("Límite de sobregiro disponible: " + cuentaCorriente.getLimiteSobregiro());
+                            throw new IllegalArgumentException("Cantidad insuficiente dentro de la cuenta.");
                         }
+                    } else {
+                        System.out.println("Error en la clave.");
                     }
-                } else {
-                    System.out.println("Error en la clave");
-                }
-                break;
-            default:
-                System.out.println("Digite una opcion correcta.");
+                    break;
+                case 2:
+                    //cuenta corriente
+                    if (tarjetaDeDebito.claveTarjeta.equals(contraseniaTarjeta)) {
+                        if (cantidadRetiro <= cuentaCorriente.saldoCuenta) {
+                            cuentaCorriente.retirar(cantidadRetiro);
+                            System.out.println("Cantidad a retirar: " + cantidadRetiro);
+                            System.out.println("Saldo restante: " + cuentaCorriente.saldoCuenta);
+                        } else {
+                            double diferencia = cantidadRetiro - cuentaCorriente.saldoCuenta;
+                            double montoConComision = cuentaCorriente.cobrarComisionPorSobregiro(diferencia);
+
+                            if (cuentaCorriente.getLimiteSobregiro() >= montoConComision) {
+                                cuentaCorriente.retirar(cuentaCorriente.saldoCuenta); // Agota el saldo de la cuenta
+                                cuentaCorriente.permitirSobregiro(diferencia); // Utiliza el sobregiro
+                                System.out.println("Retiro exitoso usando sobregiro. Saldo restante: " + cuentaCorriente.saldoCuenta);
+                                System.out.println("Sobregiro restante: " + cuentaCorriente.getLimiteSobregiro());
+                            } else {
+                                System.out.println("Fondos insuficientes. Sobregiro no permitido.");
+                                System.out.println("Saldo disponible: " + cuentaCorriente.saldoCuenta);
+                                System.out.println("Límite de sobregiro disponible: " + cuentaCorriente.getLimiteSobregiro());
+                            }
+                        }
+                    } else {
+                        System.out.println("Error en la clave");
+                    }
+                    break;
+                default:
+                    System.out.println("Digite una opcion correcta.");
+            }
+        }catch(InputMismatchException e){
+            System.out.println(e.getMessage());
         }
     }
 }
