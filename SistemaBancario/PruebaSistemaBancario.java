@@ -468,7 +468,7 @@ public class PruebaSistemaBancario {
                                                 entrada.nextLine(); // Limpiar el buffer
 
                                                 if (tipoTransaccion.equalsIgnoreCase("deposito") || tipoTransaccion.equalsIgnoreCase("retiro")) {
-                                                    Transaccion.crearYEjecutar(tipoTransaccion, montoTransaccion, fecha, cuentaVinculada, null);
+                                                    Transaccion.crearYEjecutar(tipoTransaccion, montoTransaccion, cuentaVinculada, null);
                                                 } else if (tipoTransaccion.equalsIgnoreCase("transferencia")) {
                                                     System.out.print("Ingrese el número de cuenta de destino: ");
                                                     String numeroCuentaDestino = entrada.nextLine();
@@ -482,7 +482,7 @@ public class PruebaSistemaBancario {
                                                     }
 
                                                     if (cuentaDestino != null) {
-                                                        Transaccion.crearYEjecutar("Transferencia", montoTransaccion, fecha, cuentaVinculada, cuentaDestino);
+                                                        Transaccion.crearYEjecutar("Transferencia", montoTransaccion, cuentaVinculada, cuentaDestino);
                                                     } else {
                                                         System.out.println("La cuenta de destino no existe.");
                                                     }

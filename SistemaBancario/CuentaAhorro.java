@@ -69,13 +69,15 @@ public class CuentaAhorro extends CuentaBancaria implements CuentaHija {
 
     // Sobrescribe el metodo retirar con validaciones adicionales
     public void retirar(double monto) {
+        String fecha = new String();
+        fecha = Fecha.obtenerFechaActual();
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto a retirar debe ser mayor a cero.");
         }
         if (permitirRetiro()) {
             if (saldoCuenta >= monto) {
                 saldoCuenta -= monto;
-                registrarTransaccion(new Transaccion("Retiro", monto, new Fecha(), this, this));
+                registrarTransaccion(new Transaccion("Retiro", monto, this, this));
                 System.out.println("Retiro exitoso. Saldo actual: S/. " + saldoCuenta);
             } else {
                 System.out.println("Fondos insuficientes para realizar el retiro.");
@@ -89,7 +91,7 @@ public class CuentaAhorro extends CuentaBancaria implements CuentaHija {
             throw new IllegalArgumentException("El monto a depositar debe ser mayor a cero.");
         }
         saldoCuenta += monto;
-        registrarTransaccion(new Transaccion("Depósito", monto, new Fecha(), this, this));
+        registrarTransaccion(new Transaccion("Depósito", monto, this, this));
         System.out.println("Depósito exitoso. Saldo actual: S/. " + saldoCuenta);
     }
 
