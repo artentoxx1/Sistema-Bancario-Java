@@ -88,7 +88,7 @@ public class CuentaBancaria implements CuentaHija {
             throw new IllegalArgumentException("El monto a depositar debe ser mayor a cero.");
         }
         saldoCuenta += monto;
-        registrarTransaccion(new Transaccion("Depósito", monto, new Fecha(), this, this));
+        registrarTransaccion(new Transaccion("Depósito", monto, this, this));
         System.out.println("Depósito exitoso. Nuevo saldo: S/. " + saldoCuenta);
     }
 
@@ -99,7 +99,7 @@ public class CuentaBancaria implements CuentaHija {
         }
         if (saldoCuenta >= monto) {
             saldoCuenta -= monto;
-            registrarTransaccion(new Transaccion("Retiro", monto, new Fecha(), this, this));
+            registrarTransaccion(new Transaccion("Retiro", monto, this, this));
             System.out.println("Retiro exitoso. Nuevo saldo: S/. " + saldoCuenta);
         } else {
             System.out.println("Fondos insuficientes para realizar el retiro.");

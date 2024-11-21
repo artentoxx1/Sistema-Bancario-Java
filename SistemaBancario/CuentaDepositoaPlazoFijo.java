@@ -119,7 +119,7 @@ public class CuentaDepositoaPlazoFijo extends CuentaBancaria implements CuentaHi
 
             if (saldoCuenta >= montoFinal) {
                 saldoCuenta -= montoFinal;
-                registrarTransaccion(new Transaccion("Retiro", montoFinal, new Fecha(), this, this));
+                registrarTransaccion(new Transaccion("Retiro", montoFinal, this, this));
 
                 if (penalizacionAplicada > 0) {
                     System.out.println("Se aplicó una penalización de: " + penalizacionAplicada);
