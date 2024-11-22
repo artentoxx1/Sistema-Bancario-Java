@@ -21,43 +21,58 @@ public class Administrador extends Empleado {
     public void mostrar(Empleado empleado) {
         mostrarPersona(empleado);
     }
-    public void aniadirPersona(Cajero[] cajeros, int totalCajeros) {
+    public void aniadirPersona(ArrayList<Cajero> cajeros) {
+        boolean datosValidos = true; // Bandera para controlar errores
+
         try {
-            if (totalCajeros >= cajeros.length) {
-                System.out.println("No hay espacio para agregar más cajeros. Total actual: " + totalCajeros);
-            } else {
-                System.out.println("Ingrese el nombre del cajero: ");
-                String nombreEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el nombre del cajero: ");
+            String nombreEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese el apellido paterno del cajero: ");
-                String apellidoPaternoEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el apellido paterno del cajero: ");
+            String apellidoPaternoEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese el apellido materno del cajero: ");
-                String apellidoMaternoEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el apellido materno del cajero: ");
+            String apellidoMaternoEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese el sexo del cajero: ");
-                String sexoEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el sexo del cajero: ");
+            String sexoEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese el teléfono del cajero: ");
-                String telefonoEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el teléfono del cajero: ");
+            String telefonoEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese la edad del cajero: ");
-                int edadEmpleado = entrada.nextInt();
-                entrada.nextLine();
+            System.out.println("Ingrese la edad del cajero: ");
+            int edadEmpleado = entrada.nextInt();
+            entrada.nextLine();  // Limpiar buffer
 
-                System.out.println("Ingrese el DNI del cajero: ");
-                String dniEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el DNI del cajero: ");
+            String dniEmpleado = entrada.nextLine().trim();
+            if (dniEmpleado.length() != 8) {
+                System.out.println("DNI inválido. Debe tener 8 dígitos numéricos.");
+                datosValidos = false;
+            }
 
-                System.out.println("Ingrese el salario del cajero: ");
-                double salarioEmpleado = entrada.nextDouble();
-                entrada.nextLine();
+            System.out.println("Ingrese el salario del cajero: ");
+            double salarioEmpleado = entrada.nextDouble();
+            entrada.nextLine(); // Limpiar buffer
 
-                System.out.println("Ingrese el puesto del cajero: ");
-                String puestoEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el puesto del cajero: ");
+            String puestoEmpleado = entrada.nextLine().trim();
 
-                System.out.println("Ingrese el código de la sucursal del cajero: ");
-                String sucursalEmpleado = entrada.nextLine();
+            System.out.println("Ingrese el código de la sucursal del cajero: ");
+            String sucursalEmpleado = entrada.nextLine().trim();
 
+            // Validación de datos
+            if (edadEmpleado <= 0) {
+                System.out.println("Edad inválida. Debe ser mayor a 0.");
+                datosValidos = false;
+            }
+            if (salarioEmpleado < 0) {
+                System.out.println("Salario inválido. Debe ser mayor o igual a 0.");
+                datosValidos = false;
+            }
+
+            // Solo agregar el cajero si los datos son válidos
+            if (datosValidos) {
                 Cajero nuevoCajero = new Cajero(
                         nombreEmpleado,
                         apellidoPaternoEmpleado,
@@ -69,16 +84,17 @@ public class Administrador extends Empleado {
                         salarioEmpleado,
                         puestoEmpleado,
                         sucursalEmpleado,
-                        "",
+                        "", // Suponiendo que hay campos vacíos o nulos
                         ""
                 );
 
-                cajeros[totalCajeros] = nuevoCajero;
-                totalCajeros++;
-
-                guardarCajerosArchivo(cajeros);
-                System.out.println("Cajero añadido correctamente. Total actual: " + totalCajeros);
+                cajeros.add(nuevoCajero); // Añadir al ArrayList en lugar de un arreglo fijo
+                guardarCajerosArchivo(cajeros); // Guardar la lista actualizada en el archivo
+                System.out.println("Cajero añadido correctamente. Total actual: " + cajeros.size());
+            } else {
+                System.out.println("No se pudo añadir el cajero debido a errores en los datos.");
             }
+
         } catch (InputMismatchException e) {
             System.out.println("Error: Entrada inválida. Por favor, revise los datos ingresados.");
             entrada.nextLine();
@@ -86,32 +102,30 @@ public class Administrador extends Empleado {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-    public void eliminarPersona(Cajero[] cajeros, int totalCajeros, String numDni) {
+    public void eliminarPersona(ArrayList<Cajero> cajeros, String numDni) {
+        Cajero cajero = buscarPersona(cajeros, numDni);
         try {
-            int index = buscarPersona(cajeros, numDni);
-            if (index != -1) {
-
-                for (int i = index; i < totalCajeros - 1; i++) {
-                    cajeros[i] = cajeros[i + 1];
-                }
-                cajeros[totalCajeros - 1] = null;
-                totalCajeros--;
-                System.out.println("Cajero eliminado correctamente.");
-                guardarCajerosArchivo(cajeros);
-            } else {
-                System.out.println("Cajero no encontrado.");
+            if (cajero == null) {
+                throw new IllegalArgumentException("No se encontró un cajero con el DNI especificado.");
             }
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error inesperado: " + e.getMessage());
+            else{
+                cajeros.remove(cajero);
+                guardarCajerosArchivo(cajeros);
+                System.out.println("Cajero eliminado exitosamente");
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
-    public static int buscarPersona(Cajero[] cajeros, String numDni) {
-        for (int i = 0; i < cajeros.length; i++) {
-            if (cajeros[i] != null && cajeros[i].getDni().equals(numDni)) {
-                return i; // Devuelve el índice del empleado encontrado
+    public Cajero buscarPersona(ArrayList<Cajero> cajeros, String numDni) {
+        for (Cajero cajero : cajeros) {
+            if (cajero.getDni().equals(numDni)) {
+                return cajero; // Devuelve el cliente si lo encuentra
             }
         }
-        return -1; // Si no se encuentra, se devuelve -1
+
+        System.out.println("No existe cajero asociado al DNI proporcionado.");
+        return null; // Retorna null si no encuentra al cajero
     }
     public static void ordenarPorApellido(ArrayList<Cliente> clientes) {
         if (clientes.size() > 0) {
@@ -201,7 +215,7 @@ public class Administrador extends Empleado {
             e.printStackTrace();
         }
     }
-    public void guardarCajerosArchivo(Cajero[] cajeros) {
+    public void guardarCajerosArchivo(ArrayList<Cajero> cajeros) {
         try (FileWriter writer = new FileWriter("cajeros.txt")) {
             for(Cajero cajero : cajeros) {
                 if(cajero != null){
